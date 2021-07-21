@@ -1,6 +1,5 @@
 package Raycaster;
 
-import Raycaster.Display.ObslugaOkna;
 import Raycaster.Display.Render;
 import Raycaster.Input.Input;
 
@@ -35,8 +34,6 @@ public class Raycaster extends JFrame {
 
         this.setSize(resolution.x,resolution.y+32);
         this.add(panel,BorderLayout.CENTER);
-
-        this.addWindowListener(new ObslugaOkna());
 
         this.addWindowListener(new Window());
 

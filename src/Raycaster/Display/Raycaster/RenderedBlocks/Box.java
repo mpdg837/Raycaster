@@ -1,8 +1,11 @@
 package Raycaster.Display.Raycaster.RenderedBlocks;
 
+import Raycaster.Display.Raycaster.Column;
 import Raycaster.Display.Raycaster.Raycasting;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public class Box {
 
@@ -11,8 +14,8 @@ public class Box {
         this.ray = ray;
     }
 
-    public void drawBox(int nStep, double len, double angle, Graphics2D g){
-        Point punkt = new Point(nStep, ray.game.render.renderSize.y/2);
+    public void drawBox(int nStep, double len, double angle, ArrayList<Column> columns, int[][] foo){
+        Point punkt = new Point(nStep, ray.half);
 
 
         double height =((Raycasting.maxLen - len));
@@ -37,16 +40,17 @@ public class Box {
 
             // Wyznaczenie tekstury
 
-            double zet = Math.cos(Math.abs(ray.myAngle - angle)) * len;
+            double zet = ray.tempCosB * len;
             int wallHeight = (int)(18 * height/zet);
 
-            if(cien){
-                g.drawImage(ray.game.texture.getColumnDarker(indexTex), punkt.x, punkt.y - wallHeight / 2, 1, wallHeight, null);
+            Column column = new Column();
 
-            }else {
-                g.drawImage(ray.game.texture.getColumn(indexTex), punkt.x, punkt.y - wallHeight / 2, 1, wallHeight, null);
+            column.darker = cien;
+            column.index = indexTex;
+            column.rect = new Rectangle(punkt.x, punkt.y - wallHeight / 2, 1, wallHeight);
 
-            }
+            columns.add(column);
+
         }
 
 

@@ -14,9 +14,9 @@ public class Transform {
         }else if(kieruek == getDown()){
             postion = new Point2D.Double(postion.getX() - len * Math.cos(rotation), postion.getY() - len * Math.sin(rotation));
         }else if(kieruek == getLeft()){
-            postion = new Point2D.Double(postion.getX() + len * Math.cos(rotation-deltaR), postion.getY() + len * Math.sin(rotation-deltaR));
+            postion = new Point2D.Double(postion.getX() + (len/2) * Math.cos(rotation-deltaR), postion.getY() + (len/2) * Math.sin(rotation-deltaR));
         }else if(kieruek == getRight()){
-            postion = new Point2D.Double(postion.getX() - len * Math.cos(rotation-deltaR), postion.getY() - len * Math.sin(rotation-deltaR));
+            postion = new Point2D.Double(postion.getX() + (len/2) * Math.cos(rotation+deltaR), postion.getY() + (len/2)* Math.sin(rotation+deltaR));
         }
     }
 

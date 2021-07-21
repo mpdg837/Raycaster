@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.color.ColorSpace;
 import java.awt.geom.Point2D;
 import java.awt.image.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ConcurrentModificationException;
 
@@ -27,17 +28,35 @@ public class Raycasting {
 
     private double tempCos;
     private double tempSin;
+    public double tempCosB;
 
     private int[][] mapa;
 
     public Point2D analysePos;
 
     public BufferedImage bufferImg;
+    private Graphics grphx;
+
+    private Box box;
+    private Floor floor;
+
+    ArrayList<Column> columns;
+
+    public final int half;
+    public int[][] foo;
 
     public Raycasting(Game game){
 
         this.game = game;
         bufferImg = new BufferedImage(game.render.renderSize.x,game.render.renderSize.y, BufferedImage.TYPE_INT_RGB);
+        columns = new ArrayList<Column>();
+
+        grphx = bufferImg.getGraphics();
+        floor = new Floor(this);
+        box = new Box(this);
+        foo = new int[game.render.renderSize.y][game.render.renderSize.x];
+
+        half = game.render.renderSize.y / 2;
     }
 
     public void loadMap(){
@@ -54,13 +73,10 @@ public class Raycasting {
         }
     }
 
-
     public void draw(Graphics2D g){
         try{
             loadMap();
-
-            int[][] foo = new int[game.render.renderSize.y][game.render.renderSize.x];
-
+            columns.clear();
 
             myAngle = game.playerTransform.rotation;
             myPos = game.playerTransform.postion;
@@ -68,71 +84,63 @@ public class Raycasting {
             Point lastPoint= new Point(0,0);
 
             int nStep = 0;
+
+            Point lastPointOfMap = new Point(0,0);
+
+
+
             for(double angle = myAngle - angleDelta;angle<myAngle+angleDelta;angle +=angleStep){
                 tempCos = Math.cos(angle);
                 tempSin = Math.sin(angle);
+                tempCosB =  Math.cos(Math.abs(myAngle - angle));
 
                 for(double len=0;len<maxLen;len +=0.01){
                     analysePos = new Point2D.Double(myPos.getX()+len * tempCos, myPos.getY()+len * tempSin);
 
-                    if(inside()) {
-                        if (mapa[(int) analysePos.getX()][(int) analysePos.getY()] == 1) {
-                            Box box = new Box(this);
+                    Point zaokraglij = new Point((int)(analysePos.getX()*16),(int)(analysePos.getY()*16));
 
-                            box.drawBox(nStep,len,angle,g);
-                            len = maxLen;
-                        }else{
+                    if(zaokraglij != lastPointOfMap) {
+                        if (inside()) {
+                            if (mapa[(int) analysePos.getX()][(int) analysePos.getY()] == 1) {
 
 
+                                box.drawBox(nStep, len, angle, columns, foo);
+                                len = maxLen;
+                            } else {
 
-                            Point punkta = new Point(nStep, game.render.renderSize.y / 2);
+                                if (len < 30) {
 
-                            double height = ((Raycasting.maxLen - len));
+                                    Point punkta = new Point(nStep, half);
 
-                            double zet = Math.cos(Math.abs(myAngle - angle)) * len;
-                            int wallHeight = (int) (18 * height / zet);
-
-                            punkta = new Point((int) punkta.x, (int) (punkta.y + wallHeight / 2));
-
-
-
-                            if ( punkta.x < 320) {
-                                if ( punkta.y < 240) {
-                                    if(punkta !=lastPoint) {
-                                        if (foo[punkta.y][punkta.x] == 0){
-
-                                            double partX = (analysePos.getX() - (int) analysePos.getX());
-                                            double partY = (analysePos.getY() - (int) analysePos.getY());
-
-                                            int texX = (int) (partX * 64);
-                                            int texY = (int) (partY * 64);
-
-                                            if(game.texture != null) {
-                                                int color = game.texture.textureMain.getRGB(texX,texY);
-
-                                                foo[punkta.y][punkta.x] = color;
-                                                foo[punkta.y - wallHeight][punkta.x] = color;
-
-                                            }
-                                        }
-                                    }
+                                    floor.floor(punkta, len, angle, lastPoint);
+                                    lastPoint = punkta;
                                 }
-
                             }
-                            lastPoint = punkta;
+                        } else {
+                            len = maxLen;
                         }
-                    }else{
-                        len = maxLen;
                     }
+
+                    lastPointOfMap = zaokraglij;
+
                 }
                 nStep++;
 
             }
 
 
+            array_rasterToBuffer(foo);
 
-            BufferedImage image = array_rasterToBuffer(foo);
-            g.drawImage(image,0,0,null);
+
+            for(Column col : columns) {
+                if (col.darker) {
+                    grphx.drawImage(game.texture.getColumnDarker(col.index),(int)col.rect.getX(),(int)col.rect.getY(),(int)col.rect.getWidth(),(int)col.rect.getHeight(),null);
+                }else{
+                    grphx.drawImage(game.texture.getColumn(col.index),(int)col.rect.getX(),(int)col.rect.getY(),(int)col.rect.getWidth(),(int)col.rect.getHeight(),null);
+                }
+            }
+
+            g.drawImage(bufferImg,0,0,null);
 
         }catch (ConcurrentModificationException ignore){}
 
@@ -142,37 +150,25 @@ public class Raycasting {
 
 
 
-    public BufferedImage array_rasterToBuffer(int[][] img) {
+    public void array_rasterToBuffer(int[][] img) {
         final int width = game.render.renderSize.x;
         final int height = game.render.renderSize.y;
 
-        // The bands are "packed" for TYPE_INT_RGB Raster,
-        // so we need only one array component per pixel
         int[] pixels = new int[width * height];
 
         int n = 0;
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                // "Pack" RGB values to native TYPE_INT_RGB format
-                // (NOTE: Do not use Math.abs on these values, and without alpha there won't be negative values)
+
                 pixels[n] = img[y][x];
                 n++;
             }
         }
 
-
-
-        // NOTE: getRaster rather than getData for "live" view
         WritableRaster rast = bufferImg.getRaster();
 
-        // NOTE: setDataElements rather than setPixels to avoid conversion
-        // This requires pixels to be in "native" packed RGB format (as above)
         rast.setDataElements(0, 0, width, height, pixels);
 
-        // No need for setData as we were already working on the live data
-        // thus saving at least two expensive array copies
-
-        return bufferImg;
     }
 
 

@@ -28,6 +28,7 @@ public class Game extends Interaction {
     public Map mapa;
 
     public Texture texture;
+    public Texture floor;
 
     boolean oka=true;
 
@@ -42,11 +43,17 @@ public class Game extends Interaction {
     public void start() {
         try{
             texture = new Texture(ImageIO.read(new File("texture.png")));
+            floor = new Texture(ImageIO.read(new File("floor.png")));
         }catch (IOException ignore){}
 
-        mapa.mapa[63][70] = 1;
-        mapa.mapa[70][70] = 1;
+        for(int x=0;x<16;x++) {
+            mapa.mapa[60+x][60] = 1;
+            mapa.mapa[60+x][75] = 1;
+            mapa.mapa[60][60+x] = 1;
+            mapa.mapa[75][60+x] = 1;
+        }
 
+        mapa.mapa[65][65] = 1;
     }
 
     int timer = 0;
@@ -56,14 +63,16 @@ public class Game extends Interaction {
 
         Point2D lastPos = playerTransform.postion;
 
+        double speed = 0.5;
+
         if (input.getKey(KeyEvent.VK_W)) {
-            playerTransform.translate(Transform.getUp(),0.4);
+            playerTransform.translate(Transform.getUp(),speed);
         }else if (input.getKey(KeyEvent.VK_S)) {
-            playerTransform.translate(Transform.getDown(),0.4);
+            playerTransform.translate(Transform.getDown(),speed);
         }else if (input.getKey(KeyEvent.VK_A)) {
-            playerTransform.translate(Transform.getLeft(),0.4);
+            playerTransform.translate(Transform.getLeft(),speed);
         }else if (input.getKey(KeyEvent.VK_D)) {
-            playerTransform.translate(Transform.getRight(),0.4);
+            playerTransform.translate(Transform.getRight(),speed);
         }
 
         Point pos = input.getMousePos();

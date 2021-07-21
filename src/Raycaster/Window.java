@@ -12,12 +12,12 @@ public class Window implements WindowListener {
 
     @Override
     public void windowClosing(WindowEvent e) {
-
+        System.exit(0);
     }
 
     @Override
     public void windowClosed(WindowEvent e) {
-        System.exit(0);
+
     }
 
     @Override

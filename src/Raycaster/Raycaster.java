@@ -1,5 +1,6 @@
 package Raycaster;
 
+import Raycaster.Display.Raycaster.Raycasting;
 import Raycaster.Display.Render;
 import Raycaster.Input.Input;
 
@@ -8,11 +9,13 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Timer;
 
-public class Raycaster extends JFrame {
+public class Raycaster extends Frame {
 
     public final BufferedImage buffer;
-    public final JPanel panel;
+    public final Panel panel;
     public static Point resolution= new Point(320,240);
+
+    Raycasting rayMaker ;
 
     public final Input input = new Input();
 
@@ -29,7 +32,7 @@ public class Raycaster extends JFrame {
         this.addKeyListener(input);
         this.addMouseListener(input);
 
-        panel = new JPanel();
+        panel = new Panel();
         panel.setPreferredSize(new Dimension(resolution.x,resolution.y));
 
         this.setSize(resolution.x,resolution.y+32);

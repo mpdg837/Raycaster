@@ -4,6 +4,8 @@ import java.awt.*;
 
 public class Floor {
 
+    private Point lastPoint;
+
     Raycasting ray;
     public Floor(Raycasting ray){
         this.ray = ray;
@@ -16,27 +18,34 @@ public class Floor {
 
         punkta = new Point((int) punkta.x, (int) (punkta.y + wallHeight / 2));
 
+        lastPoint = new Point(0,0);
 
-        if (punkta.x < 320) {
-            if (punkta.y < 240) {
+        if (punkta.x < ray.game.render.renderSize.getX()) {
+            if (punkta.y < ray.game.render.renderSize.getY()) {
                 if (punkta != lastPoint) {
                     if (ray.foo[punkta.y][punkta.x] == 0) {
 
                         double partX = (ray.analysePos.getX() - (int) ray.analysePos.getX());
                         double partY = (ray.analysePos.getY() - (int) ray.analysePos.getY());
 
-                        int texX = (int) (partX * 64);
-                        int texY = (int) (partY * 64);
+                        int texX = (int) (partX * Texture.size);
+                        int texY = (int) (partY * Texture.size);
 
-                        if (ray.game.texture != null) {
-                            int color = ray.game.floor.textureMain.getRGB(texX, texY);
+                        Point point = new Point(texX,texY);
+
+                        if(point!=lastPoint) {
+                            if (ray.game.texture != null) {
+                                int colorA = ray.game.floor.bufferXY[texY][texX];
+                                int colorB = ray.game.floor.bufferXY[texY][texX];
+
+                                ray.foo[punkta.y][punkta.x] = colorA;
+                                ray.foo[punkta.y - wallHeight][punkta.x] = colorB;
 
 
-                                ray.foo[punkta.y][punkta.x] = color;
-                                ray.foo[punkta.y - wallHeight][punkta.x] = color;
-
-
+                            }
                         }
+
+                        lastPoint = point;
                     }
                 }
             }

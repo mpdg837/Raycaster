@@ -14,10 +14,9 @@ public class Render extends TimerTask {
 
     private static GraphicsDevice device = GraphicsEnvironment
             .getLocalGraphicsEnvironment().getScreenDevices()[0];
-    public static int deltaTime = 18;
+    public static int deltaTime = 16;
 
     public final Point renderSize;
-    public final Graphics2D draw;
 
     private final Graphics2D drawInside;
 
@@ -31,7 +30,6 @@ public class Render extends TimerTask {
         renderSize = canvas.resolution;
 
         drawInside = (Graphics2D) canvas.panel.getGraphics();
-        draw = (Graphics2D) canvas.buffer.getGraphics();
 
         saveRaycaster = canvas;
 
@@ -63,12 +61,9 @@ public class Render extends TimerTask {
     @Override
     public void run() {
         try{
-            if(draw!=null && drawInside !=null) {
-                draw.setBackground(Color.LIGHT_GRAY);
-                draw.clearRect(0, 0, (int) renderSize.getX(), (int) renderSize.getY());
-
+            if( drawInside !=null) {
                 Raycasting rayMaker = new Raycasting(game);
-                rayMaker.draw(draw);
+                rayMaker.draw();
 
                 if (!start) {
                     init();
@@ -77,7 +72,7 @@ public class Render extends TimerTask {
                 }
 
                 game.input.resetKey();
-                drawInside.drawImage(saveRaycaster.buffer,0,0,saveRaycaster.panel.getWidth(),saveRaycaster.panel.getHeight(),saveRaycaster);
+                drawInside.drawImage(rayMaker.bufferImg,0,0,saveRaycaster.panel.getWidth(),saveRaycaster.panel.getHeight(),saveRaycaster);
             }
         }catch (ConcurrentModificationException ignore){}
 

@@ -9,10 +9,12 @@ import java.io.IOException;
 public class Texture {
 
     public static int size=64;
-    public BufferedImage[] texture = new BufferedImage[size];
-    public BufferedImage[] textureS = new BufferedImage[size];
+
+    public int[][] bufferXY;
+    public int[][] bufferXYS;
 
     public BufferedImage textureMain;
+    public BufferedImage textureMainS;
 
     public Texture(BufferedImage img){
 
@@ -22,29 +24,31 @@ public class Texture {
             Graphics grphxa = textureMain.getGraphics();
             grphxa.drawImage(texMainScaled,0,0,null);
 
-            for(int n=0;n<size;n++){
-                texture[n] = new BufferedImage(1,size,BufferedImage.TYPE_3BYTE_BGR);
-                Graphics grphx = texture[n].getGraphics();
+            textureMainS = new BufferedImage(size,size,BufferedImage.TYPE_3BYTE_BGR);
 
-                grphx.drawImage(texMainScaled,-n,0,null);
+            Graphics grphxb = textureMainS.getGraphics();
+            grphxb.drawImage(texMainScaled,0,0,null);
 
-                textureS[n] = new BufferedImage(1,size,BufferedImage.TYPE_3BYTE_BGR);
-                grphx = textureS[n].getGraphics();
-                grphx.setColor(new Color(0,0,0,40));
+            grphxb.setColor(new Color(0,0,0,64));
+            grphxb.fillRect(0,0,Texture.size,Texture.size);
 
-                grphx.drawImage(texMainScaled,-n,0,null);
-                grphx.drawLine(0,0,0,64);
-            }
+                bufferXY = new int[size][size];
+                bufferXYS = new int[size][size];
+
+
+                for(int x=0;x<size;x++){
+                    for(int y=0;y<size;y++){
+                        int color = textureMain.getRGB(x,y);
+                        bufferXY[y][x] = color;
+
+                        color = textureMainS.getRGB(x,y);
+                        bufferXYS[y][x] = color;
+                    }
+                }
+
             System.out.println("Done");
 
 
     }
 
-    public BufferedImage getColumn(int n){
-        return texture[n];
-    }
-
-    public BufferedImage getColumnDarker(int n){
-        return textureS[n];
-    }
 }

@@ -35,7 +35,6 @@ public class Raycasting {
     public Point2D analysePos;
 
     public BufferedImage bufferImg;
-    private Graphics grphx;
 
     private Box box;
     private Floor floor;
@@ -51,7 +50,6 @@ public class Raycasting {
         bufferImg = new BufferedImage(game.render.renderSize.x,game.render.renderSize.y, BufferedImage.TYPE_INT_RGB);
         columns = new ArrayList<Column>();
 
-        grphx = bufferImg.getGraphics();
         floor = new Floor(this);
         box = new Box(this);
         foo = new int[game.render.renderSize.y][game.render.renderSize.x];
@@ -73,7 +71,7 @@ public class Raycasting {
         }
     }
 
-    public void draw(Graphics2D g){
+    public void draw(){
         try{
             loadMap();
             columns.clear();
@@ -100,17 +98,20 @@ public class Raycasting {
                     Point zaokraglij = new Point((int)(analysePos.getX()*16),(int)(analysePos.getY()*16));
 
                     if(zaokraglij != lastPointOfMap) {
+
+                        Point punkta = new Point(nStep, half);
+
                         if (inside()) {
                             if (mapa[(int) analysePos.getX()][(int) analysePos.getY()] == 1) {
 
 
-                                box.drawBox(nStep, len, angle, columns, foo);
+                                box.drawBox(punkta, len, angle, columns, foo);
                                 len = maxLen;
                             } else {
 
                                 if (len < 30) {
 
-                                    Point punkta = new Point(nStep, half);
+
 
                                     floor.floor(punkta, len, angle, lastPoint);
                                     lastPoint = punkta;
@@ -129,18 +130,16 @@ public class Raycasting {
             }
 
 
-            array_rasterToBuffer(foo);
+
 
 
             for(Column col : columns) {
-                if (col.darker) {
-                    grphx.drawImage(game.texture.getColumnDarker(col.index),(int)col.rect.getX(),(int)col.rect.getY(),(int)col.rect.getWidth(),(int)col.rect.getHeight(),null);
-                }else{
-                    grphx.drawImage(game.texture.getColumn(col.index),(int)col.rect.getX(),(int)col.rect.getY(),(int)col.rect.getWidth(),(int)col.rect.getHeight(),null);
-                }
+
+                col.render(this);
             }
 
-            g.drawImage(bufferImg,0,0,null);
+            array_rasterToBuffer(foo);
+
 
         }catch (ConcurrentModificationException ignore){}
 

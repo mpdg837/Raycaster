@@ -14,8 +14,7 @@ public class Box {
         this.ray = ray;
     }
 
-    public void drawBox(int nStep, double len, double angle, ArrayList<Column> columns, int[][] foo){
-        Point punkt = new Point(nStep, ray.half);
+    public void drawBox(Point punkt, double len, double angle, ArrayList<Column> columns, int[][] foo){
 
 
         double height =((Raycasting.maxLen - len));

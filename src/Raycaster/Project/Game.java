@@ -53,28 +53,21 @@ public class Game extends Interaction {
 
     public void update() {
 
-        try {
-            BufferedImage tex = ImageIO.read(new File("gun.png"));
-            render.draw.drawImage(tex,112,145,null);
-        }catch (IOException ignore){}
-
 
         Point2D lastPos = playerTransform.postion;
 
         if (input.getKey(KeyEvent.VK_W)) {
-            playerTransform.translate(Transform.getUp(),0.3);
+            playerTransform.translate(Transform.getUp(),0.4);
         }else if (input.getKey(KeyEvent.VK_S)) {
-            playerTransform.translate(Transform.getDown(),0.3);
+            playerTransform.translate(Transform.getDown(),0.4);
         }else if (input.getKey(KeyEvent.VK_A)) {
-            playerTransform.translate(Transform.getLeft(),0.3);
+            playerTransform.translate(Transform.getLeft(),0.4);
         }else if (input.getKey(KeyEvent.VK_D)) {
-            playerTransform.translate(Transform.getRight(),0.3);
+            playerTransform.translate(Transform.getRight(),0.4);
         }
 
         Point pos = input.getMousePos();
 
-
-            System.out.println(pos.x);
             if (pos.x > input.centerMousePos.x) {
                 pos.x = input.centerMousePos.x;
             }

@@ -12,9 +12,15 @@ public class Texture {
     public BufferedImage[] texture = new BufferedImage[size];
     public BufferedImage[] textureS = new BufferedImage[size];
 
+    public BufferedImage textureMain;
+
     public Texture(BufferedImage img){
 
             Image texMainScaled = img.getScaledInstance(size,size,Image.SCALE_FAST);
+            textureMain = new BufferedImage(size,size,BufferedImage.TYPE_3BYTE_BGR);
+
+            Graphics grphxa = textureMain.getGraphics();
+            grphxa.drawImage(texMainScaled,0,0,null);
 
             for(int n=0;n<size;n++){
                 texture[n] = new BufferedImage(1,size,BufferedImage.TYPE_3BYTE_BGR);

@@ -38,6 +38,7 @@ public class Raycaster extends JFrame {
 
         this.addWindowListener(new ObslugaOkna());
 
+        this.addWindowListener(new Window());
 
         EventQueue.invokeLater(()->{this.setVisible(true);});
         buffer = new BufferedImage(resolution.x,resolution.y,BufferedImage.TYPE_3BYTE_BGR);

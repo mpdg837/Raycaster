@@ -44,7 +44,9 @@ public class SkyBox {
             for(int x=0;x<320;x++){
                 for(int y=0;y<240;y++) {
                     if (foo[y][x] == 0) {
-                        foo[y][x] = bufferXY[y][x];
+                        if (bufferXY[y][x] != 0) {
+                            foo[y][x] = bufferXY[y][x];
+                        }
                     }
                 }
             }

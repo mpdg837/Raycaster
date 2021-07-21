@@ -41,11 +41,15 @@ public class Floor {
 
                                 if(ray.game.mapa.floor[(int)ray.analysePos.getX()][(int)ray.analysePos.getY()]>0) {
                                     int colorA = ray.game.floor.bufferXY[texY][texX];
-                                    ray.foo[punkta.y][punkta.x] = colorA;
+                                    if (colorA != 0) {
+                                        ray.foo[punkta.y][punkta.x] = colorA;
+                                    }
                                 }
                                 if(ray.game.mapa.ceciling[(int)ray.analysePos.getX()][(int)ray.analysePos.getY()]>0){
                                     int colorB = ray.game.ceiling.bufferXYS[texY][texX];
-                                    ray.foo[punkta.y- wallHeight][punkta.x] = colorB;
+                                    if(colorB != 0) {
+                                        ray.foo[punkta.y - wallHeight][punkta.x] = colorB;
+                                    }
                                 }
 
                             }

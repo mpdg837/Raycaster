@@ -22,10 +22,14 @@ public class Column {
                 if (y < ray.game.render.renderSize.getY() && rect.x < ray.game.render.renderSize.getX()) {
                     if(darker){
                         int color = ray.game.texture.bufferXYS[(int)yR][index];
-                        ray.foo[y][rect.x] = color;
+                        if(color != 0) {
+                            ray.foo[y][rect.x] = color;
+                        }
                     }else {
                         int color = ray.game.texture.bufferXY[(int)yR][index];
-                        ray.foo[y][rect.x] = color;
+                        if(color != 0) {
+                            ray.foo[y][rect.x] = color;
+                        }
                     }
                 }
             }

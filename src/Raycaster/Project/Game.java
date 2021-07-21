@@ -1,5 +1,6 @@
 package Raycaster.Project;
 
+import Raycaster.Display.Raycaster.RenderedBlocks.SkyBox;
 import Raycaster.Display.Raycaster.Texture;
 import Raycaster.Display.Render;
 import Raycaster.Input.Input;
@@ -7,15 +8,11 @@ import Raycaster.Input.Interaction;
 import Raycaster.Player.Collision;
 import Raycaster.Player.Map;
 import Raycaster.Player.Transform;
-import Raycaster.Raycaster;
 
-import javax.annotation.processing.SupportedSourceVersion;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -29,7 +26,9 @@ public class Game extends Interaction {
 
     public Texture texture;
     public Texture floor;
+    public Texture ceiling;
 
+    public SkyBox skyBox;
     boolean oka=true;
 
     public Game(Render render, Input input){
@@ -44,7 +43,22 @@ public class Game extends Interaction {
         try{
             texture = new Texture(ImageIO.read(new File("texture.png")));
             floor = new Texture(ImageIO.read(new File("floor.png")));
+            ceiling = new Texture(ImageIO.read(new File("floor.png")));
+
+            skyBox = new SkyBox(ImageIO.read(new File("skybox.jpg")));
         }catch (IOException ignore){}
+
+        for(int x=0;x<16;x++){
+            for(int y=0;y<16;y++){
+                mapa.floor[60+x][60+y] = 1;
+            }
+        }
+
+        for(int x=0;x<16;x++){
+            for(int y=0;y<8;y++){
+                mapa.ceciling[60+x][60+y] = 1;
+            }
+        }
 
         for(int x=0;x<16;x++) {
             mapa.mapa[60+x][60] = 1;
@@ -54,6 +68,8 @@ public class Game extends Interaction {
         }
 
         mapa.mapa[65][65] = 1;
+
+        mapa.ceciling[64][64]=1;
     }
 
     int timer = 0;

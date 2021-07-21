@@ -46,7 +46,6 @@ public class Texture {
                     }
                 }
 
-            System.out.println("Done");
 
 
     }

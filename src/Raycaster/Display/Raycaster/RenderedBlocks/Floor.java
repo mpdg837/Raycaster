@@ -1,4 +1,7 @@
-package Raycaster.Display.Raycaster;
+package Raycaster.Display.Raycaster.RenderedBlocks;
+
+import Raycaster.Display.Raycaster.Raycasting;
+import Raycaster.Display.Raycaster.Texture;
 
 import java.awt.*;
 
@@ -35,12 +38,15 @@ public class Floor {
 
                         if(point!=lastPoint) {
                             if (ray.game.texture != null) {
-                                int colorA = ray.game.floor.bufferXY[texY][texX];
-                                int colorB = ray.game.floor.bufferXY[texY][texX];
 
-                                ray.foo[punkta.y][punkta.x] = colorA;
-                                ray.foo[punkta.y - wallHeight][punkta.x] = colorB;
-
+                                if(ray.game.mapa.floor[(int)ray.analysePos.getX()][(int)ray.analysePos.getY()]>0) {
+                                    int colorA = ray.game.floor.bufferXY[texY][texX];
+                                    ray.foo[punkta.y][punkta.x] = colorA;
+                                }
+                                if(ray.game.mapa.ceciling[(int)ray.analysePos.getX()][(int)ray.analysePos.getY()]>0){
+                                    int colorB = ray.game.ceiling.bufferXYS[texY][texX];
+                                    ray.foo[punkta.y- wallHeight][punkta.x] = colorB;
+                                }
 
                             }
                         }

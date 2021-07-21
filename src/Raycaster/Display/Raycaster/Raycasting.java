@@ -1,14 +1,13 @@
 package Raycaster.Display.Raycaster;
 
 import Raycaster.Display.Raycaster.RenderedBlocks.Box;
+import Raycaster.Display.Raycaster.RenderedBlocks.Floor;
 import Raycaster.Project.Game;
 
 import java.awt.*;
-import java.awt.color.ColorSpace;
 import java.awt.geom.Point2D;
 import java.awt.image.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.ConcurrentModificationException;
 
 public class Raycasting {
@@ -76,6 +75,8 @@ public class Raycasting {
             loadMap();
             columns.clear();
 
+
+
             myAngle = game.playerTransform.rotation;
             myPos = game.playerTransform.postion;
 
@@ -129,13 +130,13 @@ public class Raycasting {
 
             }
 
-
-
-
-
             for(Column col : columns) {
 
                 col.render(this);
+            }
+
+            if(game.skyBox!=null) {
+                foo = game.skyBox.draw(game, foo);
             }
 
             array_rasterToBuffer(foo);

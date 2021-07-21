@@ -8,13 +8,13 @@ public class Column {
     public int index;
     public boolean darker;
 
-    public void render(Raycasting ray){
-
+    void makeColumn(Raycasting ray,int n){
         double deltaY = Texture.size/rect.getHeight();
         double yR =0;
 
+        int minY =(int)rect.getY() - n*(int)rect.getHeight();
 
-        for(int y=(int)rect.getY();y<(int)rect.getY()+(int)rect.getHeight();y++) {
+        for(int y=minY;y<minY+(int)rect.getHeight();y++) {
 
 
 
@@ -31,5 +31,9 @@ public class Column {
             }
             yR += deltaY;
         }
+    }
+    public void render(Raycasting ray){
+        makeColumn(ray,0);
+
     }
 }

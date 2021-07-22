@@ -1,10 +1,7 @@
-package Raycaster.Input;
-
-import Raycaster.Raycaster;
+package Raycaster.Player.Input;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
 public class Input implements KeyListener, MouseListener, MouseMotionListener {

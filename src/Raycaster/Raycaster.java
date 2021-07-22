@@ -2,9 +2,8 @@ package Raycaster;
 
 import Raycaster.Display.Raycaster.Raycasting;
 import Raycaster.Display.Render;
-import Raycaster.Input.Input;
+import Raycaster.Player.Input.Input;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Timer;

@@ -2,8 +2,8 @@ package Raycaster.Project;
 
 import Raycaster.Display.Raycaster.Texture;
 import Raycaster.Display.Render;
-import Raycaster.Input.Input;
-import Raycaster.Input.Interaction;
+import Raycaster.Player.Input.Input;
+import Raycaster.Player.Input.Interaction;
 import Raycaster.Player.Collision;
 import Raycaster.Player.Map;
 import Raycaster.Player.Transform;
@@ -44,7 +44,7 @@ public class Game extends Interaction {
             texture = new Texture(ImageIO.read(new File("texture.png")));
             floor = new Texture(ImageIO.read(new File("floor.png")));
             ceiling = new Texture(ImageIO.read(new File("floor.png")));
-
+            sprite = new Texture(ImageIO.read(new File("floor.png")));
         }catch (IOException ignore){}
 
         for(int x=0;x<16;x++){
@@ -67,6 +67,10 @@ public class Game extends Interaction {
         }
 
         mapa.mapa[65][65] = 1;
+        mapa.mapa[62][62] =2;
+        mapa.mapa[63][62] =3;
+        mapa.mapa[64][62] =4;
+        mapa.mapa[65][62] =5;
 
         mapa.ceciling[64][64]=1;
     }

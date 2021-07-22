@@ -1,4 +1,4 @@
-package Raycaster.Input;
+package Raycaster.Player.Input;
 
 public class Interaction {
 

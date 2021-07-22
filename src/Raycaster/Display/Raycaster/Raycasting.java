@@ -1,7 +1,6 @@
 package Raycaster.Display.Raycaster;
 
-import Raycaster.Display.Raycaster.RenderedBlocks.Box;
-import Raycaster.Display.Raycaster.RenderedBlocks.Floor;
+import Raycaster.Display.Raycaster.RenderedBlocks.*;
 import Raycaster.Project.Game;
 
 import java.awt.*;
@@ -20,9 +19,6 @@ public class Raycasting {
 
     private static double angleDelta = Math.toRadians(15);
     private static double angleStep = Math.toRadians(0.1875/2);
-
-    public double deltaTex = 0.05;
-
     public static double maxLen = 48;
 
 
@@ -38,8 +34,13 @@ public class Raycasting {
 
     private Box box;
     private Floor floor;
+    private ObjColumn ocolumn;
+    private HalfBox hbox;
+    private SpriteX spriteX;
+    private SpriteY spriteY;
 
-    ArrayList<Column> columns;
+    public ArrayList<Column> columns;
+    public ArrayList<SpriteQueue> sprites;
 
     public final int half;
     public int[][] foo;
@@ -48,10 +49,17 @@ public class Raycasting {
 
         this.game = game;
         bufferImg = new BufferedImage(game.render.renderSize.x,game.render.renderSize.y, BufferedImage.TYPE_INT_RGB);
+
         columns = new ArrayList<Column>();
+        sprites = new ArrayList<SpriteQueue>();
 
         floor = new Floor(this);
         box = new Box(this);
+        hbox = new HalfBox(this);
+        ocolumn = new ObjColumn(this);
+        spriteX = new SpriteX(this);
+        spriteY = new SpriteY(this);
+
         foo = new int[game.render.renderSize.y][game.render.renderSize.x];
 
         half = game.render.renderSize.y / 2;
@@ -71,10 +79,17 @@ public class Raycasting {
         }
     }
 
+
     public void draw(){
         try{
             loadMap();
+
             columns.clear();
+            sprites.clear();
+
+            for(int n=0;n<game.render.renderSize.x;n++){
+                sprites.add(new SpriteQueue());
+            }
 
 
 
@@ -87,18 +102,22 @@ public class Raycasting {
 
             Point lastPointOfMap = new Point(0,0);
 
-
             boolean floorOpen = false;
 
             for(double angle = myAngle - angleDelta;angle<myAngle+angleDelta;angle +=angleStep){
+
+
                 tempCos = Math.cos(angle);
                 tempSin = Math.sin(angle);
                 tempCosB =  Math.cos(Math.abs(myAngle - angle));
+
+                Point largeLastPointAnalyse = new Point();
 
                 for(double len=0;len<maxLen;len +=0.01){
                     analysePos = new Point2D.Double(myPos.getX()+len * tempCos, myPos.getY()+len * tempSin);
 
                     Point zaokraglij = new Point((int)(analysePos.getX()*16),(int)(analysePos.getY()*16));
+                    Point largePointAnalyse = new Point((int) analysePos.getX(),(int) analysePos.getY());
 
                     if(zaokraglij != lastPointOfMap) {
 
@@ -110,18 +129,65 @@ public class Raycasting {
                                     box.drawBox(punkta, len, angle, columns, foo);
                                     len = maxLen;
                                     break;
+                                case 2:
 
+                                    if(largePointAnalyse.getX() != largeLastPointAnalyse.getX() || largePointAnalyse.getY() != largeLastPointAnalyse.getY()) {
+                                        hbox.drawBox(nStep, punkta, len, angle, columns, foo);
+                                        largeLastPointAnalyse = largePointAnalyse;
+                                    }
+
+                                    if (len < 30) {
+                                        floor.floor(punkta, len, angle, lastPoint);
+                                        lastPoint = punkta;
+                                    }
+
+                                    break;
+                                case 3:
+                                    if(ocolumn.drawBox(punkta, len, angle, columns, foo)) len = maxLen;
+                                    else{
+                                        if (len < 30) {
+                                            floor.floor(punkta, len, angle, lastPoint);
+                                            lastPoint = punkta;
+                                        }
+                                    }
+                                    break;
+                                case 4:
+                                case 5:
+
+                                    if(largePointAnalyse.getX() != largeLastPointAnalyse.getX() || largePointAnalyse.getY() != largeLastPointAnalyse.getY()) {
+                                        boolean ok;
+
+                                        if(mapa[(int) analysePos.getX()][(int) analysePos.getY()] == 4){
+                                            ok = spriteX.drawBox(nStep, punkta, len, angle, columns, foo);
+                                        }else{
+                                            ok = spriteY.drawBox(nStep, punkta, len, angle, columns, foo);
+                                        }
+
+                                        if(ok){
+                                            largeLastPointAnalyse = largePointAnalyse;
+                                        }
+                                    }
+
+                                    if (len < 30) {
+                                        floor.floor(punkta, len, angle, lastPoint);
+                                        lastPoint = punkta;
+                                    }
+
+                                    break;
                                 default:
                                     if (len < 30) {
                                         floor.floor(punkta, len, angle, lastPoint);
                                         lastPoint = punkta;
+                                    }
                                     break;
-                                }
+
                             }
 
                         } else {
                             len = maxLen;
                         }
+
+
                     }
 
                     lastPointOfMap = zaokraglij;
@@ -131,9 +197,24 @@ public class Raycasting {
 
             }
 
+            int n=0;
+            boolean renderuj = true;
+
             for(Column col : columns) {
 
-                col.render(this);
+                col.render(this,game.texture);
+
+                    SpriteQueue queue = sprites.get(n);
+
+                    for(int k=queue.getSize()-1;k>=0;k--){
+                        Column columnS = queue.get(k);
+
+                        columnS.render(this,game.sprite);
+                    }
+
+                renderuj = !renderuj;
+                n++;
+
             }
 
 

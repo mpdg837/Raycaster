@@ -30,11 +30,14 @@ public class Box {
 
             boolean cien = partY<0.01 || partY>0.99;
 
-            if(partY<ray.deltaTex || partY>1-ray.deltaTex) {
+            int posX = (int) (partX * 64);
+            int posY = (int) (partY * 64);
 
-                indexTex = (int) (partX * 64);
+            if( posY ==0 || posY == 63) {
+
+                indexTex = posX;
             }else{
-                indexTex = (int) (partY * 64);
+                indexTex = posY;
             }
 
             // Wyznaczenie tekstury

@@ -1,6 +1,5 @@
 package Raycaster.Project;
 
-import Raycaster.Display.Raycaster.RenderedBlocks.SkyBox;
 import Raycaster.Display.Raycaster.Texture;
 import Raycaster.Display.Render;
 import Raycaster.Input.Input;
@@ -25,10 +24,11 @@ public class Game extends Interaction {
     public Map mapa;
 
     public Texture texture;
+    public Texture sprite;
+
     public Texture floor;
     public Texture ceiling;
 
-    public SkyBox skyBox;
     boolean oka=true;
 
     public Game(Render render, Input input){
@@ -45,7 +45,6 @@ public class Game extends Interaction {
             floor = new Texture(ImageIO.read(new File("floor.png")));
             ceiling = new Texture(ImageIO.read(new File("floor.png")));
 
-            skyBox = new SkyBox(ImageIO.read(new File("skybox.jpg")));
         }catch (IOException ignore){}
 
         for(int x=0;x<16;x++){
@@ -55,7 +54,7 @@ public class Game extends Interaction {
         }
 
         for(int x=0;x<16;x++){
-            for(int y=0;y<8;y++){
+            for(int y=0;y<16;y++){
                 mapa.ceciling[60+x][60+y] = 1;
             }
         }
@@ -79,7 +78,7 @@ public class Game extends Interaction {
 
         Point2D lastPos = playerTransform.postion;
 
-        double speed = 0.5;
+        double speed = 0.4;
 
         if (input.getKey(KeyEvent.VK_W)) {
             playerTransform.translate(Transform.getUp(),speed);

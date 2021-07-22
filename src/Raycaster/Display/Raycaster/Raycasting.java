@@ -87,6 +87,7 @@ public class Raycasting {
             Point lastPointOfMap = new Point(0,0);
 
 
+            boolean floorOpen = false;
 
             for(double angle = myAngle - angleDelta;angle<myAngle+angleDelta;angle +=angleStep){
                 tempCos = Math.cos(angle);
@@ -103,21 +104,20 @@ public class Raycasting {
                         Point punkta = new Point(nStep, half);
 
                         if (inside()) {
-                            if (mapa[(int) analysePos.getX()][(int) analysePos.getY()] == 1) {
+                            switch (mapa[(int) analysePos.getX()][(int) analysePos.getY()]){
+                                case 1:
+                                    box.drawBox(punkta, len, angle, columns, foo);
+                                    len = maxLen;
+                                    break;
 
-
-                                box.drawBox(punkta, len, angle, columns, foo);
-                                len = maxLen;
-                            } else {
-
-                                if (len < 30) {
-
-
-
-                                    floor.floor(punkta, len, angle, lastPoint);
-                                    lastPoint = punkta;
+                                default:
+                                    if (len < 30) {
+                                        floor.floor(punkta, len, angle, lastPoint);
+                                        lastPoint = punkta;
+                                    break;
                                 }
                             }
+
                         } else {
                             len = maxLen;
                         }
@@ -126,7 +126,7 @@ public class Raycasting {
                     lastPointOfMap = zaokraglij;
 
                 }
-                nStep++;
+                nStep+=2;
 
             }
 
@@ -135,9 +135,6 @@ public class Raycasting {
                 col.render(this);
             }
 
-            if(game.skyBox!=null) {
-                foo = game.skyBox.draw(game, foo);
-            }
 
             array_rasterToBuffer(foo);
 

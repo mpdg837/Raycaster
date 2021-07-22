@@ -14,12 +14,13 @@ public class Render extends TimerTask {
 
     private static GraphicsDevice device = GraphicsEnvironment
             .getLocalGraphicsEnvironment().getScreenDevices()[0];
-    public static int deltaTime = 16;
+    public static int deltaTime =12;
 
     public final Point renderSize;
 
     private final Graphics2D drawInside;
 
+    public final ScreenSprite sprites;
     public final Raycaster saveRaycaster;
     private boolean start;
     private final Game game;
@@ -28,6 +29,7 @@ public class Render extends TimerTask {
     public Render(boolean start, Raycaster canvas, Game game){
 
         renderSize = canvas.resolution;
+        sprites = new ScreenSprite(this);
 
         drawInside = (Graphics2D) canvas.panel.getGraphics();
 
@@ -65,6 +67,8 @@ public class Render extends TimerTask {
                 Raycasting rayMaker = new Raycasting(game);
                 rayMaker.draw();
 
+                saveRaycaster.requestFocus();
+
                 if (!start) {
                     init();
                 } else {
@@ -72,7 +76,12 @@ public class Render extends TimerTask {
                 }
 
                 game.input.resetKey();
+
+                sprites.draw(rayMaker.bufferImg.getGraphics());
+
                 drawInside.drawImage(rayMaker.bufferImg,0,0,saveRaycaster.panel.getWidth(),saveRaycaster.panel.getHeight(),saveRaycaster);
+
+
             }
         }catch (ConcurrentModificationException ignore){}
 

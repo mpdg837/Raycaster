@@ -13,7 +13,7 @@ public class Raycaster extends Frame {
 
     public final BufferedImage buffer;
     public final Panel panel;
-    public static Point resolution= new Point(320,240);
+    public static Point resolution= new Point(640,480);
 
     Raycasting rayMaker ;
 

@@ -24,10 +24,12 @@ public class Column {
                         int color = ray.game.texture.bufferXYS[(int)yR][index];
                         if(color != 0) {
                             ray.foo[y][rect.x] = color;
+                            ray.foo[y][rect.x+1] = color;
                         }
                     }else {
                         int color = ray.game.texture.bufferXY[(int)yR][index];
                         if(color != 0) {
+                            ray.foo[y][rect.x+1] = color;
                             ray.foo[y][rect.x] = color;
                         }
                     }

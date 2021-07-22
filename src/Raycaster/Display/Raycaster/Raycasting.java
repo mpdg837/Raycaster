@@ -14,6 +14,7 @@ public class Raycasting {
 
     public Game game;
 
+    public static double renderHeightConstant = 30;
     public double myAngle = Math.toRadians(90);
     private Point2D myPos = new Point2D.Double(60,50);
 

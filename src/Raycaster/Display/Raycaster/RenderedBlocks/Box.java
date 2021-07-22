@@ -40,7 +40,7 @@ public class Box {
             // Wyznaczenie tekstury
 
             double zet = ray.tempCosB * len;
-            int wallHeight = (int)(18 * height/zet);
+            int wallHeight = (int)(Raycasting.renderHeightConstant * height/zet);
 
             Column column = new Column();
 

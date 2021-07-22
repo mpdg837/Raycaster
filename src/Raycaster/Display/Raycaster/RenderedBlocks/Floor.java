@@ -17,7 +17,7 @@ public class Floor {
         double height = ((Raycasting.maxLen - len));
 
         double zet = ray.tempCosB * len;
-        int wallHeight = (int) (18 * height / zet);
+        int wallHeight = (int) (Raycasting.renderHeightConstant * height / zet);
 
         punkta = new Point((int) punkta.x, (int) (punkta.y + wallHeight / 2));
 

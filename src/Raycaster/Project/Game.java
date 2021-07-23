@@ -44,7 +44,7 @@ public class Game extends Interaction {
             texture = new Texture(ImageIO.read(new File("texture.png")));
             floor = new Texture(ImageIO.read(new File("floor.png")));
             ceiling = new Texture(ImageIO.read(new File("floor.png")));
-            sprite = new Texture(ImageIO.read(new File("floor.png")));
+            sprite = new Texture(ImageIO.read(new File("sprite.png")));
         }catch (IOException ignore){}
 
         for(int x=0;x<16;x++){
@@ -71,7 +71,8 @@ public class Game extends Interaction {
         mapa.mapa[63][62] =3;
         mapa.mapa[64][62] =4;
         mapa.mapa[65][62] =5;
-
+        mapa.mapa[66][62] =0;
+        mapa.mapa[67][62] =7;
         mapa.ceciling[64][64]=1;
     }
 

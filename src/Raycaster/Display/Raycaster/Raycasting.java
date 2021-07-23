@@ -38,6 +38,8 @@ public class Raycasting {
     private HalfBox hbox;
     private SpriteX spriteX;
     private SpriteY spriteY;
+    private Sprite sprite;
+    private SpriteXY spriteXY;
 
     public ArrayList<Column> columns;
     public ArrayList<SpriteQueue> sprites;
@@ -59,6 +61,8 @@ public class Raycasting {
         ocolumn = new ObjColumn(this);
         spriteX = new SpriteX(this);
         spriteY = new SpriteY(this);
+        spriteXY = new SpriteXY(this);
+        sprite = new Sprite(this);
 
         foo = new int[game.render.renderSize.y][game.render.renderSize.x];
 
@@ -153,14 +157,21 @@ public class Raycasting {
                                     break;
                                 case 4:
                                 case 5:
+                                case 6:
 
                                     if(largePointAnalyse.getX() != largeLastPointAnalyse.getX() || largePointAnalyse.getY() != largeLastPointAnalyse.getY()) {
-                                        boolean ok;
+                                        boolean ok=false;
 
-                                        if(mapa[(int) analysePos.getX()][(int) analysePos.getY()] == 4){
-                                            ok = spriteX.drawBox(nStep, punkta, len, angle, columns, foo);
-                                        }else{
-                                            ok = spriteY.drawBox(nStep, punkta, len, angle, columns, foo);
+                                        switch (mapa[(int) analysePos.getX()][(int) analysePos.getY()]){
+                                            case 4:
+                                                ok = spriteX.drawBox(nStep, punkta, len, angle, columns, foo);
+                                                break;
+                                            case 5:
+                                                ok = spriteY.drawBox(nStep, punkta, len, angle, columns, foo);
+                                                break;
+                                            case 6:
+                                                ok = sprite.drawBox(nStep, punkta, len, angle, columns, foo);
+                                                break;
                                         }
 
                                         if(ok){
@@ -173,6 +184,14 @@ public class Raycasting {
                                         lastPoint = punkta;
                                     }
 
+                                    break;
+                                case 7:
+
+                                    spriteXY.drawBox(nStep, punkta, len, angle, columns, foo);
+                                    if (len < 30) {
+                                        floor.floor(punkta, len, angle, lastPoint);
+                                        lastPoint = punkta;
+                                    }
                                     break;
                                 default:
                                     if (len < 30) {

@@ -1,4 +1,4 @@
-package Raycaster.Display.Raycaster.RenderedBlocks;
+package Raycaster.Display.Raycaster;
 
 import Raycaster.Display.Raycaster.Raycasting;
 import Raycaster.Display.Raycaster.Texture;

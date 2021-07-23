@@ -14,7 +14,7 @@ public class Render extends TimerTask {
 
     private static GraphicsDevice device = GraphicsEnvironment
             .getLocalGraphicsEnvironment().getScreenDevices()[0];
-    public static int deltaTime =8;
+    public static int deltaTime =10;
 
     public final Point renderSize;
 

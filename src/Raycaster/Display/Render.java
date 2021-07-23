@@ -14,7 +14,7 @@ public class Render extends TimerTask {
 
     private final static GraphicsDevice device = GraphicsEnvironment
             .getLocalGraphicsEnvironment().getScreenDevices()[0];
-    public final static int deltaTime =10;
+    public final static int deltaTime =33;
 
     public final Point renderSize;
 
@@ -46,6 +46,8 @@ public class Render extends TimerTask {
     }
 
     public void init(){
+
+
         boolean ok = true;
         while(ok){
             if(game != null){
@@ -56,7 +58,6 @@ public class Render extends TimerTask {
 
         }
 
-
         BufferedImage cursor = new BufferedImage(16,16,BufferedImage.TYPE_4BYTE_ABGR);
         Cursor cur = Toolkit.getDefaultToolkit().createCustomCursor(cursor, new Point(0, 0), "null");
 
@@ -65,6 +66,8 @@ public class Render extends TimerTask {
     }
     @Override
     public void run() {
+        long delta = 0 ;
+
         try{
             if( drawInside !=null) {
 
@@ -73,6 +76,8 @@ public class Render extends TimerTask {
                 if (!start) {
                     init();
                 } else {
+
+                    final long timeStart = System.currentTimeMillis();
                     final Raycasting rayMaker = new Raycasting(game);
 
                     rayMaker.draw();
@@ -85,6 +90,15 @@ public class Render extends TimerTask {
                     sprites.draw(rayMaker.bufferImg.getGraphics());
 
                     drawInside.drawImage(rayMaker.bufferImg,0,0,saveRaycaster.getWidth(),saveRaycaster.getHeight(),saveRaycaster);
+                    final long timeEnd = System.currentTimeMillis();
+
+                    delta = timeEnd - timeStart;
+
+                    System.out.println(delta);
+
+                    if(delta > deltaTime){
+                        delta = deltaTime;
+                    }
 
                 }
 
@@ -95,7 +109,7 @@ public class Render extends TimerTask {
         }catch (ConcurrentModificationException ignore){}
 
         Timer tim = new Timer();
-        tim.schedule(new Render(start,saveRaycaster,game),Render.deltaTime);
+        tim.schedule(new Render(start,saveRaycaster,game),Render.deltaTime - delta);
 
     }
 }

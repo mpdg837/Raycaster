@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class SpriteQueue {
+    public boolean halfBlocked = false;
+
     private final ArrayList<Column> lista = new ArrayList<>();
 
     public void add(Column newItem){

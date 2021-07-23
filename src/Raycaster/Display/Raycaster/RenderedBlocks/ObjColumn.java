@@ -27,14 +27,17 @@ public class ObjColumn {
             final double partY = (ray.analysePos.getY() - (int) ray.analysePos.getY());
 
 
-            boolean cien = false;
 
-            final int posX = (int) (partX * 64);
-            final int posY = (int) (partY * 64);
 
-            if( posY >=24 && posY <= 40 && posX >=24 && posX <= 40) {
+            if( partX >=0.375 && partX <= 0.625 && partY >=0.375 && partY <= 0.625) {
+
+                boolean cien = false;
+
+                final int posX = (int) (partX * 64);
+                final int posY = (int) (partY * 64);
+
                 int indexTex;
-                if (posY == 24 || posY == 40) {
+                if (posY == 24 || posY == 23 || posY == 40 || posY == 39) {
                     cien = true;
                     indexTex = posX;
                 } else {

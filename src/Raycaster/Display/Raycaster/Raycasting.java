@@ -104,9 +104,11 @@ public class Raycasting {
             int nStep = 0;
 
             Point lastPointOfMap = new Point(0,0);
+            boolean floorRay = false;
 
             for(double angle = myAngle - angleDelta;angle<myAngle+angleDelta;angle +=angleStep){
 
+                floorRay = !floorRay;
 
                 final double tempCos = Math.cos(angle);
                 final double tempSin = Math.sin(angle);
@@ -114,13 +116,15 @@ public class Raycasting {
 
                 Point largeLastPointAnalyse = new Point();
 
-                for(double len=0;len<maxLen;len +=0.01){
+                for(double len=0;len<maxLen;len +=0.015){
+
+
                     analysePos = new Point2D.Double(myPos.getX()+len * tempCos, myPos.getY()+len * tempSin);
 
-                    final Point zaokraglij = new Point((int)(analysePos.getX()*16),(int)(analysePos.getY()*16));
+                    final Point zaokraglij = new Point((int)(analysePos.getX()*64),(int)(analysePos.getY()*64));
                     final Point largePointAnalyse = new Point((int) analysePos.getX(),(int) analysePos.getY());
 
-                    if(zaokraglij != lastPointOfMap) {
+                    if(!zaokraglij.equals(lastPointOfMap)) {
 
                         final Point punkta = new Point(nStep, half);
 
@@ -137,7 +141,7 @@ public class Raycasting {
                                         largeLastPointAnalyse = largePointAnalyse;
                                     }
 
-                                    if (len < 30) {
+                                    if (len < 30 && floorRay) {
                                         floor.floor(punkta, len);
 
                                     }
@@ -146,7 +150,7 @@ public class Raycasting {
                                 case 3:
                                     if(ocolumn.drawBox(punkta, len, columns)) len = maxLen;
                                     else{
-                                        if (len < 30) {
+                                        if (len < 30 && floorRay) {
                                             floor.floor(punkta, len);
 
                                         }
@@ -177,7 +181,7 @@ public class Raycasting {
                                         }
                                     }
 
-                                    if (len < 30) {
+                                    if (len < 30  && floorRay) {
                                         floor.floor(punkta, len);
 
                                     }
@@ -185,7 +189,7 @@ public class Raycasting {
                                     break;
 
                                 default:
-                                    if (len < 30) {
+                                    if (len < 30  && floorRay) {
                                         floor.floor(punkta, len);
 
                                     }
@@ -211,7 +215,7 @@ public class Raycasting {
 
             for(Column col : columns) {
 
-                col.render(this,game.texture);
+                col.render(n,this,game.texture,true);
 
                     final SpriteQueue queue = sprites.get(n);
 
@@ -219,9 +223,9 @@ public class Raycasting {
                         final Column columnS = queue.get(k);
 
                         if (columnS.half) {
-                            columnS.render(this, game.texture);
+                            columnS.render(n,this, game.texture,false);
                         } else {
-                            columnS.render(this, game.sprite);
+                            columnS.render(n,this, game.sprite,false);
                         }
                     }
 

@@ -9,17 +9,26 @@ public class Column {
     public boolean darker;
     public boolean half;
 
-    void makeColumn(Raycasting ray,int n,Texture tex){
+    public boolean spriteReduction = false;
+
+    void makeColumn(int nStep,Raycasting ray,int n,Texture tex,boolean blockColumn){
         final double deltaY = Texture.size/rect.getHeight();
         double yR =0;
 
         final int minY =(int)rect.getY() - n*(int)rect.getHeight();
 
+        int hei = (int)rect.getHeight();
         int deltaYa = 0;
         if(half){
             deltaYa = (int)rect.getHeight()/2;
         }
-        for(int y=minY+deltaYa;y<minY+(int)rect.getHeight();y++) {
+
+        if(blockColumn && ray.sprites.get(nStep).halfBlocked){
+            hei /=2;
+        }
+
+
+        for(int y=minY+deltaYa;y<minY+hei;y++) {
 
 
 
@@ -47,8 +56,8 @@ public class Column {
 
 
 
-    public void render(Raycasting ray,Texture tex){
-        makeColumn(ray,0,tex);
+    public void render(int nStep,Raycasting ray,Texture tex,boolean blockColumn){
+        makeColumn(nStep,ray,0,tex,blockColumn);
 
     }
 }

@@ -44,6 +44,7 @@ public class Sprite {
                         column.rect = new Rectangle(punkt.x, punkt.y - wallHeight / 2, 1, wallHeight);
                         column.half = false;
 
+                        column.spriteReduction = true;
 
                             ray.sprites.get(nStep/2).add(column);
 

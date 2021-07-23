@@ -41,6 +41,7 @@ public class SpriteY {
                 column.index = posY;
                 column.rect = new Rectangle(punkt.x, punkt.y - wallHeight / 2, 1, wallHeight);
                 column.half = false;
+                column.spriteReduction = true;
 
                 end = true;
 

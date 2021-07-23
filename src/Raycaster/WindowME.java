@@ -3,7 +3,7 @@ package Raycaster;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
-public class Window implements WindowListener {
+public class WindowME implements WindowListener {
 
     @Override
     public void windowOpened(WindowEvent e) {

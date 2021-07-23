@@ -27,13 +27,14 @@ public class Column {
                 if (y < ray.game.render.renderSize.getY() && rect.x < ray.game.render.renderSize.getX()) {
                     if(darker){
                         final int color = tex.bufferXYS[(int)yR][index];
-                        if(color != getIntFromColor(0,0,0)) {
+                        if(color != -16777216|| half) {
                             ray.foo[y][rect.x] = color;
                             ray.foo[y][rect.x+1] = color;
                         }
                     }else {
                         int color = tex.bufferXY[(int)yR][index];
-                        if(color != getIntFromColor(0,0,0)) {
+                        if(color != -16777216 || half) {
+
                             ray.foo[y][rect.x+1] = color;
                             ray.foo[y][rect.x] = color;
                         }
@@ -44,17 +45,7 @@ public class Column {
         }
     }
 
-    public int getIntFromColor(float Red, float Green, float Blue){
-        int R = Math.round(255 * Red);
-        int G = Math.round(255 * Green);
-        int B = Math.round(255 * Blue);
 
-        R = (R << 16) & 0x00FF0000;
-        G = (G << 8) & 0x0000FF00;
-        B = B & 0x000000FF;
-
-        return 0xFF000000 | R | G | B;
-    }
 
     public void render(Raycasting ray,Texture tex){
         makeColumn(ray,0,tex);

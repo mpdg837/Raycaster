@@ -14,7 +14,7 @@ public class Render extends TimerTask {
 
     private final static GraphicsDevice device = GraphicsEnvironment
             .getLocalGraphicsEnvironment().getScreenDevices()[0];
-    public final static int deltaTime =14;
+    public final static int deltaTime =10;
 
     public final Point renderSize;
 
@@ -84,7 +84,7 @@ public class Render extends TimerTask {
 
                     sprites.draw(rayMaker.bufferImg.getGraphics());
 
-                    drawInside.drawImage(rayMaker.bufferImg,0,0,saveRaycaster);
+                    drawInside.drawImage(rayMaker.bufferImg,0,0,saveRaycaster.getWidth(),saveRaycaster.getHeight(),saveRaycaster);
 
                 }
 

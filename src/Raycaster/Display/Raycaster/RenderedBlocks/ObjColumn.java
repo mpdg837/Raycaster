@@ -17,7 +17,7 @@ public class ObjColumn {
 
 
         final double height =((Raycasting.maxLen - len));
-        int indexTex = 0;
+
 
         boolean finish = false;
         if (height > 0) {
@@ -33,6 +33,7 @@ public class ObjColumn {
             final int posY = (int) (partY * 64);
 
             if( posY >=24 && posY <= 40 && posX >=24 && posX <= 40) {
+                int indexTex;
                 if (posY == 24 || posY == 40) {
                     cien = true;
                     indexTex = posX;

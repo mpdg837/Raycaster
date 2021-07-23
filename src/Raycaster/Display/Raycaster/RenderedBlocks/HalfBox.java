@@ -4,7 +4,6 @@ import Raycaster.Display.Raycaster.Column;
 import Raycaster.Display.Raycaster.Raycasting;
 
 import java.awt.*;
-import java.util.ArrayList;
 
 public class HalfBox {
 
@@ -15,11 +14,11 @@ public class HalfBox {
 
 
 
-    public void drawBox(int nStep,Point punkt, double len, int[][] foo) {
+    public void drawBox(int nStep,Point punkt, double len) {
 
 
             final double height = ((Raycasting.maxLen - len));
-            int indexTex = 0;
+
 
 
             if (height > 0) {
@@ -34,6 +33,7 @@ public class HalfBox {
                 final int posX = (int) (partX * 64);
                 final int posY = (int) (partY * 64);
 
+                int indexTex;
                 if (posY == 0 || posY == 63) {
                     cien = true;
                     indexTex = posX;
@@ -55,7 +55,7 @@ public class HalfBox {
                 column.half = true;
                 if (posX == 0 || posX == 63 || posY == 0 || posY == 63) {
                     if (nStep < 640) {
-                        ray.sprites.get((int) (nStep / 2)).add(column);
+                        ray.sprites.get( (nStep / 2)).add(column);
                     }
                 }
             }

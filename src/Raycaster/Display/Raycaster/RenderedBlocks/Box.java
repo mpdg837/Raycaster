@@ -18,7 +18,7 @@ public class Box {
 
 
         final double height =((Raycasting.maxLen - len));
-        int indexTex = 0;
+
 
 
         if (height > 0) {
@@ -27,7 +27,7 @@ public class Box {
             final double partX = (ray.analysePos.getX() - (int) ray.analysePos.getX());
             final double partY = (ray.analysePos.getY() - (int) ray.analysePos.getY());
 
-
+            int indexTex;
             boolean cien = false;
 
             final int posX = (int) (partX * 64);

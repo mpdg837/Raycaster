@@ -14,7 +14,7 @@ public class Floor {
         this.ray = ray;
     }
 
-    public void floor(Point punkta, double len, double angle, Point lastPoint){
+    public void floor(Point punkta, double len){
         final double height = ((Raycasting.maxLen - len));
 
         final double zet = ray.tempCosB * len;
@@ -22,19 +22,14 @@ public class Floor {
 
         punkta = new Point((int) punkta.x, (int) (punkta.y + wallHeight / 2));
 
-        lastPoint = new Point(0,0);
+        Point lastPoint = new Point(0,0);
 
-        boolean renderFloor = false;
-        boolean renderCeiling = false;
-
-        Point lastPos = new Point(0,0);
-        Point pos;
 
         if (punkta.x < ray.game.render.renderSize.getX()) {
             if (punkta.y < ray.game.render.renderSize.getY()) {
 
 
-                if (punkta != lastPoint) {
+                if (!punkta.equals(lastPoint)) {
                     if (ray.foo[punkta.y][punkta.x] == 0) {
 
                         final double partX = (ray.analysePos.getX() - (int) ray.analysePos.getX());
@@ -45,7 +40,7 @@ public class Floor {
 
                         final Point point = new Point(texX,texY);
 
-                        if(point!=lastPoint) {
+                        if(!point.equals(lastPoint)) {
                             if (ray.game.texture != null) {
                                 if (punkta.x + 1 < ray.game.render.renderSize.x && punkta.y + 1 < ray.game.render.renderSize.y) {
                                     if (ray.game.mapa.floor[(int) ray.analysePos.getX()][(int) ray.analysePos.getY()] > 0) {

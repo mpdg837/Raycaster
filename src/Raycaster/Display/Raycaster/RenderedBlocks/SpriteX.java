@@ -4,7 +4,6 @@ import Raycaster.Display.Raycaster.Column;
 import Raycaster.Display.Raycaster.Raycasting;
 
 import java.awt.*;
-import java.util.ArrayList;
 
 public class SpriteX {
     final Raycasting ray;
@@ -18,25 +17,20 @@ public class SpriteX {
 
         boolean end = false;
         final double height = ((Raycasting.maxLen - len));
-        int indexTex;
+
 
 
         if (height > 0) {
 
             // Wybór tekstury
-            final double partX = (ray.analysePos.getX() - (int) ray.analysePos.getX());
+
             final double partY = (ray.analysePos.getY() - (int) ray.analysePos.getY());
-
-
-            boolean cien = true;
-
-            final int posX = (int) (partX * 64);
             final int posY = (int) (partY * 64);
 
             if (posY==32){
-                indexTex = posX;
 
-
+                final double partX = (ray.analysePos.getX() - (int) ray.analysePos.getX());
+                final int posX = (int) (partX * 64);
 
                 // Wyznaczenie tekstury
 
@@ -45,15 +39,15 @@ public class SpriteX {
 
                 final Column column = new Column();
 
-                column.darker = cien;
-                column.index = indexTex;
+                column.darker = true;
+                column.index = posX;
                 column.rect = new Rectangle(punkt.x, punkt.y - wallHeight / 2, 1, wallHeight);
                 column.half = false;
 
                 end = true;
 
                 if (nStep < 640) {
-                    ray.sprites.get((int) (nStep / 2)).add(column);
+                    ray.sprites.get((nStep / 2)).add(column);
                 }
             }
         }

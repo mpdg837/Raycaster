@@ -1,6 +1,5 @@
 package Raycaster;
 
-import Raycaster.Display.Raycaster.Raycasting;
 import Raycaster.Display.Render;
 import Raycaster.Player.Input.Input;
 
@@ -35,7 +34,7 @@ public class Raycaster extends Frame {
         this.setSize(resolution.x,resolution.y);
         this.add(panel,BorderLayout.CENTER);
 
-        this.addWindowListener(new Window());
+        this.addWindowListener(new WindowME());
 
         EventQueue.invokeLater(()->{this.setVisible(true);});
         buffer = new BufferedImage(resolution.x,resolution.y,BufferedImage.TYPE_3BYTE_BGR);
@@ -51,13 +50,13 @@ public class Raycaster extends Frame {
     }
 
     private static DisplayMode getBestDisplayMode(GraphicsDevice device) {
-        for (int x = 0; x < BEST_DISPLAY_MODES.length; x++) {
+        for (DisplayMode bestDisplayMode : BEST_DISPLAY_MODES) {
             final DisplayMode[] modes = device.getDisplayModes();
-            for (int i = 0; i < modes.length; i++) {
-                if (modes[i].getWidth() == BEST_DISPLAY_MODES[x].getWidth()
-                        && modes[i].getHeight() == BEST_DISPLAY_MODES[x].getHeight()
-                        && modes[i].getBitDepth() == BEST_DISPLAY_MODES[x].getBitDepth()) {
-                    return BEST_DISPLAY_MODES[x];
+            for (DisplayMode mode : modes) {
+                if (mode.getWidth() == bestDisplayMode.getWidth()
+                        && mode.getHeight() == bestDisplayMode.getHeight()
+                        && mode.getBitDepth() == bestDisplayMode.getBitDepth()) {
+                    return bestDisplayMode;
                 }
             }
         }

@@ -7,17 +7,18 @@ import java.awt.*;
 
 public class Floor {
 
-    private Point lastPoint;
 
-    Raycasting ray;
+    final Raycasting ray;
+
     public Floor(Raycasting ray){
         this.ray = ray;
     }
-    public void floor(Point punkta, double len, double angle, Point lastPoint){
-        double height = ((Raycasting.maxLen - len));
 
-        double zet = ray.tempCosB * len;
-        int wallHeight = (int) (Raycasting.renderHeightConstant * height / zet);
+    public void floor(Point punkta, double len, double angle, Point lastPoint){
+        final double height = ((Raycasting.maxLen - len));
+
+        final double zet = ray.tempCosB * len;
+        final int wallHeight = (int) (Raycasting.renderHeightConstant * height / zet);
 
         punkta = new Point((int) punkta.x, (int) (punkta.y + wallHeight / 2));
 
@@ -36,19 +37,19 @@ public class Floor {
                 if (punkta != lastPoint) {
                     if (ray.foo[punkta.y][punkta.x] == 0) {
 
-                        double partX = (ray.analysePos.getX() - (int) ray.analysePos.getX());
-                        double partY = (ray.analysePos.getY() - (int) ray.analysePos.getY());
+                        final double partX = (ray.analysePos.getX() - (int) ray.analysePos.getX());
+                        final double partY = (ray.analysePos.getY() - (int) ray.analysePos.getY());
 
-                        int texX = (int) (partX * Texture.size);
-                        int texY = (int) (partY * Texture.size);
+                        final int texX = (int) (partX * Texture.size);
+                        final int texY = (int) (partY * Texture.size);
 
-                        Point point = new Point(texX,texY);
+                        final Point point = new Point(texX,texY);
 
                         if(point!=lastPoint) {
                             if (ray.game.texture != null) {
                                 if (punkta.x + 1 < ray.game.render.renderSize.x && punkta.y + 1 < ray.game.render.renderSize.y) {
                                     if (ray.game.mapa.floor[(int) ray.analysePos.getX()][(int) ray.analysePos.getY()] > 0) {
-                                        int colorA = ray.game.floor.bufferXY[texY][texX];
+                                        final int colorA = ray.game.floor.bufferXY[texY][texX];
                                         if (colorA != 0) {
 
                                             ray.foo[punkta.y][punkta.x] = colorA;
@@ -58,7 +59,7 @@ public class Floor {
                                         }
                                     }
                                     if (ray.game.mapa.ceciling[(int) ray.analysePos.getX()][(int) ray.analysePos.getY()] > 0) {
-                                        int colorB = ray.game.ceiling.bufferXYS[texY][texX];
+                                        final int colorB = ray.game.ceiling.bufferXYS[texY][texX];
                                         if (colorB != 0) {
 
                                             ray.foo[punkta.y - wallHeight][punkta.x] = colorB;

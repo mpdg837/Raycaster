@@ -15,15 +15,12 @@ public class Raycasting {
 
     public static double renderHeightConstant = 30;
     public double myAngle = Math.toRadians(90);
-    private Point2D myPos = new Point2D.Double(60,50);
 
-    private static double angleDelta = Math.toRadians(15);
-    private static double angleStep = Math.toRadians(0.1875/2);
+    private static final double angleDelta = Math.toRadians(15);
+    private static final double angleStep = Math.toRadians(0.1875/2);
     public static double maxLen = 48;
 
 
-    private double tempCos;
-    private double tempSin;
     public double tempCosB;
 
     private int[][] mapa;
@@ -32,14 +29,14 @@ public class Raycasting {
 
     public BufferedImage bufferImg;
 
-    private Box box;
-    private Floor floor;
-    private ObjColumn ocolumn;
-    private HalfBox hbox;
-    private SpriteX spriteX;
-    private SpriteY spriteY;
-    private Sprite sprite;
-    private SpriteXY spriteXY;
+    private final Box box;
+    private final Floor floor;
+    private final ObjColumn ocolumn;
+    private final HalfBox hbox;
+    private final SpriteX spriteX;
+    private final SpriteY spriteY;
+    private final Sprite sprite;
+
 
     public ArrayList<Column> columns;
     public ArrayList<SpriteQueue> sprites;
@@ -52,8 +49,12 @@ public class Raycasting {
         this.game = game;
         bufferImg = new BufferedImage(game.render.renderSize.x,game.render.renderSize.y, BufferedImage.TYPE_INT_RGB);
 
-        columns = new ArrayList<Column>();
-        sprites = new ArrayList<SpriteQueue>();
+        columns = new ArrayList<>();
+
+        sprites = new ArrayList<>();
+        for(int n=0;n<game.render.renderSize.x;n++){
+            sprites.add(new SpriteQueue());
+        }
 
         floor = new Floor(this);
         box = new Box(this);
@@ -61,7 +62,6 @@ public class Raycasting {
         ocolumn = new ObjColumn(this);
         spriteX = new SpriteX(this);
         spriteY = new SpriteY(this);
-        spriteXY = new SpriteXY(this);
         sprite = new Sprite(this);
 
         foo = new int[game.render.renderSize.y][game.render.renderSize.x];
@@ -89,16 +89,16 @@ public class Raycasting {
             loadMap();
 
             columns.clear();
-            sprites.clear();
+
 
             for(int n=0;n<game.render.renderSize.x;n++){
-                sprites.add(new SpriteQueue());
+                sprites.get(n).clear();
             }
 
 
 
             myAngle = game.playerTransform.rotation;
-            myPos = game.playerTransform.postion;
+            final Point2D myPos = game.playerTransform.postion;
 
             Point lastPoint= new Point(0,0);
 
@@ -106,13 +106,11 @@ public class Raycasting {
 
             Point lastPointOfMap = new Point(0,0);
 
-            boolean floorOpen = false;
-
             for(double angle = myAngle - angleDelta;angle<myAngle+angleDelta;angle +=angleStep){
 
 
-                tempCos = Math.cos(angle);
-                tempSin = Math.sin(angle);
+                final double tempCos = Math.cos(angle);
+                final double tempSin = Math.sin(angle);
                 tempCosB =  Math.cos(Math.abs(myAngle - angle));
 
                 Point largeLastPointAnalyse = new Point();
@@ -120,23 +118,23 @@ public class Raycasting {
                 for(double len=0;len<maxLen;len +=0.01){
                     analysePos = new Point2D.Double(myPos.getX()+len * tempCos, myPos.getY()+len * tempSin);
 
-                    Point zaokraglij = new Point((int)(analysePos.getX()*16),(int)(analysePos.getY()*16));
-                    Point largePointAnalyse = new Point((int) analysePos.getX(),(int) analysePos.getY());
+                    final Point zaokraglij = new Point((int)(analysePos.getX()*16),(int)(analysePos.getY()*16));
+                    final Point largePointAnalyse = new Point((int) analysePos.getX(),(int) analysePos.getY());
 
                     if(zaokraglij != lastPointOfMap) {
 
-                        Point punkta = new Point(nStep, half);
+                        final Point punkta = new Point(nStep, half);
 
                         if (inside()) {
                             switch (mapa[(int) analysePos.getX()][(int) analysePos.getY()]){
                                 case 1:
-                                    box.drawBox(punkta, len, angle, columns, foo);
+                                    box.drawBox(punkta, len,columns,foo);
                                     len = maxLen;
                                     break;
                                 case 2:
 
                                     if(largePointAnalyse.getX() != largeLastPointAnalyse.getX() || largePointAnalyse.getY() != largeLastPointAnalyse.getY()) {
-                                        hbox.drawBox(nStep, punkta, len, angle, columns, foo);
+                                        hbox.drawBox(nStep, punkta, len,foo);
                                         largeLastPointAnalyse = largePointAnalyse;
                                     }
 
@@ -147,7 +145,7 @@ public class Raycasting {
 
                                     break;
                                 case 3:
-                                    if(ocolumn.drawBox(punkta, len, angle, columns, foo)) len = maxLen;
+                                    if(ocolumn.drawBox(punkta, len, columns)) len = maxLen;
                                     else{
                                         if (len < 30) {
                                             floor.floor(punkta, len, angle, lastPoint);
@@ -158,19 +156,20 @@ public class Raycasting {
                                 case 4:
                                 case 5:
                                 case 6:
+                                case 7:
 
                                     if(largePointAnalyse.getX() != largeLastPointAnalyse.getX() || largePointAnalyse.getY() != largeLastPointAnalyse.getY()) {
                                         boolean ok=false;
 
                                         switch (mapa[(int) analysePos.getX()][(int) analysePos.getY()]){
                                             case 4:
-                                                ok = spriteX.drawBox(nStep, punkta, len, angle, columns, foo);
+                                                ok = spriteX.drawBox(nStep, punkta, len);
                                                 break;
                                             case 5:
-                                                ok = spriteY.drawBox(nStep, punkta, len, angle, columns, foo);
+                                                ok = spriteY.drawBox(nStep, punkta, len);
                                                 break;
                                             case 6:
-                                                ok = sprite.drawBox(nStep, punkta, len, angle, columns, foo);
+                                                ok = sprite.drawBox(nStep, punkta, len);
                                                 break;
                                         }
 
@@ -185,14 +184,7 @@ public class Raycasting {
                                     }
 
                                     break;
-                                case 7:
 
-                                    spriteXY.drawBox(nStep, punkta, len, angle, columns, foo);
-                                    if (len < 30) {
-                                        floor.floor(punkta, len, angle, lastPoint);
-                                        lastPoint = punkta;
-                                    }
-                                    break;
                                 default:
                                     if (len < 30) {
                                         floor.floor(punkta, len, angle, lastPoint);
@@ -217,21 +209,19 @@ public class Raycasting {
             }
 
             int n=0;
-            boolean renderuj = true;
 
             for(Column col : columns) {
 
                 col.render(this,game.texture);
 
-                    SpriteQueue queue = sprites.get(n);
+                    final SpriteQueue queue = sprites.get(n);
 
                     for(int k=queue.getSize()-1;k>=0;k--){
-                        Column columnS = queue.get(k);
+                        final Column columnS = queue.get(k);
 
                         columnS.render(this,game.sprite);
                     }
 
-                renderuj = !renderuj;
                 n++;
 
             }
@@ -263,7 +253,7 @@ public class Raycasting {
             }
         }
 
-        WritableRaster rast = bufferImg.getRaster();
+        final WritableRaster rast = bufferImg.getRaster();
 
         rast.setDataElements(0, 0, width, height, pixels);
 

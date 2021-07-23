@@ -12,9 +12,7 @@ public class Raycaster extends Frame {
 
     public final BufferedImage buffer;
     public final Panel panel;
-    public static Point resolution= new Point(640,480);
-
-    Raycasting rayMaker ;
+    public final static Point resolution= new Point(640,480);
 
     public final Input input = new Input();
 
@@ -34,7 +32,7 @@ public class Raycaster extends Frame {
         panel = new Panel();
         panel.setPreferredSize(new Dimension(resolution.x,resolution.y));
 
-        this.setSize(resolution.x,resolution.y+32);
+        this.setSize(resolution.x,resolution.y);
         this.add(panel,BorderLayout.CENTER);
 
         this.addWindowListener(new Window());
@@ -54,7 +52,7 @@ public class Raycaster extends Frame {
 
     private static DisplayMode getBestDisplayMode(GraphicsDevice device) {
         for (int x = 0; x < BEST_DISPLAY_MODES.length; x++) {
-            DisplayMode[] modes = device.getDisplayModes();
+            final DisplayMode[] modes = device.getDisplayModes();
             for (int i = 0; i < modes.length; i++) {
                 if (modes[i].getWidth() == BEST_DISPLAY_MODES[x].getWidth()
                         && modes[i].getHeight() == BEST_DISPLAY_MODES[x].getHeight()
@@ -67,7 +65,7 @@ public class Raycaster extends Frame {
     }
 
     public static void chooseBestDisplayMode(GraphicsDevice device) {
-        DisplayMode best = getBestDisplayMode(device);
+        final DisplayMode best = getBestDisplayMode(device);
         if (best != null) {
             device.setDisplayMode(best);
         }

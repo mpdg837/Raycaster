@@ -68,11 +68,11 @@ public class Game extends Interaction {
 
         mapa.mapa[65][65] = 1;
         mapa.mapa[62][62] =2;
-        mapa.mapa[63][62] =3;
-        mapa.mapa[64][62] =4;
-        mapa.mapa[65][62] =5;
-        mapa.mapa[66][62] =0;
-        mapa.mapa[67][62] =7;
+        mapa.mapa[64][62] =3;
+        mapa.mapa[66][62] =4;
+        mapa.mapa[68][62] =5;
+        mapa.mapa[66][68] =6;
+
         mapa.ceciling[64][64]=1;
     }
 
@@ -83,7 +83,7 @@ public class Game extends Interaction {
 
         Point2D lastPos = playerTransform.postion;
 
-        double speed = 0.4;
+        double speed = 0.5;
 
         if (input.getKey(KeyEvent.VK_W)) {
             playerTransform.translate(Transform.getUp(),speed);

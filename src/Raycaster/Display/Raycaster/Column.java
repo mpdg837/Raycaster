@@ -10,10 +10,10 @@ public class Column {
     public boolean half;
 
     void makeColumn(Raycasting ray,int n,Texture tex){
-        double deltaY = Texture.size/rect.getHeight();
+        final double deltaY = Texture.size/rect.getHeight();
         double yR =0;
 
-        int minY =(int)rect.getY() - n*(int)rect.getHeight();
+        final int minY =(int)rect.getY() - n*(int)rect.getHeight();
 
         int deltaYa = 0;
         if(half){
@@ -26,7 +26,7 @@ public class Column {
             if (y >= 0 && rect.x >= 0) {
                 if (y < ray.game.render.renderSize.getY() && rect.x < ray.game.render.renderSize.getX()) {
                     if(darker){
-                        int color = tex.bufferXYS[(int)yR][index];
+                        final int color = tex.bufferXYS[(int)yR][index];
                         if(color != getIntFromColor(0,0,0)) {
                             ray.foo[y][rect.x] = color;
                             ray.foo[y][rect.x+1] = color;

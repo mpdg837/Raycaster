@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public class ScreenSprite {
 
-    private Render ren;
+    private final Render ren;
     public BufferedImage gun;
 
     public ScreenSprite(Render ren){

@@ -8,34 +8,34 @@ import java.util.ArrayList;
 
 public class HalfBox {
 
-    Raycasting ray;
+    final Raycasting ray;
     public HalfBox(Raycasting ray){
         this.ray = ray;
     }
 
 
 
-    public void drawBox(int nStep,Point punkt, double len, double angle, ArrayList<Column> columns, int[][] foo) {
+    public void drawBox(int nStep,Point punkt, double len, int[][] foo) {
 
 
-            double height = ((Raycasting.maxLen - len));
+            final double height = ((Raycasting.maxLen - len));
             int indexTex = 0;
 
 
             if (height > 0) {
 
                 // Wybór tekstury
-                double partX = (ray.analysePos.getX() - (int) ray.analysePos.getX());
-                double partY = (ray.analysePos.getY() - (int) ray.analysePos.getY());
+                final double partX = (ray.analysePos.getX() - (int) ray.analysePos.getX());
+                final double partY = (ray.analysePos.getY() - (int) ray.analysePos.getY());
 
 
-                boolean cien = partY < 0.01 || partY > 0.99;
+                boolean cien = false;
 
-                int posX = (int) (partX * 64);
-                int posY = (int) (partY * 64);
+                final int posX = (int) (partX * 64);
+                final int posY = (int) (partY * 64);
 
                 if (posY == 0 || posY == 63) {
-
+                    cien = true;
                     indexTex = posX;
                 } else {
                     indexTex = posY;
@@ -44,10 +44,10 @@ public class HalfBox {
 
                 // Wyznaczenie tekstury
 
-                double zet = ray.tempCosB * len;
-                int wallHeight = (int) (Raycasting.renderHeightConstant * height / zet);
+                final double zet = ray.tempCosB * len;
+                final int wallHeight = (int) (Raycasting.renderHeightConstant * height / zet);
 
-                Column column = new Column();
+                final Column column = new Column();
 
                 column.darker = cien;
                 column.index = indexTex;

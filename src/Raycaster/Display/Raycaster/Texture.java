@@ -10,11 +10,11 @@ public class Texture {
 
     public static int size=64;
 
-    public int[][] bufferXY;
-    public int[][] bufferXYS;
+    public final int[][] bufferXY;
+    public final int[][] bufferXYS;
 
-    public BufferedImage textureMain;
-    public BufferedImage textureMainS;
+    public final BufferedImage textureMain;
+    public final BufferedImage textureMainS;
 
     public Texture(BufferedImage img){
 
@@ -29,7 +29,7 @@ public class Texture {
             Graphics grphxb = textureMainS.getGraphics();
             grphxb.drawImage(texMainScaled,0,0,null);
 
-            grphxb.setColor(new Color(0,0,0,64));
+            grphxb.setColor(new Color(0,0,0,96));
             grphxb.fillRect(0,0,Texture.size,Texture.size);
 
                 bufferXY = new int[size][size];

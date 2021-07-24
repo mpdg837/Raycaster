@@ -120,6 +120,7 @@ public class Raycasting {
                 spriteQueue.clear();
             }
 
+
             rayHalfBlocked = new boolean[320];
             byte[][] renderedSprites = new byte[128][128];
 
@@ -131,7 +132,6 @@ public class Raycasting {
 
             Point lastPointOfMap = new Point(0,0);
             boolean floorRay = false;
-
 
             for(double angle = myAngle - angleDelta;angle<myAngle+angleDelta;angle +=angleStep){
 
@@ -364,6 +364,8 @@ public class Raycasting {
 
 
             }
+
+            foo = game.sky.addSkybox(foo);
 
             array_rasterToBuffer(foo);
 

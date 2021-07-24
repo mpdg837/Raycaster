@@ -14,8 +14,11 @@ public class Texture {
     public final BufferedImage textureMain;
     public final BufferedImage textureMainS;
     public final BufferedImage textureMainNL;
-    public Texture(BufferedImage img){
 
+    public boolean transparency = false;
+    public Texture(BufferedImage img,boolean transparency){
+
+            this.transparency = transparency;
             Image texMainScaled = img.getScaledInstance(size,size,Image.SCALE_FAST);
             textureMain = new BufferedImage(size,size,BufferedImage.TYPE_3BYTE_BGR);
 

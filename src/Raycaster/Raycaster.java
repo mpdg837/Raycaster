@@ -2,9 +2,11 @@ package Raycaster;
 
 import Raycaster.Display.Render;
 import Raycaster.Player.Input.Input;
+import Raycaster.Project.Game;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.Timer;
 
 public class Raycaster extends Frame {
@@ -15,12 +17,13 @@ public class Raycaster extends Frame {
 
     public final Input input = new Input();
 
+    public Game game;
     private static DisplayMode[] BEST_DISPLAY_MODES = new DisplayMode[]{
             new DisplayMode(640, 480, 32, 0),
             new DisplayMode(640, 480, 16, 0),
             new DisplayMode(640, 480, 8, 0)};
 
-    public Raycaster(){
+    public Raycaster() {
 
         super("Window");
 
@@ -29,23 +32,38 @@ public class Raycaster extends Frame {
         this.addMouseListener(input);
 
         panel = new Panel();
-        panel.setPreferredSize(new Dimension(resolution.x,resolution.y));
+        panel.setPreferredSize(new Dimension(resolution.x, resolution.y));
 
-        this.setSize(resolution.x,resolution.y);
-        this.add(panel,BorderLayout.CENTER);
+        this.setSize(resolution.x, resolution.y);
+        this.add(panel, BorderLayout.CENTER);
 
         this.addWindowListener(new WindowME());
 
-        EventQueue.invokeLater(()->{this.setVisible(true);});
-        buffer = new BufferedImage(resolution.x,resolution.y,BufferedImage.TYPE_3BYTE_BGR);
+        EventQueue.invokeLater(() -> {
+            this.setVisible(true);
+        });
+        buffer = new BufferedImage(resolution.x, resolution.y, BufferedImage.TYPE_3BYTE_BGR);
 
-        java.util.Timer tim = new Timer();
-        tim.schedule(new Render(false,this,null),Render.deltaTime);
+        try {
+            game = new Game(input);
 
-        GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        GraphicsDevice device = env.getDefaultScreenDevice();
+            java.util.Timer tim = new Timer();
+            try {
+                tim.schedule(new Render(false, this, null), Render.deltaTime);
+            } catch (IOException ignore) {
+            }
 
-        chooseBestDisplayMode(device);
+            GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            GraphicsDevice device = env.getDefaultScreenDevice();
+
+            chooseBestDisplayMode(device);
+
+        }catch (IOException ignore){
+
+            System.exit(0);
+        }
+
+
 
     }
 

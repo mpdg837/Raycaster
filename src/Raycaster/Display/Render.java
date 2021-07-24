@@ -6,6 +6,7 @@ import Raycaster.Raycaster;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ConcurrentModificationException;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -24,11 +25,11 @@ public class Render extends TimerTask {
     public final ScreenSprite sprites;
     public final Raycaster saveRaycaster;
     private boolean start;
-    private final Game game;
+    private Game game;
 
     public int deltaRenderTime;
 
-    public Render(boolean start, Raycaster canvas, Game game){
+    public Render(boolean start, Raycaster canvas, Game game) throws IOException{
 
         renderSize = canvas.resolution;
         sprites = new ScreenSprite(this);
@@ -39,7 +40,11 @@ public class Render extends TimerTask {
 
         this.start = start;
         if(game == null) {
-            this.game = new Game(this,canvas.input);
+
+            this.game = canvas.game;
+            this.game.render = this;
+
+
             device.setFullScreenWindow(saveRaycaster);
         }else{
             this.game = game;
@@ -110,7 +115,8 @@ public class Render extends TimerTask {
         }catch (ConcurrentModificationException ignore){}
 
         Timer tim = new Timer();
-        tim.schedule(new Render(start,saveRaycaster,game),Render.deltaTime - deltaRenderTime);
-
+        try {
+            tim.schedule(new Render(start, saveRaycaster, game), Render.deltaTime - deltaRenderTime);
+        }catch (IOException ignore){}
     }
 }

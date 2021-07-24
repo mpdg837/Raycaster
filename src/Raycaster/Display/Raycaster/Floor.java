@@ -28,7 +28,7 @@ public class Floor {
         final double zet = ray.tempCosB * len;
         final int wallHeight = (int) (Raycasting.renderHeightConstant * height / zet);
 
-        punkta = new Point((int) punkta.x, (int) (punkta.y + wallHeight / 2));
+        punkta = new Point((int) punkta.x, (int) (punkta.y + wallHeight / 2) );
 
 
 
@@ -76,6 +76,7 @@ public class Floor {
                                     }
                                     if (ray.game.mapa.ceciling[(int) ray.analysePos.getX()][(int) ray.analysePos.getY()] > 0) {
                                         int colorB = ray.game.ceiling.bufferXYS[texY][texX];
+
 
                                         if (colorB != 0) {
 

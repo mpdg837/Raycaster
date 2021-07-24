@@ -33,6 +33,23 @@ public class Collision {
                 case 10:
                     decyzja = partY < 1 - partX;
                     break;
+                case 12:
+                case 16:
+                    decyzja = partX < 0.5;
+                    break;
+                case 13:
+                case 17:
+                    decyzja = partX > 0.5;
+                    break;
+                case 14:
+                case 18:
+                    decyzja = partY < 0.5;
+                    break;
+                case 15:
+                case 19:
+                    decyzja = partY > 0.5;
+                    break;
+
                 default:
                     decyzja = true;
                     break;

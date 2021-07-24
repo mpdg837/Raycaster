@@ -1,5 +1,6 @@
 package Raycaster.Project;
 
+import Raycaster.Display.Raycaster.SkyBox;
 import Raycaster.Display.Raycaster.Texture;
 import Raycaster.Display.Render;
 import Raycaster.Player.Input.Input;
@@ -23,29 +24,32 @@ public class Game extends Interaction {
     public Transform playerTransform;
     public Map mapa;
 
-    public Texture texture;
-    public Texture sprite;
+    public final Texture texture;
+    public final Texture sprite;
 
-    public Texture floor;
-    public Texture ceiling;
+    public final Texture floor;
+    public final Texture ceiling;
+    public final SkyBox sky;
 
     boolean oka=true;
 
-    public Game(Render render, Input input){
+    public Game(Input input) throws IOException{
         super(input);
-        this.render = render;
+
         this.mapa = new Map();
 
         playerTransform = new Transform();
+
+
+            texture = new Texture(ImageIO.read(new File("texture.png")),false);
+            floor = new Texture(ImageIO.read(new File("floor.png")),false);
+            ceiling = new Texture(ImageIO.read(new File("floor.png")),false);
+            sprite = new Texture(ImageIO.read(new File("sprite.png")),true);
+            sky = new SkyBox(ImageIO.read(new File("skybox.jpg")));
     }
 
     public void start() {
-        try{
-            texture = new Texture(ImageIO.read(new File("texture.png")));
-            floor = new Texture(ImageIO.read(new File("floor.png")));
-            ceiling = new Texture(ImageIO.read(new File("floor.png")));
-            sprite = new Texture(ImageIO.read(new File("sprite.png")));
-        }catch (IOException ignore){}
+
 
         for(int x=0;x<16;x++){
             for(int y=0;y<10;y++){
@@ -58,6 +62,13 @@ public class Game extends Interaction {
                 mapa.ceciling[60+x][60+y] = 1;
             }
         }
+
+        for(int x=0;x<5;x++){
+            for(int y=0;y<5;y++){
+                mapa.ceciling[62+x][63+y] = 0;
+            }
+        }
+
 
         for(int x=0;x<16;x++) {
             mapa.mapa[60+x][60] = 1;
@@ -98,7 +109,7 @@ public class Game extends Interaction {
                 mapa.light[x][y] = false;
             }
         }
-        mapa.ceciling[64][64]=1;
+
     }
 
     int timer = 0;

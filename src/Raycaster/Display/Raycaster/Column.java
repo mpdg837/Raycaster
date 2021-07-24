@@ -13,7 +13,7 @@ public class Column {
     public boolean spriteReduction = false;
 
     public void setLen(double len){
-        this.len = (int) (len*2);
+        this.len = (int) (len*10);
     }
     void makeColumn(int nStep,Raycasting ray,int n,Texture tex,boolean blockColumn){
         final double deltaY = Texture.size/rect.getHeight();

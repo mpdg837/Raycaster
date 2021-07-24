@@ -36,7 +36,7 @@ public class Raycasting {
     private final SpriteX spriteX;
     private final SpriteY spriteY;
     private final Sprite sprite;
-
+    private final Triangle tria;
 
     public ArrayList<Column> columns;
     public ArrayList<SpriteQueue> sprites;
@@ -56,7 +56,7 @@ public class Raycasting {
         columns = new ArrayList<>();
 
         sprites = new ArrayList<>();
-        for(int n=0;n<maxLen*2;n++){
+        for(int n=0;n<maxLen*10;n++){
             sprites.add(new SpriteQueue());
         }
 
@@ -67,6 +67,7 @@ public class Raycasting {
         spriteX = new SpriteX(this);
         spriteY = new SpriteY(this);
         sprite = new Sprite(this);
+        tria = new Triangle(this);
 
         rayHalfBlocked = new boolean[320];
 
@@ -97,8 +98,8 @@ public class Raycasting {
             columns.clear();
 
 
-            for(int n=0;n<sprites.size();n++){
-                sprites.get(n).clear();
+            for (SpriteQueue spriteQueue : sprites) {
+                spriteQueue.clear();
             }
 
             rayHalfBlocked = new boolean[320];
@@ -155,6 +156,7 @@ public class Raycasting {
 
                                     break;
                                 case 3:
+
                                     if(ocolumn.drawBox(punkta, len, columns)) len = maxLen;
                                     else{
                                         if (len < 30 && floorRay) {
@@ -207,6 +209,20 @@ public class Raycasting {
 
                                     }
 
+                                    break;
+                                case 7:
+                                case 8:
+                                case 9:
+                                case 10:
+                                    int type = mapa[(int) analysePos.getX()][(int) analysePos.getY()] - 7;
+
+                                    if(tria.drawBox(punkta, len, columns,type)) len = maxLen;
+                                    else{
+                                        if (len < 30 && floorRay) {
+                                            floor.floor(punkta, len);
+
+                                        }
+                                    }
                                     break;
                                 default:
                                     if (len < 30  && floorRay) {

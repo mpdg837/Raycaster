@@ -48,20 +48,20 @@ public class Game extends Interaction {
         }catch (IOException ignore){}
 
         for(int x=0;x<16;x++){
-            for(int y=0;y<16;y++){
+            for(int y=0;y<10;y++){
                 mapa.floor[60+x][60+y] = 1;
             }
         }
 
         for(int x=0;x<16;x++){
-            for(int y=0;y<16;y++){
+            for(int y=0;y<10;y++){
                 mapa.ceciling[60+x][60+y] = 1;
             }
         }
 
         for(int x=0;x<16;x++) {
             mapa.mapa[60+x][60] = 1;
-            mapa.mapa[60+x][75] = 1;
+            mapa.mapa[60+x][70] = 1;
             mapa.mapa[60][60+x] = 1;
             mapa.mapa[75][60+x] = 1;
         }
@@ -75,6 +75,12 @@ public class Game extends Interaction {
         mapa.mapa[66][68] =6;
         mapa.mapa[67][68] =6;
         mapa.mapa[68][68] =6;
+
+
+        mapa.mapa[69][66] =7;
+        mapa.mapa[69][65] =9;
+        mapa.mapa[70][66] =10;
+        mapa.mapa[70][65] =8;
 
         mapa.ceciling[64][64]=1;
     }

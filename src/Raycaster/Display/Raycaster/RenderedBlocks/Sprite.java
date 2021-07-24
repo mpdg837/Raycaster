@@ -29,7 +29,7 @@ public class Sprite {
 
 
 
-                if(partX > 0.49 && partX < 0.51 && partY > 0.49 && partY < 0.51 ) {
+                if(partX > 0.45 && partX < 0.55 && partY > 0.45 && partY < 0.55 ) {
 
 
 

@@ -52,10 +52,13 @@ public class ObjColumn {
 
                 final Column column = new Column();
 
+
                 column.darker = cien;
                 column.index = indexTex;
                 column.rect = new Rectangle(punkt.x, punkt.y - wallHeight / 2, 1, wallHeight);
 
+                column.half = false;
+                column.setLen(len);
                 columns.add(column);
                 finish = true;
             }

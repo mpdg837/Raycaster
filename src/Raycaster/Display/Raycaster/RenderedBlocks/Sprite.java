@@ -13,10 +13,11 @@ public class Sprite {
 
 
 
-    public boolean drawBox(int nStep, Point punkt, double len) {
+    public boolean drawBox(int nStep, Point punkt, double len,double angle) {
 
         boolean end = false;
         final double height = ((Raycasting.maxLen - len));
+
 
 
 
@@ -29,6 +30,7 @@ public class Sprite {
 
 
                 if(partX > 0.49 && partX < 0.51 && partY > 0.49 && partY < 0.51 ) {
+
 
 
                     // Wyznaczenie tekstury
@@ -46,7 +48,8 @@ public class Sprite {
 
                         column.spriteReduction = true;
 
-                            ray.sprites.get(nStep/2).add(column);
+                        column.setLen(len);
+                            ray.sprites.get(column.len).add(column);
 
 
 

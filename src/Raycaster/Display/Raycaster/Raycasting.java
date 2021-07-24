@@ -17,7 +17,7 @@ public class Raycasting {
     public double myAngle = Math.toRadians(90);
 
     private static final double angleDelta = Math.toRadians(15);
-    private static final double angleStep = Math.toRadians(0.1875/2);
+    public static final double angleStep = Math.toRadians(0.1875/2);
     public static double maxLen = 48;
 
 
@@ -44,6 +44,10 @@ public class Raycasting {
     public final int half;
     public int[][] foo;
 
+    public boolean[] rayHalfBlocked ;
+
+    public Point2D myPos;
+
     public Raycasting(Game game){
 
         this.game = game;
@@ -52,7 +56,7 @@ public class Raycasting {
         columns = new ArrayList<>();
 
         sprites = new ArrayList<>();
-        for(int n=0;n<game.render.renderSize.x;n++){
+        for(int n=0;n<maxLen*2;n++){
             sprites.add(new SpriteQueue());
         }
 
@@ -63,6 +67,8 @@ public class Raycasting {
         spriteX = new SpriteX(this);
         spriteY = new SpriteY(this);
         sprite = new Sprite(this);
+
+        rayHalfBlocked = new boolean[320];
 
         foo = new int[game.render.renderSize.y][game.render.renderSize.x];
 
@@ -91,14 +97,15 @@ public class Raycasting {
             columns.clear();
 
 
-            for(int n=0;n<game.render.renderSize.x;n++){
+            for(int n=0;n<sprites.size();n++){
                 sprites.get(n).clear();
             }
 
-
+            rayHalfBlocked = new boolean[320];
+            byte[][] renderedSprites = new byte[128][128];
 
             myAngle = game.playerTransform.rotation;
-            final Point2D myPos = game.playerTransform.postion;
+            myPos = game.playerTransform.postion;
 
 
             int nStep = 0;
@@ -158,7 +165,6 @@ public class Raycasting {
                                     break;
                                 case 4:
                                 case 5:
-                                case 6:
 
 
                                     if(largePointAnalyse.getX() != largeLastPointAnalyse.getX() || largePointAnalyse.getY() != largeLastPointAnalyse.getY()) {
@@ -171,9 +177,7 @@ public class Raycasting {
                                             case 5:
                                                 ok = spriteY.drawBox(nStep, punkta, len);
                                                 break;
-                                            case 6:
-                                                ok = sprite.drawBox(nStep, punkta, len);
-                                                break;
+
                                         }
 
                                         if(ok){
@@ -187,7 +191,23 @@ public class Raycasting {
                                     }
 
                                     break;
+                                case 6:
 
+
+                                    if(renderedSprites[(int) analysePos.getX()][(int) analysePos.getY()] == 0) {
+                                        boolean ok =sprite.drawBox(nStep, punkta, len,angle);
+
+                                        if(ok) {
+                                            renderedSprites[(int) analysePos.getX()][(int) analysePos.getY()] = 1;
+                                        }
+                                    }
+
+                                    if (len < 30  && floorRay) {
+                                        floor.floor(punkta, len);
+
+                                    }
+
+                                    break;
                                 default:
                                     if (len < 30  && floorRay) {
                                         floor.floor(punkta, len);
@@ -215,10 +235,11 @@ public class Raycasting {
 
             for(Column col : columns) {
 
-                col.render(n,this,game.texture,true);
-
-                    final SpriteQueue queue = sprites.get(n);
-
+                col.render(n, this, game.texture, true);
+                n++;
+            }
+            for(n=0;n<sprites.size();n++) {
+                SpriteQueue queue = sprites.get(sprites.size()-1-n);
                     for(int k=queue.getSize()-1;k>=0;k--) {
                         final Column columnS = queue.get(k);
 
@@ -229,10 +250,8 @@ public class Raycasting {
                         }
                     }
 
-                n++;
 
             }
-
 
             array_rasterToBuffer(foo);
 

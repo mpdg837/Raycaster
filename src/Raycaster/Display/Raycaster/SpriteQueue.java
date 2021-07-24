@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class SpriteQueue {
-    public boolean halfBlocked = false;
+
 
     private final ArrayList<Column> lista = new ArrayList<>();
 
@@ -13,7 +13,7 @@ public class SpriteQueue {
     }
 
     public Column get(int index){
-        return lista.get(index);
+        return lista.get( index);
     }
 
     public int getSize(){

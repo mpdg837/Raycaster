@@ -50,7 +50,8 @@ public class Box {
             column.darker = cien;
             column.index = indexTex;
             column.rect = new Rectangle(punkt.x, punkt.y - wallHeight / 2, 1, wallHeight);
-
+            column.half = false;
+            column.setLen(len);
             columns.add(column);
 
         }

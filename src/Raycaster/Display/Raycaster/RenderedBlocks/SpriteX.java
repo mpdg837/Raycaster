@@ -43,12 +43,12 @@ public class SpriteX {
                 column.index = posX;
                 column.rect = new Rectangle(punkt.x, punkt.y - wallHeight / 2, 1, wallHeight);
                 column.half = false;
-                column.spriteReduction = true;
 
+                column.setLen(len);
                 end = true;
 
                 if (nStep < 640) {
-                    ray.sprites.get((nStep / 2)).add(column);
+                    ray.sprites.get(column.len).add(column);
                 }
             }
         }

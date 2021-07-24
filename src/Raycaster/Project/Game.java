@@ -71,7 +71,10 @@ public class Game extends Interaction {
         mapa.mapa[64][62] =3;
         mapa.mapa[66][62] =4;
         mapa.mapa[68][62] =5;
+
         mapa.mapa[66][68] =6;
+        mapa.mapa[67][68] =6;
+        mapa.mapa[68][68] =6;
 
         mapa.ceciling[64][64]=1;
     }

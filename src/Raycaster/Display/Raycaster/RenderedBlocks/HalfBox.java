@@ -53,10 +53,13 @@ public class HalfBox {
                 column.index = indexTex;
                 column.rect = new Rectangle(punkt.x, punkt.y - wallHeight / 2, 1, wallHeight);
                 column.half = true;
+
+                column.setLen(len);
+
                 if (posX == 0 || posX == 63 || posY == 0 || posY == 63) {
                     if (nStep < 640) {
-                        ray.sprites.get( (nStep / 2)).add(column);
-                        ray.sprites.get( (nStep / 2)).halfBlocked = true;
+                        ray.sprites.get( column.len).add(column);
+                        ray.rayHalfBlocked[nStep/2] = true;
                     }
                 }
             }

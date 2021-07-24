@@ -1,9 +1,10 @@
-package Raycaster.Display.Raycaster.RenderedBlocks;
+package Raycaster.Display.Raycaster.RenderedBlocks.Boxes;
 
 import Raycaster.Display.Raycaster.Column;
 import Raycaster.Display.Raycaster.Raycasting;
 
 import java.awt.*;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
 public class ObjColumn {
@@ -23,25 +24,22 @@ public class ObjColumn {
         if (height > 0) {
 
             // Wybór tekstury
-            final double partX = (ray.analysePos.getX() - (int) ray.analysePos.getX());
-            final double partY = (ray.analysePos.getY() - (int) ray.analysePos.getY());
 
 
 
 
-            if( partX >=0.375 && partX <= 0.625 && partY >=0.375 && partY <= 0.625) {
+
+            if( ray.partX >=0.375 && ray.partX <= 0.625 && ray.partY >=0.375 && ray.partY <= 0.625) {
 
                 boolean cien = false;
 
-                final int posX = (int) (partX * 64);
-                final int posY = (int) (partY * 64);
 
                 int indexTex;
-                if (posY == 24 || posY == 23 || posY == 40 || posY == 39) {
+                if (ray.posY == 24 || ray.posY == 23 || ray.posY == 40 || ray.posY == 39) {
                     cien = true;
-                    indexTex = posX;
+                    indexTex = ray.posX;
                 } else {
-                    indexTex = posY;
+                    indexTex = ray.posY;
 
                 }
 
@@ -56,6 +54,8 @@ public class ObjColumn {
                 column.darker = cien;
                 column.index = indexTex;
                 column.rect = new Rectangle(punkt.x, punkt.y - wallHeight / 2, 1, wallHeight);
+                column.objPosition = new Point((int)ray.analysePos.getX(),(int)ray.analysePos.getY());
+                column.raycastPosition = new Point2D.Double(ray.analysePos.getX(),ray.analysePos.getY());
 
                 column.half = false;
                 column.setLen(len);

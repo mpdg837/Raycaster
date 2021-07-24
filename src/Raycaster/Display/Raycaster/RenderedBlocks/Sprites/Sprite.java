@@ -1,9 +1,10 @@
-package Raycaster.Display.Raycaster.RenderedBlocks;
+package Raycaster.Display.Raycaster.RenderedBlocks.Sprites;
 
 import Raycaster.Display.Raycaster.Column;
 import Raycaster.Display.Raycaster.Raycasting;
 
 import java.awt.*;
+import java.awt.geom.Point2D;
 
 public class Sprite {
     final Raycasting ray;
@@ -24,12 +25,10 @@ public class Sprite {
         if (height > 0) {
 
             // Wybór tekstury
-            final double partX = (ray.analysePos.getX() - (int) ray.analysePos.getX());
-            final double partY = (ray.analysePos.getY() - (int) ray.analysePos.getY());
 
 
 
-                if(partX > 0.45 && partX < 0.55 && partY > 0.45 && partY < 0.55 ) {
+                if(ray.partX > 0.45 && ray.partX < 0.55 && ray.partY > 0.45 && ray.partY < 0.55 ) {
 
 
 
@@ -45,6 +44,8 @@ public class Sprite {
                         column.index = 32;
                         column.rect = new Rectangle(punkt.x, punkt.y - wallHeight / 2, 1, wallHeight);
                         column.half = false;
+                        column.objPosition = new Point((int)ray.analysePos.getX(),(int)ray.analysePos.getY());
+                        column.raycastPosition = new Point2D.Double(ray.analysePos.getX(),ray.analysePos.getY());
 
                         column.spriteReduction = true;
 

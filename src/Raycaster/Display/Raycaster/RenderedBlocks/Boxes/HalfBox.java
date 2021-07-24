@@ -1,9 +1,10 @@
-package Raycaster.Display.Raycaster.RenderedBlocks;
+package Raycaster.Display.Raycaster.RenderedBlocks.Boxes;
 
 import Raycaster.Display.Raycaster.Column;
 import Raycaster.Display.Raycaster.Raycasting;
 
 import java.awt.*;
+import java.awt.geom.Point2D;
 
 public class HalfBox {
 
@@ -24,21 +25,17 @@ public class HalfBox {
             if (height > 0) {
 
                 // Wybór tekstury
-                final double partX = (ray.analysePos.getX() - (int) ray.analysePos.getX());
-                final double partY = (ray.analysePos.getY() - (int) ray.analysePos.getY());
 
 
                 boolean cien = false;
 
-                final int posX = (int) (partX * 64);
-                final int posY = (int) (partY * 64);
 
                 int indexTex;
-                if (posY == 0 || posY == 63) {
+                if (ray.posY == 0 || ray.posY == 63) {
                     cien = true;
-                    indexTex = posX;
+                    indexTex = ray.posX;
                 } else {
-                    indexTex = posY;
+                    indexTex = ray.posY;
                 }
 
 
@@ -53,10 +50,12 @@ public class HalfBox {
                 column.index = indexTex;
                 column.rect = new Rectangle(punkt.x, punkt.y - wallHeight / 2, 1, wallHeight);
                 column.half = true;
+                column.objPosition = new Point((int)ray.analysePos.getX(),(int)ray.analysePos.getY());
+                column.raycastPosition = new Point2D.Double(ray.analysePos.getX(),ray.analysePos.getY());
 
                 column.setLen(len);
 
-                if (posX == 0 || posX == 63 || posY == 0 || posY == 63) {
+                if (ray.posX == 0 || ray.posX == 63 || ray.posY == 0 || ray.posY == 63) {
                     if (nStep < 640) {
                         ray.sprites.get( column.len).add(column);
                         ray.rayHalfBlocked[nStep/2] = true;

@@ -81,7 +81,13 @@ public class Game extends Interaction {
         mapa.mapa[69][65] =9;
         mapa.mapa[70][66] =10;
         mapa.mapa[70][65] =8;
+        mapa.mapa[71][64] =11;
 
+        for(int x=61;x<70;x++) {
+            for (int y = 61; y < 63; y++) {
+                mapa.light[x][y] = false;
+            }
+        }
         mapa.ceciling[64][64]=1;
     }
 
@@ -92,7 +98,7 @@ public class Game extends Interaction {
 
         Point2D lastPos = playerTransform.postion;
 
-        double speed = 0.5;
+        double speed = 0.4;
 
         if (input.getKey(KeyEvent.VK_W)) {
             playerTransform.translate(Transform.getUp(),speed);

@@ -1,6 +1,13 @@
 package Raycaster.Display.Raycaster;
 
 import Raycaster.Display.Raycaster.RenderedBlocks.*;
+import Raycaster.Display.Raycaster.RenderedBlocks.Boxes.Box;
+import Raycaster.Display.Raycaster.RenderedBlocks.Boxes.HalfBox;
+import Raycaster.Display.Raycaster.RenderedBlocks.Boxes.ObjColumn;
+import Raycaster.Display.Raycaster.RenderedBlocks.Sprites.Sprite;
+import Raycaster.Display.Raycaster.RenderedBlocks.Sprites.SpriteX;
+import Raycaster.Display.Raycaster.RenderedBlocks.Sprites.SpriteXY;
+import Raycaster.Display.Raycaster.RenderedBlocks.Sprites.SpriteY;
 import Raycaster.Project.Game;
 
 import java.awt.*;
@@ -37,6 +44,7 @@ public class Raycasting {
     private final SpriteY spriteY;
     private final Sprite sprite;
     private final Triangle tria;
+    private final SpriteXY sprXY;
 
     public ArrayList<Column> columns;
     public ArrayList<SpriteQueue> sprites;
@@ -47,7 +55,12 @@ public class Raycasting {
     public boolean[] rayHalfBlocked ;
 
     public Point2D myPos;
+    public boolean darkerMe;
 
+    public double partX;
+    public double partY;
+    public int posX;
+    public int posY;
     public Raycasting(Game game){
 
         this.game = game;
@@ -68,6 +81,7 @@ public class Raycasting {
         spriteY = new SpriteY(this);
         sprite = new Sprite(this);
         tria = new Triangle(this);
+        sprXY = new SpriteXY(this);
 
         rayHalfBlocked = new boolean[320];
 
@@ -114,6 +128,7 @@ public class Raycasting {
             Point lastPointOfMap = new Point(0,0);
             boolean floorRay = false;
 
+
             for(double angle = myAngle - angleDelta;angle<myAngle+angleDelta;angle +=angleStep){
 
                 floorRay = !floorRay;
@@ -131,6 +146,12 @@ public class Raycasting {
 
                     final Point zaokraglij = new Point((int)(analysePos.getX()*64),(int)(analysePos.getY()*64));
                     final Point largePointAnalyse = new Point((int) analysePos.getX(),(int) analysePos.getY());
+
+                    partX = (analysePos.getX() - (int) analysePos.getX());
+                    partY = (analysePos.getY() - (int) analysePos.getY());
+
+                    posX = (int)(partX*64);
+                    posY = (int)(partY*64);
 
                     if(!zaokraglij.equals(lastPointOfMap)) {
 
@@ -223,6 +244,15 @@ public class Raycasting {
 
                                         }
                                     }
+                                    break;
+                                case 11:
+                                    sprXY.drawBox(nStep, punkta, len);
+
+                                    if (len < 30 && floorRay) {
+                                        floor.floor(punkta, len);
+
+                                    }
+
                                     break;
                                 default:
                                     if (len < 30  && floorRay) {

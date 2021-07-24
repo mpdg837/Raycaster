@@ -52,8 +52,14 @@ public class Floor {
                             if (ray.game.texture != null) {
                                 if (punkta.x + 4 < ray.game.render.renderSize.x && punkta.y + 4 < ray.game.render.renderSize.y) {
                                     if (ray.game.mapa.floor[(int) ray.analysePos.getX()][(int) ray.analysePos.getY()] > 0) {
-                                        final int colorA = ray.game.floor.bufferXY[texY][texX];
+                                        int colorA = ray.game.floor.bufferXY[texY][texX];
+
                                         if (colorA != 0) {
+
+                                            if (!ray.game.mapa.light[(int) ray.analysePos.getX()][(int) ray.analysePos.getY()]) {
+
+                                                colorA = ray.game.floor.bufferXYNL[texY][texX];
+                                            }
 
                                             if (len > 4) {
                                                 drawBigPixel(colorA, new Point(punkta.x, punkta.y ));
@@ -69,8 +75,13 @@ public class Floor {
                                         }
                                     }
                                     if (ray.game.mapa.ceciling[(int) ray.analysePos.getX()][(int) ray.analysePos.getY()] > 0) {
-                                        final int colorB = ray.game.ceiling.bufferXYS[texY][texX];
+                                        int colorB = ray.game.ceiling.bufferXYS[texY][texX];
+
                                         if (colorB != 0) {
+
+                                            if(!ray.game.mapa.light[(int) ray.analysePos.getX()][(int) ray.analysePos.getY()]) {
+                                                colorB = ray.game.ceiling.bufferXYNL[texY][texX];
+                                            }
 
                                             if (len > 4) {
                                                 drawBigPixel(colorB, new Point(punkta.x, punkta.y - wallHeight));

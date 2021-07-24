@@ -1,49 +1,42 @@
-package Raycaster.Display.Raycaster.RenderedBlocks;
+package Raycaster.Display.Raycaster.RenderedBlocks.Boxes;
 
 import Raycaster.Display.Raycaster.Column;
 import Raycaster.Display.Raycaster.Raycasting;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
-public class Box {
-
+public class QuaterBox {
     final Raycasting ray;
-    public Box(Raycasting ray){
+    public QuaterBox(Raycasting ray){
         this.ray = ray;
     }
 
-    public void drawBox(Point punkt, double len, ArrayList<Column> columns, int[][] foo){
+    public void drawBox(Point punkt, double len, ArrayList<Column> columns, int[][] foo,int type) {
 
 
-        final double height =((Raycasting.maxLen - len));
-
+        final double height = ((Raycasting.maxLen - len));
 
 
         if (height > 0) {
 
             // Wybór tekstury
-            final double partX = (ray.analysePos.getX() - (int) ray.analysePos.getX());
-            final double partY = (ray.analysePos.getY() - (int) ray.analysePos.getY());
 
             int indexTex;
             boolean cien = false;
 
-            final int posX = (int) (partX * 64);
-            final int posY = (int) (partY * 64);
-
-            if( posY ==0 || posY == 63) {
+            if( ray.posY ==0 || ray.posY == 63) {
                 cien = true;
-                indexTex = posX;
+                indexTex = ray.posX;
             }else{
-                indexTex = posY;
+                indexTex = ray.posY;
             }
 
             // Wyznaczenie tekstury
 
             final double zet = ray.tempCosB * len;
-            final int wallHeight = (int)(Raycasting.renderHeightConstant * height/zet);
+            final int wallHeight = (int) (Raycasting.renderHeightConstant * height / zet);
 
             final Column column = new Column();
 
@@ -51,11 +44,12 @@ public class Box {
             column.index = indexTex;
             column.rect = new Rectangle(punkt.x, punkt.y - wallHeight / 2, 1, wallHeight);
             column.half = false;
+            column.objPosition = new Point((int) ray.analysePos.getX(), (int) ray.analysePos.getY());
+            column.raycastPosition = new Point2D.Double(ray.analysePos.getX(), ray.analysePos.getY());
+
             column.setLen(len);
             columns.add(column);
 
         }
-
-
     }
 }

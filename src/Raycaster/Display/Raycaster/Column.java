@@ -1,6 +1,7 @@
 package Raycaster.Display.Raycaster;
 
 import java.awt.*;
+import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 
 public class Column {
@@ -8,10 +9,52 @@ public class Column {
     public int index;
     public boolean darker;
     public boolean half;
+    public Point objPosition;
+    public Point2D raycastPosition;
 
     public int len;
     public boolean spriteReduction = false;
 
+
+    boolean makeLight(Raycasting ray){
+
+
+        final double partX = (raycastPosition.getX() - (int) raycastPosition.getX());
+        final double partY = (raycastPosition.getY() - (int) raycastPosition.getY());
+
+        Point checkPos = new Point(0,0);
+        int count = 0;
+
+        if(partX <0.02){
+            checkPos = new Point((int)objPosition.getX()-1,(int)objPosition.getY());
+            count ++;
+        }
+        if(partX > 0.98){
+            checkPos = new Point((int)objPosition.getX()+1,(int)objPosition.getY());
+            count ++;
+        }
+        if(partY <0.02){
+            checkPos = new Point((int)objPosition.getX(),(int)objPosition.getY()-1);
+            count ++;
+        }
+        if(partY >0.98){
+            checkPos = new Point((int)objPosition.getX(),(int)objPosition.getY()+1);
+            count ++;
+        }
+
+        if(count<2) {
+            ray.darkerMe = false;
+            if (!checkPos.equals(new Point(0, 0))) {
+                if (checkPos.x >= 0 && checkPos.x < 128) {
+                    if (checkPos.y >= 0 && checkPos.y < 128) {
+                        ray.darkerMe = !ray.game.mapa.light[(int) checkPos.getX()][(int) checkPos.getY()];
+                    }
+                }
+            }
+        }
+
+        return !ray.game.mapa.light[(int) objPosition.getX()][(int) objPosition.getY()] || ray.darkerMe;
+    }
     public void setLen(double len){
         this.len = (int) (len*10);
     }
@@ -34,6 +77,7 @@ public class Column {
             }
         }
 
+        boolean darkMe = makeLight(ray);
 
         for(int y=minY+deltaYa;y<minY+hei;y++) {
 
@@ -55,7 +99,12 @@ public class Column {
 
                                             if(column.len>this.len) {
                                                 if (relX >= 0 && relX < 64) {
-                                                    final int color = tex.bufferXYS[(int) yR][(int) relX];
+                                                    int color = tex.bufferXYS[(int) yR][(int) relX];
+
+                                                    if(!ray.game.mapa.light[(int) objPosition.getX()][(int) objPosition.getY()]){
+                                                        color = ray.game.floor.bufferXYNL[(int) yR][(int) relX];
+                                                    }
+
                                                     if (color != -16777216 || half) {
                                                         ray.foo[y][x] = color;
                                                         ray.foo[y][x] = color;
@@ -70,14 +119,23 @@ public class Column {
 
                         }else {
                             if (darker) {
-                                final int color = tex.bufferXYS[(int) yR][index];
+                                int color = tex.bufferXYS[(int) yR][index];
                                 if (color != -16777216 || half) {
+
+                                    if( darkMe ){
+                                        color = tex.bufferXYNL[(int) yR][(int) index];
+                                    }
+
                                     ray.foo[y][rect.x] = color;
                                     ray.foo[y][rect.x + 1] = color;
                                 }
                             } else {
                                 int color = tex.bufferXY[(int) yR][index];
                                 if (color != -16777216 || half) {
+
+                                    if( darkMe ){
+                                        color = tex.bufferXYNL[(int) yR][(int) index];
+                                    }
 
                                     ray.foo[y][rect.x + 1] = color;
                                     ray.foo[y][rect.x] = color;

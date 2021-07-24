@@ -8,7 +8,39 @@ public class Collision {
         this.mapa = mapa;
     }
 
-    public boolean collide(Point2D position){
-        return mapa.mapa[(int)position.getX()][(int)position.getY()]>0;
+    public boolean collide(Point2D position) {
+
+        if (mapa.mapa[(int) position.getX()][(int) position.getY()] > 0) {
+            boolean decyzja;
+            int type = mapa.mapa[(int) position.getX()][(int) position.getY()];
+
+            final double partX = (position.getX() - (int) position.getX());
+            final double partY = (position.getY() - (int) position.getY());
+
+            switch (type) {
+                case 3:
+                    decyzja = partX >=0.375 && partX <= 0.625 && partY >=0.375 && partY <= 0.625;
+                    break;
+                case 7:
+                    decyzja = partX > partY;
+                    break;
+                case 8:
+                    decyzja = partX < partY;
+                    break;
+                case 9:
+                    decyzja = partY > 1 - partX;
+                    break;
+                case 10:
+                    decyzja = partY < 1 - partX;
+                    break;
+                default:
+                    decyzja = true;
+                    break;
+            }
+
+            return decyzja;
+        } else {
+            return false;
+        }
     }
 }

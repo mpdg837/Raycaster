@@ -1,10 +1,7 @@
 package Raycaster.Display.Raycaster;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 public class Texture {
 
@@ -12,10 +9,11 @@ public class Texture {
 
     public final int[][] bufferXY;
     public final int[][] bufferXYS;
+    public final int[][] bufferXYNL;
 
     public final BufferedImage textureMain;
     public final BufferedImage textureMainS;
-
+    public final BufferedImage textureMainNL;
     public Texture(BufferedImage img){
 
             Image texMainScaled = img.getScaledInstance(size,size,Image.SCALE_FAST);
@@ -29,12 +27,20 @@ public class Texture {
             Graphics grphxb = textureMainS.getGraphics();
             grphxb.drawImage(texMainScaled,0,0,null);
 
-            grphxb.setColor(new Color(0,0,0,96));
+            grphxb.setColor(new Color(0,0,0,64));
+            grphxb.fillRect(0,0,Texture.size,Texture.size);
+
+            textureMainNL = new BufferedImage(size,size,BufferedImage.TYPE_3BYTE_BGR);
+
+            grphxb = textureMainNL.getGraphics();
+            grphxb.drawImage(texMainScaled,0,0,null);
+
+            grphxb.setColor(new Color(0,0,0,196));
             grphxb.fillRect(0,0,Texture.size,Texture.size);
 
                 bufferXY = new int[size][size];
                 bufferXYS = new int[size][size];
-
+                bufferXYNL = new int[size][size];
 
                 for(int x=0;x<size;x++){
                     for(int y=0;y<size;y++){
@@ -43,6 +49,9 @@ public class Texture {
 
                         color = textureMainS.getRGB(x,y);
                         bufferXYS[y][x] = color;
+
+                        color = textureMainNL.getRGB(x,y);
+                        bufferXYNL[y][x] = color;
                     }
                 }
 

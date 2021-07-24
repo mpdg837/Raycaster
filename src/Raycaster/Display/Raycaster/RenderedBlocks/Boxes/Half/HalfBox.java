@@ -1,4 +1,4 @@
-package Raycaster.Display.Raycaster.RenderedBlocks.Boxes;
+package Raycaster.Display.Raycaster.RenderedBlocks.Boxes.Half;
 
 import Raycaster.Display.Raycaster.Column;
 import Raycaster.Display.Raycaster.Raycasting;

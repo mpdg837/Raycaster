@@ -1,6 +1,7 @@
 package Raycaster.Display;
 
 import Raycaster.Display.Raycaster.Raycasting;
+import Raycaster.Display.UI.ScreenSprite;
 import Raycaster.Raycaster;
 
 import java.awt.*;

@@ -1,4 +1,6 @@
-package Raycaster.Display;
+package Raycaster.Display.UI;
+
+import Raycaster.Display.Render;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

@@ -1,9 +1,9 @@
 package Raycaster.Display.Raycaster;
 
 import Raycaster.Display.Raycaster.RenderedBlocks.*;
-import Raycaster.Display.Raycaster.RenderedBlocks.Boxes.Box;
-import Raycaster.Display.Raycaster.RenderedBlocks.Boxes.HalfBox;
-import Raycaster.Display.Raycaster.RenderedBlocks.Boxes.ObjColumn;
+import Raycaster.Display.Raycaster.RenderedBlocks.Boxes.*;
+import Raycaster.Display.Raycaster.RenderedBlocks.Boxes.Half.HalfBox;
+import Raycaster.Display.Raycaster.RenderedBlocks.Boxes.Half.HalfQuaterBox;
 import Raycaster.Display.Raycaster.RenderedBlocks.Sprites.Sprite;
 import Raycaster.Display.Raycaster.RenderedBlocks.Sprites.SpriteX;
 import Raycaster.Display.Raycaster.RenderedBlocks.Sprites.SpriteXY;
@@ -45,6 +45,8 @@ public class Raycasting {
     private final Sprite sprite;
     private final Triangle tria;
     private final SpriteXY sprXY;
+    private final QuaterBox quFull;
+    private final HalfQuaterBox quHalf;
 
     public ArrayList<Column> columns;
     public ArrayList<SpriteQueue> sprites;
@@ -82,6 +84,8 @@ public class Raycasting {
         sprite = new Sprite(this);
         tria = new Triangle(this);
         sprXY = new SpriteXY(this);
+        quFull = new QuaterBox(this);
+        quHalf = new HalfQuaterBox(this);
 
         rayHalfBlocked = new boolean[320];
 
@@ -252,6 +256,68 @@ public class Raycasting {
                                         floor.floor(punkta, len);
 
                                     }
+
+                                    break;
+                                case 12:
+                                case 13:
+                                case 14:
+                                    case 15:
+                                        int typeA=0;
+                                        switch (mapa[(int) analysePos.getX()][(int) analysePos.getY()]){
+                                            case 12:
+                                               typeA = 0;
+                                                break;
+
+                                            case 13:
+                                                typeA = 1;
+                                                break;
+                                            case 14:
+                                                typeA = 2;
+                                                break;
+                                            case 15:
+                                                typeA = 3;
+                                                break;
+                                        }
+
+                                    if(quFull.drawBox(punkta, len,columns,foo,typeA)) len = maxLen;
+                                    else{
+                                        if (len < 30 && floorRay) {
+                                            floor.floor(punkta, len);
+
+                                        }
+                                    }
+
+                                    break;
+                                case 16:
+                                case 17:
+                                case 18:
+                                case 19:
+                                    int typeB=0;
+                                    switch (mapa[(int) analysePos.getX()][(int) analysePos.getY()]){
+                                        case 16:
+                                            typeB = 0;
+                                            break;
+
+                                        case 17:
+                                            typeB = 1;
+                                            break;
+                                        case 18:
+                                            typeB = 2;
+                                            break;
+                                        case 19:
+                                            typeB = 3;
+                                            break;
+                                    }
+
+                                    if(largePointAnalyse.getX() != largeLastPointAnalyse.getX() || largePointAnalyse.getY() != largeLastPointAnalyse.getY()) {
+                                        if(quHalf.drawBox(nStep, punkta, len,typeB)) largeLastPointAnalyse = largePointAnalyse;
+                                    }
+
+                                    if (len < 30 && floorRay) {
+                                        floor.floor(punkta, len);
+
+                                    }
+
 
                                     break;
                                 default:

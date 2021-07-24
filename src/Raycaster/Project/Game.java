@@ -83,6 +83,16 @@ public class Game extends Interaction {
         mapa.mapa[70][65] =8;
         mapa.mapa[71][64] =11;
 
+        mapa.mapa[61][69] =12;
+        mapa.mapa[61][67] =13;
+        mapa.mapa[61][65] =14;
+        mapa.mapa[61][63] =15;
+
+        mapa.mapa[74][69] =16;
+        mapa.mapa[74][67] =17;
+        mapa.mapa[74][65] =18;
+        mapa.mapa[74][63] =19;
+
         for(int x=61;x<70;x++) {
             for (int y = 61; y < 63; y++) {
                 mapa.light[x][y] = false;

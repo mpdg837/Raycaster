@@ -54,7 +54,7 @@ public class QuaterBox {
                 // Wyznaczenie tekstury
 
                 final double zet = ray.tempCosB * len;
-                final int wallHeight = (int) (Raycasting.renderHeightConstant * height / zet);
+                final int wallHeight = (int) (ray.renderHeightConstant * height / zet);
 
                 final Column column = new Column();
 

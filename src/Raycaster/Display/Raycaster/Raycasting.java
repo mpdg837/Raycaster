@@ -20,7 +20,7 @@ public class Raycasting {
 
     public Game game;
 
-    public static double renderHeightConstant = 30;
+    public double renderHeightConstant = 30;
     public double myAngle = Math.toRadians(90);
 
     private static final double angleDelta = Math.toRadians(15);
@@ -63,6 +63,7 @@ public class Raycasting {
     public double partY;
     public int posX;
     public int posY;
+
     public Raycasting(Game game){
 
         this.game = game;
@@ -133,7 +134,17 @@ public class Raycasting {
             Point lastPointOfMap = new Point(0,0);
             boolean floorRay = false;
 
-            for(double angle = myAngle - angleDelta;angle<myAngle+angleDelta;angle +=angleStep){
+            double actAngleDelta = angleDelta;
+            double actStep = angleStep;
+            renderHeightConstant = 30;
+
+            if (game.zoom>1){
+                actAngleDelta = angleDelta/game.zoom;
+                actStep = angleStep/game.zoom;
+                renderHeightConstant=30*game.zoom;
+            }
+
+            for(double angle = myAngle - actAngleDelta ;angle<myAngle+actAngleDelta;angle +=actStep){
 
                 floorRay = !floorRay;
 
@@ -385,10 +396,22 @@ public class Raycasting {
         int[] pixels = new int[width * height];
 
         int n = 0;
+
+
+        double scale = (double) height/(double)(height+game.deltaY);
+        int deltaM = game.deltaY;
+
+        if(game.deltaY<0){
+            deltaM = 0;
+            scale = (double) height/(double)(height-game.deltaY);
+        }
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
+                int ny = (int)((y+deltaM)*scale);
 
-                pixels[n] = img[y][x];
+                if(ny>=0 && ny<height) {
+                    pixels[n] = img[ny][x];
+                }
                 n++;
             }
         }

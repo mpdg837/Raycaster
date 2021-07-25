@@ -82,7 +82,6 @@ public class Column {
         for(int y=minY+deltaYa;y<minY+hei;y++) {
 
 
-
                 if (y >= 0 && rect.x >= 0) {
                     if (y < ray.game.render.renderSize.getY() && rect.x < ray.game.render.renderSize.getX()) {
                         if(spriteReduction){

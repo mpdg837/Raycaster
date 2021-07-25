@@ -12,6 +12,7 @@ import Raycaster.Player.Transform;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 import java.io.File;
 import java.io.IOException;
@@ -20,6 +21,10 @@ public class Game extends Interaction {
 
 
     public Render render;
+
+    public double zoom;
+    public int deltaY;
+    public double angle;
 
     public Transform playerTransform;
     public Map mapa;
@@ -31,7 +36,6 @@ public class Game extends Interaction {
     public final Texture ceiling;
     public final SkyBox sky;
 
-    boolean oka=true;
 
     public Game(Input input) throws IOException{
         super(input);
@@ -114,9 +118,7 @@ public class Game extends Interaction {
 
     int timer = 0;
 
-    public void update() {
-
-
+    void walking(){
         Point2D lastPos = playerTransform.postion;
 
         double speed = 0.4;
@@ -131,19 +133,43 @@ public class Game extends Interaction {
             playerTransform.translate(Transform.getRight(),speed);
         }
 
+        Collision coll = new Collision(mapa);
+        if(coll.collide(playerTransform.postion)){
+            playerTransform.postion =lastPos;
+        }
+    }
+
+    void cameraRot(){
         Point pos = input.getMousePos();
 
-            if (pos.x > input.centerMousePos.x) {
-                pos.x = input.centerMousePos.x;
-            }
+        if (pos.x > Input.centerMousePos.x) {
+            pos.x = Input.centerMousePos.x;
+        }
+        if (pos.y > Input.centerMousePos.y) {
+            pos.y = Input.centerMousePos.y;
+        }
 
-            double delta = (double)pos.x / (double) Input.centerMousePos.x * 0.15;
+        double delta = (double)pos.x / (double) Input.centerMousePos.x * 0.15;
+        double deltay = (double)pos.y / (double) Input.centerMousePos.y * 0.15;
 
-            if (pos.x > 0) {
-                playerTransform.rotate(0, delta);
-            } else if (pos.x < 0) {
-                playerTransform.rotate(0, delta);
+        if (pos.x > 0) {
+            playerTransform.rotate(0, delta);
+        } else if (pos.x < 0) {
+            playerTransform.rotate(0, delta);
+        }
+
+        if (pos.y > 0) {
+            if(angle<1.7){
+                angle+= deltay;
             }
+        } else if (pos.y < 0) {
+            if(angle>-1.7){
+                angle+= deltay;
+            }
+        }
+
+        deltaY = (int)(600 * Math.sin(angle));
+
 
         if(timer ==3) {
             input.centerMouse();
@@ -151,10 +177,26 @@ public class Game extends Interaction {
         }
         timer++;
 
-        Collision coll = new Collision(mapa);
-        if(coll.collide(playerTransform.postion)){
-            playerTransform.postion =lastPos;
+
+    }
+
+    public void update() {
+
+        walking();
+        cameraRot();
+
+        if(input.getKey(KeyEvent.VK_E)){
+            if(zoom<3) {
+                zoom += 0.15;
+
+            }
+        }else {
+            if(zoom>1) {
+                zoom -= 0.2;
+
+            }
         }
+
     }
 
 }

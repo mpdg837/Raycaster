@@ -31,7 +31,7 @@ public class SkyBox {
 
     public int[][] addSkybox(int[][] foo){
        for(int x=0;x<318;x++){
-           for(int y=3;y<120;y++){
+           for(int y=3;y<160;y++){
                 if(foo[y*2][x*2] == 0) {
                     foo[y * 2][x * 2] = bufferXY[y][x];
                     foo[y * 2 + 1][x * 2] = bufferXY[y][x];

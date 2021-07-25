@@ -134,6 +134,7 @@ public class Raycasting {
             Point lastPointOfMap = new Point(0,0);
             boolean floorRay = false;
 
+
             double actAngleDelta = angleDelta;
             double actStep = angleStep;
             renderHeightConstant = 30;
@@ -175,8 +176,15 @@ public class Raycasting {
                         if (inside()) {
                             switch (mapa[(int) analysePos.getX()][(int) analysePos.getY()]){
                                 case 1:
-                                    box.drawBox(punkta, len,columns,foo);
-                                    len = maxLen;
+
+                                    if(box.drawBox(punkta, len,columns,foo)) len = maxLen;
+                                    else{
+                                        if (len < 30 && floorRay) {
+                                            floor.floor(punkta, len);
+
+                                        }
+                                    }
+
                                     break;
                                 case 2:
 

@@ -35,6 +35,8 @@ public class Game extends Interaction {
     public final Texture ceiling;
     public final SkyBox sky;
 
+    public final Texture destroyed;
+
     public final Camera camera = new Camera();
 
     public Game(Input input) throws IOException{
@@ -44,7 +46,7 @@ public class Game extends Interaction {
 
         playerTransform = new Transform();
 
-
+            destroyed = new Texture(ImageIO.read(new File("destroyed.png")),false);
             texture = new Texture(ImageIO.read(new File("texture.png")),false);
             floor = new Texture(ImageIO.read(new File("floor.png")),false);
             ceiling = new Texture(ImageIO.read(new File("floor.png")),false);
@@ -79,6 +81,7 @@ public class Game extends Interaction {
             mapa.mapa[60+x][70] = 1;
             mapa.mapa[60][60+x] = 1;
             mapa.mapa[75][60+x] = 1;
+            mapa.HP[75][60+x]=5;
         }
 
         mapa.mapa[65][65] = 1;
@@ -113,6 +116,8 @@ public class Game extends Interaction {
                 mapa.light[x][y] = false;
             }
         }
+
+        mapa.HP[65][65]=5;
 
     }
 

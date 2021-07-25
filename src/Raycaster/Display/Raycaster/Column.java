@@ -15,6 +15,7 @@ public class Column {
     public int len;
     public boolean spriteReduction = false;
 
+    public boolean destroyed;
 
     boolean makeLight(Raycasting ray){
 
@@ -59,6 +60,10 @@ public class Column {
         this.len = (int) (len*10);
     }
     void makeColumn(int nStep,Raycasting ray,int n,Texture tex,boolean blockColumn){
+
+        if(destroyed){
+            tex = ray.game.destroyed;
+        }
         final double deltaY = Texture.size/rect.getHeight();
         double yR =0;
 
@@ -94,24 +99,25 @@ public class Column {
 
                                         if (x >= 0 && x < ray.game.render.renderSize.getX()) {
 
-                                            Column column = ray.columns.get(x/2);
+                                            if(x/2<ray.columns.size()) {
+                                                Column column = ray.columns.get(x / 2);
 
-                                            if(column.len>this.len) {
-                                                if (relX >= 0 && relX < 64) {
-                                                    int color = tex.bufferXYS[(int) yR][(int) relX];
+                                                if (column.len > this.len) {
+                                                    if (relX >= 0 && relX < 64) {
+                                                        int color = tex.bufferXYS[(int) yR][(int) relX];
 
-                                                    if(!ray.game.mapa.light[(int) objPosition.getX()][(int) objPosition.getY()]){
-                                                        color = ray.game.floor.bufferXYNL[(int) yR][(int) relX];
-                                                    }
+                                                        if (!ray.game.mapa.light[(int) objPosition.getX()][(int) objPosition.getY()]) {
+                                                            color = ray.game.floor.bufferXYNL[(int) yR][(int) relX];
+                                                        }
 
-                                                    if (color != -16777216 || half || !tex.transparency) {
+                                                        if (color != -16777216 || half || !tex.transparency) {
 
-                                                        ray.foo[y][x] = color;
-                                                        ray.foo[y][x] = color;
+                                                            ray.foo[y][x] = color;
+                                                            ray.foo[y][x] = color;
+                                                        }
                                                     }
                                                 }
                                             }
-
                                         }
 
                                     relX += relDelta;

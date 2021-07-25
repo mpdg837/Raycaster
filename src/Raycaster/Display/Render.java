@@ -93,18 +93,19 @@ public class Render extends TimerTask {
                     game.update();
                     game.input.resetKey();
 
-                    sprites.draw(rayMaker.bufferImg.getGraphics());
+                    sprites.draw(rayMaker.bufferImg.getGraphics(),timeStart);
+
+
+
 
                     drawInside.drawImage(rayMaker.bufferImg, 0, 0, saveRaycaster.getWidth(), saveRaycaster.getHeight() , saveRaycaster);
 
-
                     final long timeEnd = System.nanoTime()/1000000;
-
-                    deltaRenderTime = (int)(timeEnd - timeStart);
+                    this.deltaRenderTime = (int)(timeEnd - timeStart);
 
                     System.out.println(deltaRenderTime);
-                    if(deltaRenderTime > deltaTime){
-                        deltaRenderTime = deltaTime;
+                    if(this.deltaRenderTime > deltaTime){
+                        this.deltaRenderTime = deltaTime;
                     }
 
 

@@ -138,10 +138,10 @@ public class Raycasting {
             double actStep = angleStep;
             renderHeightConstant = 30;
 
-            if (game.zoom>1){
-                actAngleDelta = angleDelta/game.zoom;
-                actStep = angleStep/game.zoom;
-                renderHeightConstant=30*game.zoom;
+            if (game.camera.zoom>1){
+                actAngleDelta = angleDelta/game.camera.zoom;
+                actStep = angleStep/game.camera.zoom;
+                renderHeightConstant=30*game.camera.zoom;
             }
 
             for(double angle = myAngle - actAngleDelta ;angle<myAngle+actAngleDelta;angle +=actStep){
@@ -376,7 +376,7 @@ public class Raycasting {
 
             }
 
-            foo = game.sky.addSkybox(foo);
+
 
             array_rasterToBuffer(foo);
 
@@ -398,12 +398,12 @@ public class Raycasting {
         int n = 0;
 
 
-        double scale = (double) height/(double)(height+game.deltaY);
-        int deltaM = game.deltaY;
+        double scale = (double) height/(double)(height+game.camera.deltaY);
+        int deltaM = game.camera.deltaY;
 
-        if(game.deltaY<0){
+        if(game.camera.deltaY<0){
             deltaM = 0;
-            scale = (double) height/(double)(height-game.deltaY);
+            scale = (double) height/(double)(height-game.camera.deltaY);
         }
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
@@ -415,6 +415,8 @@ public class Raycasting {
                 n++;
             }
         }
+
+        pixels = game.sky.addSkybox(pixels);
 
         final WritableRaster rast = bufferImg.getRaster();
 

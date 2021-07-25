@@ -29,14 +29,16 @@ public class SkyBox {
 
     }
 
-    public int[][] addSkybox(int[][] foo){
+    public int[] addSkybox(int[] foo){
        for(int x=0;x<318;x++){
-           for(int y=3;y<160;y++){
-                if(foo[y*2][x*2] == 0) {
-                    foo[y * 2][x * 2] = bufferXY[y][x];
-                    foo[y * 2 + 1][x * 2] = bufferXY[y][x];
-                    foo[y * 2][x * 2 + 1] = bufferXY[y][x];
-                    foo[y * 2 + 1][x * 2 + 1] = bufferXY[y][x];
+           for(int y=5;y<235;y++){
+
+               int index = (y*2)*640 + x*2;
+                if(foo[index] == 0) {
+                    foo[(y*2)*640 + x*2] = bufferXY[y][x];
+                    foo[(y*2+1)*640 + x*2] = bufferXY[y][x];
+                    foo[(y*2)*640 + x*2+1] = bufferXY[y][x];
+                    foo[(y*2+1)*640 + x*2+1] = bufferXY[y][x];
                 }
            }
        }

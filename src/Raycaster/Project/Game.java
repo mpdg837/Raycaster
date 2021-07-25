@@ -3,6 +3,7 @@ package Raycaster.Project;
 import Raycaster.Display.Raycaster.SkyBox;
 import Raycaster.Display.Raycaster.Texture;
 import Raycaster.Display.Render;
+import Raycaster.Player.Camera;
 import Raycaster.Player.Input.Input;
 import Raycaster.Player.Input.Interaction;
 import Raycaster.Player.Collision;
@@ -22,9 +23,7 @@ public class Game extends Interaction {
 
     public Render render;
 
-    public double zoom;
-    public int deltaY;
-    public double angle;
+
 
     public Transform playerTransform;
     public Map mapa;
@@ -36,6 +35,7 @@ public class Game extends Interaction {
     public final Texture ceiling;
     public final SkyBox sky;
 
+    public final Camera camera = new Camera();
 
     public Game(Input input) throws IOException{
         super(input);
@@ -116,7 +116,6 @@ public class Game extends Interaction {
 
     }
 
-    int timer = 0;
 
     void walking(){
         Point2D lastPos = playerTransform.postion;
@@ -139,60 +138,21 @@ public class Game extends Interaction {
         }
     }
 
-    void cameraRot(){
-        Point pos = input.getMousePos();
 
-        if (pos.x > Input.centerMousePos.x) {
-            pos.x = Input.centerMousePos.x;
-        }
-        if (pos.y > Input.centerMousePos.y) {
-            pos.y = Input.centerMousePos.y;
-        }
-
-        double delta = (double)pos.x / (double) Input.centerMousePos.x * 0.15;
-        double deltay = (double)pos.y / (double) Input.centerMousePos.y * 0.15;
-
-        if (pos.x > 0) {
-            playerTransform.rotate(0, delta);
-        } else if (pos.x < 0) {
-            playerTransform.rotate(0, delta);
-        }
-
-        if (pos.y > 0) {
-            if(angle<1.7){
-                angle+= deltay;
-            }
-        } else if (pos.y < 0) {
-            if(angle>-1.7){
-                angle+= deltay;
-            }
-        }
-
-        deltaY = (int)(600 * Math.sin(angle));
-
-
-        if(timer ==3) {
-            input.centerMouse();
-            timer = 0;
-        }
-        timer++;
-
-
-    }
 
     public void update() {
 
         walking();
-        cameraRot();
+        camera.cameraRot(this);
 
         if(input.getKey(KeyEvent.VK_E)){
-            if(zoom<3) {
-                zoom += 0.15;
+            if(camera.zoom<3) {
+                camera.zoom += 0.15;
 
             }
         }else {
-            if(zoom>1) {
-                zoom -= 0.2;
+            if(camera.zoom>1) {
+                camera.zoom -= 0.2;
 
             }
         }

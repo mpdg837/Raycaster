@@ -93,6 +93,8 @@ public class Render extends TimerTask {
                     game.update();
                     game.input.resetKey();
 
+                    sprites.draw(rayMaker.bufferImg.getGraphics());
+
                     drawInside.drawImage(rayMaker.bufferImg, 0, 0, saveRaycaster.getWidth(), saveRaycaster.getHeight() , saveRaycaster);
 
 

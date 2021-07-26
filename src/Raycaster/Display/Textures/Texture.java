@@ -1,9 +1,11 @@
-package Raycaster.Display;
+package Raycaster.Display.Textures;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Texture {
+
+    public static final int black = -16777216;
 
     public static int size=64;
 

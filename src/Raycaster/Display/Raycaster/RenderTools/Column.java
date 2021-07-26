@@ -1,7 +1,7 @@
 package Raycaster.Display.Raycaster.RenderTools;
 
 import Raycaster.Display.Raycaster.Raycasting;
-import Raycaster.Display.Texture;
+import Raycaster.Display.Textures.Texture;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
@@ -93,7 +93,7 @@ public class Column {
                                                             color = ray.game.floor.bufferXYNL[(int) yR][(int) relX];
                                                         }
 
-                                                        if (color != -16777216 || half || !tex.transparency) {
+                                                        if (color != Texture.black || half || !tex.transparency) {
 
                                                             ray.foo[y][x] = color;
                                                             ray.foo[y][x] = color;
@@ -109,7 +109,7 @@ public class Column {
                         }else {
                             if (darker) {
                                 int color = tex.bufferXYS[(int) yR][index];
-                                if (color != -16777216 || half || !tex.transparency) {
+                                if (color != Texture.black|| half || !tex.transparency) {
 
 
                                     if( darkMe ){
@@ -121,7 +121,7 @@ public class Column {
                                 }
                             } else {
                                 int color = tex.bufferXY[(int) yR][index];
-                                if (color != -16777216 || half || !tex.transparency) {
+                                if (color != Texture.black || half || !tex.transparency) {
 
 
                                     if( darkMe ){

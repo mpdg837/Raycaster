@@ -1,7 +1,7 @@
 package Raycaster.Display.Raycaster.RenderTools;
 
 import Raycaster.Display.Raycaster.Raycasting;
-import Raycaster.Display.Texture;
+import Raycaster.Display.Textures.Texture;
 
 import java.awt.*;
 
@@ -52,47 +52,44 @@ public class Floor {
                             if (ray.game.texture != null) {
                                 if (punkta.x + 4 < ray.game.render.renderSize.x && punkta.y + 4 < ray.game.render.renderSize.y) {
                                     if (ray.game.mapa.floor[(int) ray.analysePos.getX()][(int) ray.analysePos.getY()] > 0) {
-                                        int colorA = ray.game.floor.bufferXY[texY][texX];
+
+                                        final Texture myTex = ray.game.texture.textures[ray.game.mapa.floor[(int) ray.analysePos.getX()][(int) ray.analysePos.getY()]];
+                                        int colorA = myTex.bufferXY[texY][texX];
 
                                         if (colorA != 0) {
 
                                             if (!ray.game.mapa.light[(int) ray.analysePos.getX()][(int) ray.analysePos.getY()]) {
 
-                                                colorA = ray.game.floor.bufferXYNL[texY][texX];
+                                                colorA = myTex.bufferXYNL[texY][texX];
                                             }
 
-                                            if (len > 4) {
-                                                drawBigPixel(colorA, new Point(punkta.x, punkta.y ));
-                                                drawBigPixel(colorA+1, new Point(punkta.x + 2, punkta.y));
-                                            } else {
+
                                                 drawBigPixel(colorA, new Point(punkta.x, punkta.y ));
                                                 drawBigPixel(colorA, new Point(punkta.x + 2, punkta.y ));
                                                 drawBigPixel(colorA, new Point(punkta.x, punkta.y  + 2));
                                                 drawBigPixel(colorA, new Point(punkta.x + 2, punkta.y + 2));
-                                            }
+
 
 
                                         }
                                     }
                                     if (ray.game.mapa.ceciling[(int) ray.analysePos.getX()][(int) ray.analysePos.getY()] > 0) {
-                                        int colorB = ray.game.ceiling.bufferXYS[texY][texX];
+                                        final Texture myTex = ray.game.texture.textures[ray.game.mapa.ceciling[(int) ray.analysePos.getX()][(int) ray.analysePos.getY()]];
+                                        int colorB = myTex.bufferXYS[texY][texX];
 
 
                                         if (colorB != 0) {
 
                                             if(!ray.game.mapa.light[(int) ray.analysePos.getX()][(int) ray.analysePos.getY()]) {
-                                                colorB = ray.game.ceiling.bufferXYNL[texY][texX];
+                                                colorB = myTex.bufferXYNL[texY][texX];
                                             }
 
-                                            if (len > 4) {
-                                                drawBigPixel(colorB, new Point(punkta.x, punkta.y - wallHeight));
-                                                drawBigPixel(colorB+1, new Point(punkta.x + 2, punkta.y - wallHeight));
-                                            } else {
+
                                                 drawBigPixel(colorB, new Point(punkta.x, punkta.y - wallHeight));
                                                 drawBigPixel(colorB, new Point(punkta.x + 2, punkta.y - wallHeight));
                                                 drawBigPixel(colorB, new Point(punkta.x, punkta.y - wallHeight + 2));
                                                 drawBigPixel(colorB, new Point(punkta.x + 2, punkta.y - wallHeight + 2));
-                                            }
+
                                         }
                                     }
                                 }

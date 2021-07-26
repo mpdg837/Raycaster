@@ -1,6 +1,6 @@
 package Raycaster.Player.Input;
 
-import Raycaster.Display.Raycaster.RenderedBlocks.DamageSystem.DamageSystem;
+import Raycaster.Display.Raycaster.DamageSystem.DamageSystem;
 
 public class Interaction {
 

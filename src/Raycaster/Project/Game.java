@@ -1,8 +1,9 @@
 package Raycaster.Project;
 
 import Raycaster.Display.Raycaster.SkyBox;
-import Raycaster.Display.Texture;
+import Raycaster.Display.Textures.Texture;
 import Raycaster.Display.Render;
+import Raycaster.Display.Textures.TexturePack;
 import Raycaster.Player.Camera;
 import Raycaster.Player.Input.Input;
 import Raycaster.Player.Input.Interaction;
@@ -26,8 +27,8 @@ public class Game extends Interaction {
     public Transform playerTransform;
     public Map mapa;
 
-    public final Texture texture;
-    public final Texture sprite;
+    public final TexturePack texture;
+    public final TexturePack sprite;
 
     public final Texture floor;
     public final Texture ceiling;
@@ -45,10 +46,10 @@ public class Game extends Interaction {
         playerTransform = new Transform();
 
             destroyed = new Texture(ImageIO.read(new File("destroyed.png")),false);
-            texture = new Texture(ImageIO.read(new File("texture.png")),false);
+            texture = new TexturePack(ImageIO.read(new File("texture.png")));
             floor = new Texture(ImageIO.read(new File("floor.png")),false);
             ceiling = new Texture(ImageIO.read(new File("floor.png")),false);
-            sprite = new Texture(ImageIO.read(new File("sprite.png")),true);
+            sprite = new TexturePack(ImageIO.read(new File("sprite.png")));
             sky = new SkyBox(ImageIO.read(new File("skybox.jpg")));
     }
 
@@ -56,13 +57,13 @@ public class Game extends Interaction {
 
 
         for(int x=0;x<16;x++){
-            for(int y=0;y<10;y++){
+            for(int y=0;y<16;y++){
                 mapa.floor[60+x][60+y] = 1;
             }
         }
 
         for(int x=0;x<16;x++){
-            for(int y=0;y<10;y++){
+            for(int y=0;y<16;y++){
                 mapa.ceciling[60+x][60+y] = 1;
             }
         }
@@ -76,7 +77,7 @@ public class Game extends Interaction {
 
         for(int x=0;x<16;x++) {
             mapa.mapa[60+x][60] = 1;
-            mapa.mapa[60+x][70] = 1;
+            mapa.mapa[60+x][75] = 1;
             mapa.mapa[60][60+x] = 1;
             mapa.mapa[75][60+x] = 1;
             mapa.HP[75][60+x]=0;

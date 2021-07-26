@@ -4,6 +4,8 @@ import java.util.Arrays;
 
 public class Map {
     public byte[][] mapa = new byte[128][128];
+    public byte[][] textures = new byte[128][128];
+
     public byte[][] HP = new byte[128][128];
 
     public byte[][] ceciling = new byte[128][128];

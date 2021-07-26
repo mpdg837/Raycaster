@@ -12,6 +12,7 @@ import Raycaster.Display.Raycaster.RenderedBlocks.Sprites.Sprite;
 import Raycaster.Display.Raycaster.RenderedBlocks.Sprites.SpriteX;
 import Raycaster.Display.Raycaster.RenderedBlocks.Sprites.SpriteXY;
 import Raycaster.Display.Raycaster.RenderedBlocks.Sprites.SpriteY;
+import Raycaster.Display.Textures.Texture;
 import Raycaster.Project.Game;
 
 import java.awt.*;
@@ -371,7 +372,8 @@ public class Raycasting {
 
             for(Column col : columns) {
 
-                col.render(n, this, game.texture, true);
+                final Texture myTex = game.texture.textures[game.mapa.textures[(int)col.objPosition.x][(int)col.objPosition.y]];
+                col.render(n, this, myTex, true);
                 n++;
             }
 
@@ -379,12 +381,15 @@ public class Raycasting {
             for(n=0;n<sprites.size();n++) {
                 SpriteQueue queue = sprites.get(sprites.size()-1-n);
                     for(int k=queue.getSize()-1;k>=0;k--) {
+
                         final Column columnS = queue.get(k);
 
                         if (columnS.half) {
-                            columnS.render(n,this, game.texture,false);
+                            final Texture myTex = game.texture.textures[game.mapa.textures[(int)columnS.objPosition.x][(int)columnS.objPosition.y]];
+                            columnS.render(n,this, myTex,false);
                         } else {
-                            columnS.render(n,this, game.sprite,false);
+                            final Texture myTex = game.sprite.textures[game.mapa.textures[(int)columnS.objPosition.x][(int)columnS.objPosition.y]];
+                            columnS.render(n,this, myTex,false);
                         }
                     }
 

@@ -1,5 +1,6 @@
-package Raycaster.Display.Raycaster;
+package Raycaster.Display.Raycaster.RenderTools;
 
+import Raycaster.Display.Raycaster.Raycasting;
 import Raycaster.Display.Texture;
 
 import java.awt.*;
@@ -18,45 +19,7 @@ public class Column {
 
     public boolean destroyed;
 
-    boolean makeLight(Raycasting ray){
 
-
-        final double partX = (raycastPosition.getX() - (int) raycastPosition.getX());
-        final double partY = (raycastPosition.getY() - (int) raycastPosition.getY());
-
-        Point checkPos = new Point(0,0);
-        int count = 0;
-
-        if(partX <0.02){
-            checkPos = new Point((int)objPosition.getX()-1,(int)objPosition.getY());
-            count ++;
-        }
-        if(partX > 0.98){
-            checkPos = new Point((int)objPosition.getX()+1,(int)objPosition.getY());
-            count ++;
-        }
-        if(partY <0.02){
-            checkPos = new Point((int)objPosition.getX(),(int)objPosition.getY()-1);
-            count ++;
-        }
-        if(partY >0.98){
-            checkPos = new Point((int)objPosition.getX(),(int)objPosition.getY()+1);
-            count ++;
-        }
-
-        if(count<2) {
-            ray.darkerMe = false;
-            if (!checkPos.equals(new Point(0, 0))) {
-                if (checkPos.x >= 0 && checkPos.x < 128) {
-                    if (checkPos.y >= 0 && checkPos.y < 128) {
-                        ray.darkerMe = !ray.game.mapa.light[(int) checkPos.getX()][(int) checkPos.getY()];
-                    }
-                }
-            }
-        }
-
-        return !ray.game.mapa.light[(int) objPosition.getX()][(int) objPosition.getY()] || ray.darkerMe;
-    }
     public void setLen(double len){
         this.len = (int) (len*10);
     }
@@ -83,17 +46,36 @@ public class Column {
             }
         }
 
-        boolean darkMe = makeLight(ray);
-
-        for(int y=minY+deltaYa;y<minY+hei;y++) {
+        boolean darkMe = Light.makeLight(ray,this);
 
 
-                if (y >= 0 && rect.x >= 0) {
+
+        // Reduktor
+
+        int min=minY+deltaYa;
+        int max=minY+hei;
+
+        if(min<0){
+            yR = -deltaY*min;
+            min = 0;
+
+        }
+        if(max>ray.game.render.renderSize.getY()){
+            max = (int)ray.game.render.renderSize.getY();
+        }
+
+        for(int y=min;y<max;y++) {
+
+
+                if ( rect.x >= 0) {
                     if (y < ray.game.render.renderSize.getY() && rect.x < ray.game.render.renderSize.getX()) {
+
+
+
                         if(spriteReduction){
 
                             double relX = 0 ;
-                            double relDelta = (double) 64/(double)hei;
+                            final double relDelta = (double) 64/(double)hei;
 
 
                                 for (int x = rect.x - (hei / 2); x < rect.x + hei / 2; x++) {
@@ -156,6 +138,8 @@ public class Column {
 
             yR += deltaY;
         }
+
+
     }
 
 

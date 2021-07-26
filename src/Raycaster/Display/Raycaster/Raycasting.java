@@ -1,8 +1,11 @@
 package Raycaster.Display.Raycaster;
 
+import Raycaster.Display.BufferTranslator;
+import Raycaster.Display.Raycaster.RenderTools.Column;
+import Raycaster.Display.Raycaster.RenderTools.Floor;
+import Raycaster.Display.Raycaster.RenderTools.SpriteQueue;
 import Raycaster.Display.Raycaster.RenderedBlocks.*;
 import Raycaster.Display.Raycaster.RenderedBlocks.Boxes.*;
-import Raycaster.Display.Raycaster.RenderedBlocks.Boxes.DamageSystem.DamageSystem;
 import Raycaster.Display.Raycaster.RenderedBlocks.Boxes.Half.HalfBox;
 import Raycaster.Display.Raycaster.RenderedBlocks.Boxes.Half.HalfQuaterBox;
 import Raycaster.Display.Raycaster.RenderedBlocks.Sprites.Sprite;
@@ -388,9 +391,7 @@ public class Raycasting {
 
             }
 
-
-
-            array_rasterToBuffer(foo);
+            bufferImg = BufferTranslator.array_rasterToBuffer(foo,game,bufferImg);
 
 
         }catch (ConcurrentModificationException ignore){
@@ -403,40 +404,7 @@ public class Raycasting {
 
 
 
-    public void array_rasterToBuffer(int[][] img) {
-        final int width = game.render.renderSize.x;
-        final int height = game.render.renderSize.y;
 
-        int[] pixels = new int[width * height];
-
-        int n = 0;
-
-
-        double scale = (double) height/(double)(height+game.camera.deltaY);
-        int deltaM = game.camera.deltaY;
-
-        if(game.camera.deltaY<0){
-            deltaM = 0;
-            scale = (double) height/(double)(height-game.camera.deltaY);
-        }
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                int ny = (int)((y+deltaM)*scale);
-
-                if(ny>=0 && ny<height) {
-                    pixels[n] = img[ny][x];
-                }
-                n++;
-            }
-        }
-
-        pixels = game.sky.addSkybox(pixels);
-
-        final WritableRaster rast = bufferImg.getRaster();
-
-        rast.setDataElements(0, 0, width, height, pixels);
-
-    }
 
 
 }

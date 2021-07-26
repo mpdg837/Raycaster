@@ -1,9 +1,6 @@
 package Raycaster.Player.Input;
 
-import Raycaster.Display.Raycaster.RenderedBlocks.Boxes.DamageSystem.DamageSystem;
-
-import java.awt.*;
-import java.awt.image.BufferedImage;
+import Raycaster.Display.Raycaster.RenderedBlocks.DamageSystem.DamageSystem;
 
 public class Interaction {
 

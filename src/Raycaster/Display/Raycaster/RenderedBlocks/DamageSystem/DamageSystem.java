@@ -1,4 +1,4 @@
-package Raycaster.Display.Raycaster.RenderedBlocks.Boxes.DamageSystem;
+package Raycaster.Display.Raycaster.RenderedBlocks.DamageSystem;
 
 public class DamageSystem {
 

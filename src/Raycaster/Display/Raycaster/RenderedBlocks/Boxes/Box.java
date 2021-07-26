@@ -1,6 +1,6 @@
 package Raycaster.Display.Raycaster.RenderedBlocks.Boxes;
 
-import Raycaster.Display.Raycaster.Column;
+import Raycaster.Display.Raycaster.RenderTools.Column;
 import Raycaster.Display.Raycaster.Raycasting;
 
 import java.awt.*;

@@ -1,7 +1,6 @@
-package Raycaster.Display.Raycaster;
+package Raycaster.Display.Raycaster.RenderTools;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 public class SpriteQueue {
 

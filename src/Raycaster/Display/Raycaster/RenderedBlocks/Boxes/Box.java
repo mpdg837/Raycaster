@@ -15,30 +15,28 @@ public class Box {
         this.ray = ray;
     }
 
-    public boolean pseudoLos(int punkt){
 
-        return (-1)*(punkt-5)*(punkt-15)*(punkt-2*20)*(punkt-30)*(punkt-45) >0;
-    }
     public boolean drawBox(Point punkt, double len, ArrayList<Column> columns, int[][] foo){
 
         boolean ok = false;
         final double height =((Raycasting.maxLen - len));
 
-        final int hp = ray.game.mapa.HP[(int) ray.analysePos.getX()][(int) ray.analysePos.getY()];
+
 
         if (height > 0) {
 
 
             boolean destroy = false;
             boolean decyzja = true;
+            final byte hp = ray.game.mapa.HP[(int) ray.analysePos.getX()][(int) ray.analysePos.getY()];
 
             boolean in = (ray.posY >= hp && ray.posY <= 64 - hp && ray.posX >= hp && ray.posX <= 64 - hp);
-            if(hp>0) {
+            if(hp>1) {
                 if (ray.posY <= hp || ray.posY >= 64-hp) {
-                    decyzja = (pseudoLos(ray.posX)) || in;
+                    decyzja = (ray.game.damage.pseudoLos(ray.posX,hp)) || in;
                     destroy = in;
                 } else {
-                    decyzja = (pseudoLos(ray.posY)) || in;
+                    decyzja = (ray.game.damage.pseudoLos(ray.posY,hp)) || in;
                     destroy = in;
                 }
             }

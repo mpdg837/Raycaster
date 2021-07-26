@@ -1,4 +1,4 @@
-package Raycaster.Display.Raycaster;
+package Raycaster.Display;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

@@ -2,6 +2,7 @@ package Raycaster.Display.Raycaster;
 
 import Raycaster.Display.Raycaster.RenderedBlocks.*;
 import Raycaster.Display.Raycaster.RenderedBlocks.Boxes.*;
+import Raycaster.Display.Raycaster.RenderedBlocks.Boxes.DamageSystem.DamageSystem;
 import Raycaster.Display.Raycaster.RenderedBlocks.Boxes.Half.HalfBox;
 import Raycaster.Display.Raycaster.RenderedBlocks.Boxes.Half.HalfQuaterBox;
 import Raycaster.Display.Raycaster.RenderedBlocks.Sprites.Sprite;
@@ -30,7 +31,7 @@ public class Raycasting {
 
     public double tempCosB;
 
-    private int[][] mapa;
+    private byte[][] mapa;
 
     public Point2D analysePos;
 
@@ -63,6 +64,7 @@ public class Raycasting {
     public double partY;
     public int posX;
     public int posY;
+
 
     public Raycasting(Game game){
 
@@ -144,6 +146,7 @@ public class Raycasting {
                 actStep = angleStep/game.camera.zoom;
                 renderHeightConstant=30*game.camera.zoom;
             }
+
 
             for(double angle = myAngle - actAngleDelta ;angle<myAngle+actAngleDelta;angle +=actStep){
 
@@ -361,7 +364,6 @@ public class Raycasting {
                 nStep+=2;
 
             }
-
             int n=0;
 
             for(Column col : columns) {
@@ -369,6 +371,8 @@ public class Raycasting {
                 col.render(n, this, game.texture, true);
                 n++;
             }
+
+
             for(n=0;n<sprites.size();n++) {
                 SpriteQueue queue = sprites.get(sprites.size()-1-n);
                     for(int k=queue.getSize()-1;k>=0;k--) {
@@ -389,7 +393,9 @@ public class Raycasting {
             array_rasterToBuffer(foo);
 
 
-        }catch (ConcurrentModificationException ignore){}
+        }catch (ConcurrentModificationException ignore){
+
+        }
 
 
 

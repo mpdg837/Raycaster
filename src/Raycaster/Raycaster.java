@@ -48,15 +48,13 @@ public class Raycaster extends Frame {
             game = new Game(input);
 
             java.util.Timer tim = new Timer();
-            try {
+
                 tim.schedule(new Render(false, this, null), Render.deltaTime);
-            } catch (IOException ignore) {
-            }
+
 
             GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
             GraphicsDevice device = env.getDefaultScreenDevice();
 
-            chooseBestDisplayMode(device);
 
         }catch (IOException ignore){
 

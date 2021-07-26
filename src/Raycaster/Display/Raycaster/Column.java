@@ -1,8 +1,9 @@
 package Raycaster.Display.Raycaster;
 
+import Raycaster.Display.Texture;
+
 import java.awt.*;
 import java.awt.geom.Point2D;
-import java.awt.image.BufferedImage;
 
 public class Column {
     public Rectangle rect;
@@ -59,7 +60,7 @@ public class Column {
     public void setLen(double len){
         this.len = (int) (len*10);
     }
-    void makeColumn(int nStep,Raycasting ray,int n,Texture tex,boolean blockColumn){
+    void makeColumn(int nStep, Raycasting ray, int n, Texture tex, boolean blockColumn){
 
         if(destroyed){
             tex = ray.game.destroyed;

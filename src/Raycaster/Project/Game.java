@@ -1,7 +1,7 @@
 package Raycaster.Project;
 
 import Raycaster.Display.Raycaster.SkyBox;
-import Raycaster.Display.Raycaster.Texture;
+import Raycaster.Display.Texture;
 import Raycaster.Display.Render;
 import Raycaster.Player.Camera;
 import Raycaster.Player.Input.Input;
@@ -11,9 +11,7 @@ import Raycaster.Player.Map;
 import Raycaster.Player.Transform;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 import java.io.File;
 import java.io.IOException;
@@ -81,7 +79,7 @@ public class Game extends Interaction {
             mapa.mapa[60+x][70] = 1;
             mapa.mapa[60][60+x] = 1;
             mapa.mapa[75][60+x] = 1;
-            mapa.HP[75][60+x]=5;
+            mapa.HP[75][60+x]=0;
         }
 
         mapa.mapa[65][65] = 1;
@@ -117,7 +115,7 @@ public class Game extends Interaction {
             }
         }
 
-        mapa.HP[65][65]=5;
+        mapa.HP[65][65]=0;
 
     }
 
@@ -125,7 +123,7 @@ public class Game extends Interaction {
     void walking(){
         Point2D lastPos = playerTransform.postion;
 
-        double speed = 0.4;
+        double speed = 0.45;
 
         if (input.getKey(KeyEvent.VK_W)) {
             playerTransform.translate(Transform.getUp(),speed);
@@ -150,18 +148,32 @@ public class Game extends Interaction {
         walking();
         camera.cameraRot(this);
 
-        if(input.getKey(KeyEvent.VK_E)){
-            if(camera.zoom<3) {
+        if (input.getKey(KeyEvent.VK_E)) {
+            if (camera.zoom < 3) {
                 camera.zoom += 0.15;
 
             }
-        }else {
-            if(camera.zoom>1) {
+        } else {
+            if (camera.zoom > 1) {
                 camera.zoom -= 0.2;
 
             }
         }
 
+        tim ++;
+
+        if(tim>60) {
+            tim = 0;
+            if (mapa.HP[65][65] >= 5) {
+                mapa.HP[65][65] = 0;
+                mapa.HP[64][62] = 0;
+            } else {
+                mapa.HP[65][65]++;
+                mapa.HP[64][62]++;
+            }
+        }
     }
+
+    int tim = 0;
 
 }

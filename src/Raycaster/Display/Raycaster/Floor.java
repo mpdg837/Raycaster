@@ -1,7 +1,6 @@
 package Raycaster.Display.Raycaster;
 
-import Raycaster.Display.Raycaster.Raycasting;
-import Raycaster.Display.Raycaster.Texture;
+import Raycaster.Display.Texture;
 
 import java.awt.*;
 

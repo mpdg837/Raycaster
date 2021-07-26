@@ -3,11 +3,11 @@ package Raycaster.Player;
 import java.util.Arrays;
 
 public class Map {
-    public int[][] mapa = new int[128][128];
-    public int[][] HP = new int[128][128];
+    public byte[][] mapa = new byte[128][128];
+    public byte[][] HP = new byte[128][128];
 
-    public int[][] ceciling = new int[128][128];
-    public int[][] floor = new int[128][128];
+    public byte[][] ceciling = new byte[128][128];
+    public byte[][] floor = new byte[128][128];
 
     public boolean[][] light = new boolean[128][128];
 

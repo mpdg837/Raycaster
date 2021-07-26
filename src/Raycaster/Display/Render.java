@@ -16,7 +16,7 @@ public class Render extends TimerTask {
 
     private final static GraphicsDevice device = GraphicsEnvironment
             .getLocalGraphicsEnvironment().getScreenDevices()[0];
-    public final static int deltaTime =24;
+    public final static int deltaTime =33;
 
     public final Point renderSize;
 
@@ -29,7 +29,7 @@ public class Render extends TimerTask {
 
     public int deltaRenderTime;
 
-    public Render(boolean start, Raycaster canvas, Game game) throws IOException{
+    public Render(boolean start, Raycaster canvas, Game game){
 
         renderSize = canvas.resolution;
         sprites = new ScreenSprite(this);
@@ -86,6 +86,9 @@ public class Render extends TimerTask {
                     final long timeStart = System.nanoTime()/1000000;
                     final Raycasting rayMaker = new Raycasting(game);
 
+                    System.out.print("\033[H\033[2J");
+                    System.out.flush();
+
                     rayMaker.draw();
 
                     saveRaycaster.requestFocus();
@@ -97,16 +100,15 @@ public class Render extends TimerTask {
 
 
 
-
                     drawInside.drawImage(rayMaker.bufferImg, 0, 0, saveRaycaster.getWidth(), saveRaycaster.getHeight() , saveRaycaster);
 
                     final long timeEnd = System.nanoTime()/1000000;
                     this.deltaRenderTime = (int)(timeEnd - timeStart);
 
-                    System.out.println(deltaRenderTime);
                     if(this.deltaRenderTime > deltaTime){
                         this.deltaRenderTime = deltaTime;
                     }
+
 
 
                 }
@@ -118,8 +120,8 @@ public class Render extends TimerTask {
         }catch (ConcurrentModificationException ignore){}
 
         Timer tim = new Timer();
-        try {
-            tim.schedule(new Render(start, saveRaycaster, game), Render.deltaTime - deltaRenderTime);
-        }catch (IOException ignore){}
+
+        tim.schedule(new Render(start, saveRaycaster, game), Render.deltaTime - deltaRenderTime);
+
     }
 }

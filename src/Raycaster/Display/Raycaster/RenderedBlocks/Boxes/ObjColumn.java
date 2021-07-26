@@ -27,20 +27,50 @@ public class ObjColumn {
 
 
 
+            final byte hp = ray.game.mapa.HP[(int) ray.analysePos.getX()][(int) ray.analysePos.getY()];
 
+            final boolean in = ray.posX >=24+hp && ray.posX <= 40-hp && ray.posY >=24+hp && ray.posY <= 40-hp;
+            final boolean nearIn = ray.posX >=24 && ray.posX <= 40 && ray.posY >=24 && ray.posY <= 40;
 
-            if( ray.partX >=0.375 && ray.partX <= 0.625 && ray.partY >=0.375 && ray.partY <= 0.625) {
+            boolean decyzja=false;
+            boolean destroy=false;
+
+            if(hp>1 && nearIn) {
+                if (ray.posY <= hp+24 || ray.posY >= 40-hp) {
+                    decyzja = (ray.game.damage.pseudoLos(ray.posX,hp)) || in;
+                    destroy = in;
+                } else {
+                    decyzja = (ray.game.damage.pseudoLos(ray.posY,hp)) || in;
+                    destroy = in;
+                }
+            }else if(nearIn){
+                decyzja = true;
+                destroy = false;
+            }
+
+            if( decyzja ) {
 
                 boolean cien = false;
 
 
-                int indexTex;
-                if (ray.posY == 24 || ray.posY == 23 || ray.posY == 40 || ray.posY == 39) {
-                    cien = true;
-                    indexTex = ray.posX;
-                } else {
-                    indexTex = ray.posY;
 
+                int indexTex;
+                if(destroy) {
+                    if (ray.posY == 24 + hp || ray.posY == 23 + hp || ray.posY == 40 - hp || ray.posY == 39 - hp) {
+                        cien = true;
+                        indexTex = ray.posX;
+                    } else {
+                        indexTex = ray.posY;
+
+                    }
+                }else{
+                    if (ray.posY == 24|| ray.posY == 23 || ray.posY == 40  || ray.posY == 39 ) {
+                        cien = true;
+                        indexTex = ray.posX;
+                    } else {
+                        indexTex = ray.posY;
+
+                    }
                 }
 
                 // Wyznaczenie tekstury
@@ -56,6 +86,8 @@ public class ObjColumn {
                 column.rect = new Rectangle(punkt.x, punkt.y - wallHeight / 2, 1, wallHeight);
                 column.objPosition = new Point((int)ray.analysePos.getX(),(int)ray.analysePos.getY());
                 column.raycastPosition = new Point2D.Double(ray.analysePos.getX(),ray.analysePos.getY());
+
+                column.destroyed = destroy;
 
                 column.half = false;
                 column.setLen(len);

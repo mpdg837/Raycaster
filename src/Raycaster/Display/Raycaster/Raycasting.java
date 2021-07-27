@@ -29,7 +29,7 @@ public class Raycasting {
     public double myAngle = Math.toRadians(90);
 
     private static final double angleDelta = Math.toRadians(15);
-    public static final double angleStep = Math.toRadians(0.1875/2);
+    public static final double angleStep = Math.toRadians(0.1);
     public static double maxLen = 48;
 
 
@@ -54,7 +54,7 @@ public class Raycasting {
     private final HalfQuaterBox quHalf;
 
     public ArrayList<Column> columns;
-    public ArrayList<SpriteQueue> sprites;
+    public SpriteQueue[] sprites;
 
     public final int half;
     public int[][] foo;
@@ -77,9 +77,9 @@ public class Raycasting {
 
         columns = new ArrayList<>();
 
-        sprites = new ArrayList<>();
-        for(int n=0;n<maxLen*10;n++){
-            sprites.add(new SpriteQueue());
+        sprites = new SpriteQueue[(int)(maxLen*10)];
+        for(int n=0;n<sprites.length;n++){
+            sprites[n] = new SpriteQueue();
         }
 
         floor = new Floor(this);
@@ -378,8 +378,8 @@ public class Raycasting {
             }
 
 
-            for(n=0;n<sprites.size();n++) {
-                SpriteQueue queue = sprites.get(sprites.size()-1-n);
+            for(n=0;n<sprites.length;n++) {
+                SpriteQueue queue = sprites[sprites.length-1-n];
                     for(int k=queue.getSize()-1;k>=0;k--) {
 
                         final Column columnS = queue.get(k);
@@ -396,7 +396,7 @@ public class Raycasting {
 
             }
 
-            bufferImg = BufferTranslator.array_rasterToBuffer(foo,game,bufferImg);
+            BufferTranslator.array_rasterToBuffer(foo,game,bufferImg);
 
 
         }catch (ConcurrentModificationException ignore){

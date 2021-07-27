@@ -40,13 +40,8 @@ public class Floor {
                 if (!punkta.equals(lastPoint)) {
                     if (ray.foo[punkta.y][punkta.x] == 0) {
 
-                        final double partX = (ray.analysePos.getX() - (int) ray.analysePos.getX());
-                        final double partY = (ray.analysePos.getY() - (int) ray.analysePos.getY());
 
-                        final int texX = (int) (partX * Texture.size);
-                        final int texY = (int) (partY * Texture.size);
-
-                        point = new Point(texX,texY);
+                        point = new Point(ray.posX,ray.posY);
 
                         if(!point.equals(lastPoint)) {
                             if (ray.game.texture != null) {
@@ -54,13 +49,13 @@ public class Floor {
                                     if (ray.game.mapa.floor[(int) ray.analysePos.getX()][(int) ray.analysePos.getY()] > 0) {
 
                                         final Texture myTex = ray.game.texture.textures[ray.game.mapa.floor[(int) ray.analysePos.getX()][(int) ray.analysePos.getY()]];
-                                        int colorA = myTex.bufferXY[texY][texX];
+                                        int colorA = myTex.bufferXY[ray.posY][ray.posX];
 
                                         if (colorA != 0) {
 
                                             if (!ray.game.mapa.light[(int) ray.analysePos.getX()][(int) ray.analysePos.getY()]) {
 
-                                                colorA = myTex.bufferXYNL[texY][texX];
+                                                colorA = myTex.bufferXYNL[ray.posY][ray.posX];
                                             }
 
 
@@ -75,13 +70,13 @@ public class Floor {
                                     }
                                     if (ray.game.mapa.ceciling[(int) ray.analysePos.getX()][(int) ray.analysePos.getY()] > 0) {
                                         final Texture myTex = ray.game.texture.textures[ray.game.mapa.ceciling[(int) ray.analysePos.getX()][(int) ray.analysePos.getY()]];
-                                        int colorB = myTex.bufferXYS[texY][texX];
+                                        int colorB = myTex.bufferXYS[ray.posY][ray.posX];
 
 
                                         if (colorB != 0) {
 
                                             if(!ray.game.mapa.light[(int) ray.analysePos.getX()][(int) ray.analysePos.getY()]) {
-                                                colorB = myTex.bufferXYNL[texY][texX];
+                                                colorB = myTex.bufferXYNL[ray.posY][ray.posX];
                                             }
 
 

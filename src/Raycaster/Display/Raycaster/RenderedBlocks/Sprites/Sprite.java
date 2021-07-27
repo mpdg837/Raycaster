@@ -50,7 +50,7 @@ public class Sprite {
                         column.spriteReduction = true;
 
                         column.setLen(len);
-                            ray.sprites.get(column.len).add(column);
+                            ray.sprites[column.len].add(column);
 
 
 

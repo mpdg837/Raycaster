@@ -164,6 +164,9 @@ public class Game extends Interaction {
         tim ++;
 
         if(tim>60) {
+
+            render.saveRaycaster.requestFocus();
+
             tim = 0;
             if (mapa.HP[65][65] >= 5) {
                 mapa.HP[65][65] = 0;

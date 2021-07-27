@@ -53,7 +53,7 @@ public class SpriteXY {
                 column.setLen(len);
 
                 if (nStep < 640) {
-                    ray.sprites.get(column.len).add(column);
+                    ray.sprites[column.len].add(column);
                 }
             }
         }

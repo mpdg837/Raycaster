@@ -57,7 +57,7 @@ public class HalfBox {
 
                 if (ray.posX == 0 || ray.posX == 63 || ray.posY == 0 || ray.posY == 63) {
                     if (nStep < 640) {
-                        ray.sprites.get( column.len).add(column);
+                        ray.sprites[column.len].add(column);
                         ray.rayHalfBlocked[nStep/2] = true;
                     }
                 }

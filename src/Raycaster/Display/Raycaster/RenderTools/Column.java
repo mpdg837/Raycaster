@@ -77,8 +77,9 @@ public class Column {
                             double relX = 0 ;
                             final double relDelta = (double) 64/(double)hei;
 
+                            final int hhei = (hei / 2);
 
-                                for (int x = rect.x - (hei / 2); x < rect.x + hei / 2; x++) {
+                                for (int x = rect.x - hhei; x < rect.x + hhei; x++) {
 
                                         if (x >= 0 && x < ray.game.render.renderSize.getX()) {
 
@@ -113,7 +114,7 @@ public class Column {
 
 
                                     if( darkMe ){
-                                        color = tex.bufferXYNL[(int) yR][(int) index];
+                                        color = tex.bufferXYNL[(int) yR][ index];
                                     }
 
                                     ray.foo[y][rect.x] = color;
@@ -125,7 +126,7 @@ public class Column {
 
 
                                     if( darkMe ){
-                                        color = tex.bufferXYNL[(int) yR][(int) index];
+                                        color = tex.bufferXYNL[(int) yR][ index];
                                     }
 
                                     ray.foo[y][rect.x + 1] = color;

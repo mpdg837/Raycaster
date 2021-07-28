@@ -98,7 +98,7 @@ public class Raycasting {
 
         foo = new int[game.render.renderSize.y][game.render.renderSize.x];
 
-        half = game.render.renderSize.y / 2;
+        half = game.render.renderSize.y >> 1;
     }
 
     public void loadMap(){

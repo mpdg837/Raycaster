@@ -60,7 +60,7 @@ public class QuaterBox {
 
                 column.darker = cien;
                 column.index = indexTex;
-                column.rect = new Rectangle(punkt.x, punkt.y - wallHeight / 2, 1, wallHeight);
+                column.rect = new Rectangle(punkt.x, punkt.y - (wallHeight >> 1), 1, wallHeight);
                 column.half = false;
                 column.objPosition = new Point((int) ray.analysePos.getX(), (int) ray.analysePos.getY());
                 column.raycastPosition = new Point2D.Double(ray.analysePos.getX(), ray.analysePos.getY());

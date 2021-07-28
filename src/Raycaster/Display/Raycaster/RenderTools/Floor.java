@@ -28,7 +28,7 @@ public class Floor {
         final double zet = ray.tempCosB * len;
         final int wallHeight = (int) (ray.renderHeightConstant * height / zet);
 
-        punkta = new Point((int) punkta.x, (int) (punkta.y + wallHeight / 2) );
+        punkta = new Point((int) punkta.x, (int) (punkta.y + (wallHeight >> 1)) );
 
 
 

@@ -12,13 +12,14 @@ public class Texture {
     public final int[][] bufferXY;
     public final int[][] bufferXYS;
     public final int[][] bufferXYNL;
-
-    public final BufferedImage textureMain;
-    public final BufferedImage textureMainS;
-    public final BufferedImage textureMainNL;
-
     public boolean transparency = false;
+
     public Texture(BufferedImage img,boolean transparency){
+
+
+         BufferedImage textureMain;
+         BufferedImage textureMainS;
+         BufferedImage textureMainNL;
 
             this.transparency = transparency;
             Image texMainScaled = img.getScaledInstance(size,size,Image.SCALE_FAST);

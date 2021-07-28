@@ -11,6 +11,10 @@ import java.util.Timer;
 
 public class Raycaster extends Frame {
 
+
+    private final static GraphicsDevice device = GraphicsEnvironment
+            .getLocalGraphicsEnvironment().getScreenDevices()[0];
+
     public final BufferedImage buffer;
     public final Panel panel;
     public final static Point resolution= new Point(640,480);
@@ -51,10 +55,7 @@ public class Raycaster extends Frame {
 
                 tim.schedule(new Render(false, this, null), Render.deltaTime);
 
-
-            GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            GraphicsDevice device = env.getDefaultScreenDevice();
-
+            device.setFullScreenWindow(this);
 
         }catch (IOException ignore){
 

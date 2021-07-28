@@ -14,8 +14,6 @@ import Raycaster.Project.Game;
 
 public class Render extends TimerTask {
 
-    private final static GraphicsDevice device = GraphicsEnvironment
-            .getLocalGraphicsEnvironment().getScreenDevices()[0];
     public final static int deltaTime =33;
 
     public final Point renderSize;
@@ -45,7 +43,7 @@ public class Render extends TimerTask {
             this.game.render = this;
 
 
-            device.setFullScreenWindow(saveRaycaster);
+
         }else{
             this.game = game;
         }

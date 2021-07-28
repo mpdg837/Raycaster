@@ -31,18 +31,18 @@ public class Column {
         final double deltaY = Texture.size/rect.getHeight();
         double yR =0;
 
-        final int minY =(int)rect.getY() - n*(int)rect.getHeight();
+        final int minY =(int)rect.getY() ;
 
         int hei = (int)rect.getHeight();
         int deltaYa = 0;
         if(half){
-            deltaYa = (int)rect.getHeight()/2;
+            deltaYa = (int)rect.getHeight() >> 1;
         }
 
-        int xR = rect.x/2;
+        int xR = rect.x >> 1;
         if(xR<320) {
             if (blockColumn && ray.rayHalfBlocked[xR]) {
-                hei /= 2;
+                hei = hei >> 1;
             }
         }
 
@@ -77,14 +77,14 @@ public class Column {
                             double relX = 0 ;
                             final double relDelta = (double) 64/(double)hei;
 
-                            final int hhei = (hei / 2);
+                            final int hhei = (hei >> 1);
 
                                 for (int x = rect.x - hhei; x < rect.x + hhei; x++) {
 
                                         if (x >= 0 && x < ray.game.render.renderSize.getX()) {
 
                                             if(x/2<ray.columns.size()) {
-                                                Column column = ray.columns.get(x / 2);
+                                                Column column = ray.columns.get(x >> 1);
 
                                                 if (column.len > this.len) {
                                                     if (relX >= 0 && relX < 64) {

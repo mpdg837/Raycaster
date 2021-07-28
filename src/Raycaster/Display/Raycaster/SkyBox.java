@@ -6,10 +6,11 @@ import java.awt.image.BufferedImage;
 public class SkyBox {
 
     public final int[][] bufferXY;
-    public final BufferedImage textureMain;
+
 
     public SkyBox(BufferedImage img){
 
+        final BufferedImage textureMain;
         Image texMainScaled = img.getScaledInstance(320,240,Image.SCALE_FAST);
         textureMain = new BufferedImage(320,240,BufferedImage.TYPE_3BYTE_BGR);
 

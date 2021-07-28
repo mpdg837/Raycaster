@@ -64,7 +64,7 @@ public class HalfQuaterBox {
 
                 column.darker = cien;
                 column.index = indexTex;
-                column.rect = new Rectangle(punkt.x, punkt.y - wallHeight / 2, 1, wallHeight);
+                column.rect = new Rectangle(punkt.x, punkt.y - (wallHeight >> 1), 1, wallHeight);
                 column.half = true;
                 column.objPosition = new Point((int) ray.analysePos.getX(), (int) ray.analysePos.getY());
                 column.raycastPosition = new Point2D.Double(ray.analysePos.getX(), ray.analysePos.getY());
@@ -74,7 +74,7 @@ public class HalfQuaterBox {
                 if (ray.posX == 0 || ray.posX == 32 || ray.posX == 63 || ray.posY == 0 || ray.posY == 32 || ray.posY == 63) {
                     if (nStep < 640) {
                         ray.sprites[column.len].add(column);
-                        ray.rayHalfBlocked[nStep / 2] = true;
+                        ray.rayHalfBlocked[nStep >> 1] = true;
                     }
                     end = true;
                 }

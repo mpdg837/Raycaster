@@ -1,6 +1,7 @@
 package Raycaster.Display;
 
 import Raycaster.Project.Game;
+import Raycaster.Raycaster;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.WritableRaster;
@@ -10,10 +11,9 @@ public class BufferTranslator {
         final int width = game.render.renderSize.x;
         final int height = game.render.renderSize.y;
 
-        int[] pixels = new int[width * height];
-
         int n = 0;
 
+        int[] pixels = new int[Raycaster.resolution.x * Raycaster.resolution.y];
 
         double scale = (double) height/(double)(height+game.camera.deltaY);
         int deltaM = game.camera.deltaY;
@@ -22,15 +22,17 @@ public class BufferTranslator {
             deltaM = 0;
             scale = (double) height/(double)(height-game.camera.deltaY);
         }
+        double yact = deltaM * scale;
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                int ny = (int)((y+deltaM)*scale);
 
-                if(ny>=0 && ny<height) {
-                    pixels[n] = img[ny][x];
+
+                if(yact>=0 && yact<height) {
+                    pixels[n] = img[(int)yact][x];
                 }
                 n++;
             }
+            yact += scale;
         }
 
         pixels = game.sky.addSkybox(pixels);

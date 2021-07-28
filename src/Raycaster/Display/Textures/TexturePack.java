@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 
 public class TexturePack {
 
+
     public Texture[] textures;
 
     private boolean isTranspareced(BufferedImage tex){

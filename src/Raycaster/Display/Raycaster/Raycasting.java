@@ -117,7 +117,7 @@ public class Raycasting {
 
 
     public void draw(){
-        try{
+
             loadMap();
 
             columns.clear();
@@ -186,7 +186,7 @@ public class Raycasting {
 
                                     if(box.drawBox(punkta, len,columns,foo)) len = maxLen;
                                     else{
-                                        if (len < 30 && floorRay) {
+                                        if ( floorRay) {
                                             floor.floor(punkta, len);
 
                                         }
@@ -238,7 +238,7 @@ public class Raycasting {
                                         }
                                     }
 
-                                    if (len < 30  && floorRay) {
+                                    if ( floorRay) {
                                         floor.floor(punkta, len);
 
                                     }
@@ -255,7 +255,7 @@ public class Raycasting {
                                         }
                                     }
 
-                                    if (len < 30  && floorRay) {
+                                    if ( floorRay) {
                                         floor.floor(punkta, len);
 
                                     }
@@ -269,7 +269,7 @@ public class Raycasting {
 
                                     if(tria.drawBox(punkta, len, columns,type)) len = maxLen;
                                     else{
-                                        if (len < 30 && floorRay) {
+                                        if ( floorRay) {
                                             floor.floor(punkta, len);
 
                                         }
@@ -278,7 +278,7 @@ public class Raycasting {
                                 case 11:
                                     sprXY.drawBox(nStep, punkta, len);
 
-                                    if (len < 30 && floorRay) {
+                                    if ( floorRay) {
                                         floor.floor(punkta, len);
 
                                     }
@@ -307,7 +307,7 @@ public class Raycasting {
 
                                     if(quFull.drawBox(punkta, len,columns,foo,typeA)) len = maxLen;
                                     else{
-                                        if (len < 30 && floorRay) {
+                                        if ( floorRay) {
                                             floor.floor(punkta, len);
 
                                         }
@@ -339,7 +339,7 @@ public class Raycasting {
                                         if(quHalf.drawBox(nStep, punkta, len,typeB)) largeLastPointAnalyse = largePointAnalyse;
                                     }
 
-                                    if (len < 30 && floorRay) {
+                                    if (floorRay) {
                                         floor.floor(punkta, len);
 
                                     }
@@ -347,7 +347,7 @@ public class Raycasting {
 
                                     break;
                                 default:
-                                    if (len < 30  && floorRay) {
+                                    if ( floorRay) {
                                         floor.floor(punkta, len);
 
                                     }
@@ -399,9 +399,7 @@ public class Raycasting {
             BufferTranslator.array_rasterToBuffer(foo,game,bufferImg);
 
 
-        }catch (ConcurrentModificationException ignore){
 
-        }
 
 
 

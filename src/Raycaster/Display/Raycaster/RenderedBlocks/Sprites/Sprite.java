@@ -2,6 +2,7 @@ package Raycaster.Display.Raycaster.RenderedBlocks.Sprites;
 
 import Raycaster.Display.Raycaster.RenderTools.Column;
 import Raycaster.Display.Raycaster.Raycasting;
+import Raycaster.Player.GameTask;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
@@ -27,8 +28,9 @@ public class Sprite {
             // Wybór tekstury
 
 
+                Point posMy = ray.game.mapa.deltaPos[(int) ray.analysePos.getX()][(int) ray.analysePos.getY()];
 
-                if(ray.partX > 0.45 && ray.partX < 0.55 && ray.partY > 0.45 && ray.partY < 0.55 ) {
+                if(ray.posX > posMy.x && ray.posX < posMy.x + 4 && ray.posY > posMy.y && ray.posY < posMy.y+4 ) {
 
 
 

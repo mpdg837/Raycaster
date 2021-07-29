@@ -1,6 +1,7 @@
 package Raycaster;
 
 import Raycaster.Display.Render;
+import Raycaster.Player.GameTask;
 import Raycaster.Player.Input.Input;
 import Raycaster.Project.Game;
 
@@ -20,6 +21,7 @@ public class Raycaster extends Frame {
     public final static Point resolution= new Point(640,480);
 
     public final Input input = new Input();
+    public java.util.Timer tim = new Timer();
 
     public Game game;
     private static DisplayMode[] BEST_DISPLAY_MODES = new DisplayMode[]{
@@ -51,9 +53,8 @@ public class Raycaster extends Frame {
         try {
             game = new Game(input);
 
-            java.util.Timer tim = new Timer();
-
-                tim.schedule(new Render(false, this, null), Render.deltaTime);
+            tim.schedule(new Render(false, this, null), Render.deltaTime);
+            tim.schedule(new GameTask(game), Render.deltaTime);
 
             device.setFullScreenWindow(this);
 

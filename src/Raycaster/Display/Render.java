@@ -72,7 +72,7 @@ public class Render extends TimerTask {
     }
     @Override
     public void run() {
-        try{
+
             if( drawInside !=null) {
 
 
@@ -85,10 +85,6 @@ public class Render extends TimerTask {
                     final Raycasting rayMaker = new Raycasting(game);
 
                     rayMaker.draw();
-
-
-                    game.update();
-                    game.input.resetKey();
 
                     sprites.draw(rayMaker.bufferImg.getGraphics(),timeStart);
 
@@ -111,11 +107,9 @@ public class Render extends TimerTask {
 
 
             }
-        }catch (ConcurrentModificationException ignore){}
 
-        Timer tim = new Timer();
 
-        tim.schedule(new Render(start, saveRaycaster, game), Render.deltaTime - deltaRenderTime);
+        saveRaycaster.tim.schedule(new Render(start, saveRaycaster, game), Render.deltaTime - deltaRenderTime);
 
     }
 }

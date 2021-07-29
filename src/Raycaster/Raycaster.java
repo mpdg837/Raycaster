@@ -39,11 +39,17 @@ public class Raycaster extends Frame {
 
         panel = new Panel();
 
-        this.setExtendedState(Frame.MAXIMIZED_BOTH);
-        this.setUndecorated(true);
+        if(!windowed) {
+            this.setExtendedState(Frame.MAXIMIZED_BOTH);
+            this.setUndecorated(true);
+        }else{
+            this.setSize(1024,768);
+        }
         panel.setPreferredSize(new Dimension(resolution.x, resolution.y));
 
-        this.setSize(this.getMaximumSize());
+        if(!windowed) {
+            this.setSize(this.getMaximumSize());
+        }
 
         this.add(panel, BorderLayout.CENTER);
 

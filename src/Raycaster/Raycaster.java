@@ -53,11 +53,24 @@ public class Raycaster extends Frame {
         try {
             game = new Game(input);
 
-            tim.schedule(new Render(false, this, null), Render.deltaTime);
-            tim.schedule(new GameTask(game), Render.deltaTime);
+            Raycaster it = this;
+            Thread the = new Thread(() -> {
+                Timer tim = new Timer();
+                tim.schedule(new Render(false, it, null), Render.deltaTime);
+            });
+            the.start();
+
+            Thread ethe = new Thread(() -> {
+                Timer tim = new Timer();
+                tim.schedule(new GameTask(game), Render.deltaTime);
+            });
+            ethe.start();
+
+
+
 
             device.setFullScreenWindow(this);
-
+            chooseBestDisplayMode(device);
         }catch (IOException ignore){
 
             System.exit(0);

@@ -81,7 +81,7 @@ public class Render extends TimerTask {
                     init();
                 } else {
 
-                    final long timeStart = System.nanoTime()/1000000;
+                    final long timeStart = System.currentTimeMillis();
                     final Raycasting rayMaker = new Raycasting(game);
 
                     rayMaker.draw();
@@ -92,7 +92,7 @@ public class Render extends TimerTask {
                     Image scaled = rayMaker.bufferImg.getScaledInstance(saveRaycaster.getWidth(), saveRaycaster.getHeight(),Image.SCALE_FAST);
                     drawInside.drawImage(scaled, 0, 0 , saveRaycaster);
 
-                    final long timeEnd = System.nanoTime()/1000000;
+                    final long timeEnd = System.currentTimeMillis();
                     this.deltaRenderTime = (int)(timeEnd - timeStart);
 
                     if(this.deltaRenderTime > deltaTime){

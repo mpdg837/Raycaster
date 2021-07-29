@@ -17,10 +17,11 @@ public class Triangle {
     public boolean drawBox(Point punkt, double len, ArrayList<Column> columns,int type){
 
 
+        final double height =((Raycasting.maxLen - len));
 
 
         boolean finish = false;
-        if (ray.height > 0) {
+        if (height > 0) {
 
             // Wybór tekstury
 
@@ -105,14 +106,15 @@ public class Triangle {
 
                 // Wyznaczenie tekstury
 
-
+                final double zet = ray.tempCosB * len;
+                final int wallHeight = (int) (ray.renderHeightConstant * height / zet);
 
                 final Column column = new Column();
 
 
                 column.darker = cien;
                 column.index = indexTex;
-                column.rect = new Rectangle(punkt.x, punkt.y - (ray.wallHeight >> 1), 1, ray.wallHeight);
+                column.rect = new Rectangle(punkt.x, punkt.y - (wallHeight >> 1), 1, wallHeight);
                 column.objPosition = new Point((int)ray.analysePos.getX(),(int)ray.analysePos.getY());
                 column.raycastPosition = new Point2D.Double(ray.analysePos.getX(),ray.analysePos.getY());
 

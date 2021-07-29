@@ -23,9 +23,12 @@ public class Floor {
         ray.foo[punkta.y+1][punkta.x + 1] = colorA;
     }
     public void floor(Point punkta, double len){
+        final double height = ((Raycasting.maxLen - len));
 
+        final double zet = ray.tempCosB * len;
+        final int wallHeight = (int) (ray.renderHeightConstant * height / zet);
 
-        punkta = new Point((int) punkta.x, (int) (punkta.y + (ray.wallHeight >> 1)) );
+        punkta = new Point((int) punkta.x, (int) (punkta.y + (wallHeight >> 1)) );
 
 
 
@@ -77,10 +80,10 @@ public class Floor {
                                             }
 
 
-                                                drawBigPixel(colorB, new Point(punkta.x, punkta.y - ray.wallHeight));
-                                                drawBigPixel(colorB, new Point(punkta.x + 2, punkta.y - ray.wallHeight));
-                                                drawBigPixel(colorB, new Point(punkta.x, punkta.y - ray.wallHeight + 2));
-                                                drawBigPixel(colorB, new Point(punkta.x + 2, punkta.y - ray.wallHeight + 2));
+                                                drawBigPixel(colorB, new Point(punkta.x, punkta.y - wallHeight));
+                                                drawBigPixel(colorB, new Point(punkta.x + 2, punkta.y - wallHeight));
+                                                drawBigPixel(colorB, new Point(punkta.x, punkta.y - wallHeight + 2));
+                                                drawBigPixel(colorB, new Point(punkta.x + 2, punkta.y - wallHeight + 2));
 
                                         }
                                     }

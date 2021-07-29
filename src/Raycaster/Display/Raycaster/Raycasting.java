@@ -69,9 +69,7 @@ public class Raycasting {
     public int posX;
     public int posY;
 
-    public double height;
-    public double zet;
-    public int wallHeight;
+
     public Raycasting(Game game){
 
         this.game = game;
@@ -177,11 +175,6 @@ public class Raycasting {
 
                     posX = (int)(partX*64);
                     posY = (int)(partY*64);
-
-                    height = ((Raycasting.maxLen - len));
-
-                    zet = tempCosB * len;
-                    wallHeight = (int) (renderHeightConstant * height / zet);
 
                     if(!zaokraglij.equals(lastPointOfMap)) {
 

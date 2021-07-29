@@ -29,7 +29,7 @@ public class Raycasting {
     public double myAngle = Math.toRadians(90);
 
     private static final double angleDelta = Math.toRadians(15);
-    public static final double angleStep = Math.toRadians(0.1);
+    public static final double angleStep = Math.toRadians(0.09);
     public static double maxLen = 48;
 
 

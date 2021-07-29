@@ -27,7 +27,7 @@ public class ScreenSprite {
         Image scaled = gun.getScaledInstance(196,196,Image.SCALE_FAST);
         g.drawImage(scaled,ren.renderSize.x/2-98,ren.renderSize.y-196,null);
 
-        final long timeEnd = System.currentTimeMillis();
+        final long timeEnd = System.nanoTime()/1000000;
         final int deltaRenderTime = (int)(timeEnd - timeStart);
 
         String key= deltaRenderTime + "ms";

@@ -18,8 +18,8 @@ public class HalfQuaterBox {
     public boolean drawBox(int nStep, Point punkt, double len,int type) {
 
         boolean end = false;
-        final double height = ((Raycasting.maxLen - len));
 
+        final double height = ray.height;
 
 
         if (height > 0) {
@@ -57,8 +57,7 @@ public class HalfQuaterBox {
 
                 // Wyznaczenie tekstury
 
-                final double zet = ray.tempCosB * len;
-                final int wallHeight = (int) (ray.renderHeightConstant * height / zet);
+                final int wallHeight = ray.wallHeight;
 
                 final Column column = new Column();
 

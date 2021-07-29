@@ -18,12 +18,9 @@ public class Sprite {
     public boolean drawBox(int nStep, Point punkt, double len,double angle) {
 
         boolean end = false;
-        final double height = ((Raycasting.maxLen - len));
 
 
-
-
-        if (height > 0) {
+        if (ray.height > 0) {
 
             // Wybór tekstury
 
@@ -36,15 +33,12 @@ public class Sprite {
 
                     // Wyznaczenie tekstury
 
-                    final double zet = ray.tempCosB * len;
-                    final int wallHeight = (int) (ray.renderHeightConstant* height / zet);
-
                     final Column column = new Column();
 
 
                         column.darker = false;
                         column.index = 32;
-                        column.rect = new Rectangle(punkt.x, punkt.y - (wallHeight >> 1), 1, wallHeight);
+                        column.rect = new Rectangle(punkt.x, punkt.y - (ray.wallHeight >> 1), 1, ray.wallHeight);
                         column.half = false;
                         column.objPosition = new Point((int)ray.analysePos.getX(),(int)ray.analysePos.getY());
                         column.raycastPosition = new Point2D.Double(ray.analysePos.getX(),ray.analysePos.getY());

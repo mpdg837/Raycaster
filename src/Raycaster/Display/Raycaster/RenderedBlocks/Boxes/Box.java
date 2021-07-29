@@ -19,11 +19,9 @@ public class Box {
     public boolean drawBox(Point punkt, double len, ArrayList<Column> columns, int[][] foo){
 
         boolean ok = false;
-        final double height =((Raycasting.maxLen - len));
 
 
-
-        if (height > 0) {
+        if (ray.height > 0) {
 
 
             boolean destroy = false;
@@ -57,8 +55,7 @@ public class Box {
 
                 // Wyznaczenie tekstury
 
-                final double zet = ray.tempCosB * len;
-                final int wallHeight = (int) (ray.renderHeightConstant * height / zet);
+                final int wallHeight = ray.wallHeight;
 
                 final Column column = new Column();
 

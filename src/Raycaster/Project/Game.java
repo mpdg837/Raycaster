@@ -12,6 +12,7 @@ import Raycaster.Player.Map;
 import Raycaster.Player.Transform;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Point2D;
 import java.io.File;
@@ -171,9 +172,11 @@ public class Game extends Interaction {
             if (mapa.HP[65][65] >= 5) {
                 mapa.HP[65][65] = 0;
                 mapa.HP[64][62] = 0;
+                mapa.deltaPos[66][68] = new Point( (int)mapa.deltaPos[66][68].getX()- 2*5,(int)mapa.deltaPos[66][68].getY());
             } else {
                 mapa.HP[65][65]++;
                 mapa.HP[64][62]++;
+                mapa.deltaPos[66][68] = new Point( (int)mapa.deltaPos[66][68].getX()+ 2,(int)mapa.deltaPos[66][68].getY());
             }
         }
     }

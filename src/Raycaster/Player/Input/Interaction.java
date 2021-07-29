@@ -21,7 +21,6 @@ public class Interaction {
             n++;
         }
 
-        System.out.print(n);
 
     }
 

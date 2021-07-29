@@ -32,7 +32,7 @@ public class Transform {
         }else if (rotation< 0) {
             rotation = 2*Math.PI;
         }
-        System.out.println(rotation);
+
 
     }
 

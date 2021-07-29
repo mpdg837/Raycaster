@@ -150,13 +150,13 @@ public class Raycasting {
 
             floorRay = !floorRay;
 
-            tempCosB =  Math.cos(Math.abs(myAngle - angle));
+            tempCosB = game.getCos(Math.abs(myAngle - angle));
 
             Point largeLastPointAnalyse = new Point();
 
 
-            final double deltaX = deltaLen * Math.cos(angle);
-            final double deltaY = deltaLen * Math.sin(angle);
+            final double deltaX = deltaLen * game.getCos(angle);
+            final double deltaY = deltaLen * game.getSin(angle);
 
             cx = myPos.getX();
             cy = myPos.getY();

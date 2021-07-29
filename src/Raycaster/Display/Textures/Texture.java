@@ -7,7 +7,7 @@ public class Texture {
 
     public static final int black = -16777216;
 
-    public static int size=64;
+    public static final int size=64;
 
     public final int[][] bufferXY;
     public final int[][] bufferXYS;

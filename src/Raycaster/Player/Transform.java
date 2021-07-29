@@ -26,7 +26,16 @@ public class Transform {
         }else if(kieruek == getDown()){
             rotation -=len;
         }
+
+        if (rotation>= 2*Math.PI) {
+            rotation = 0;
+        }else if (rotation< 0) {
+            rotation = 2*Math.PI;
+        }
+        System.out.println(rotation);
+
     }
+
 
     public static int getUp(){return 0;}
     public static int getDown(){return 1;}

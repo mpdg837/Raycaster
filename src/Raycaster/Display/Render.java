@@ -18,7 +18,7 @@ public class Render extends TimerTask {
 
     public final Point renderSize;
 
-    private final Graphics2D drawInside;
+    private final Graphics drawInside;
 
     public final ScreenSprite sprites;
     public final Raycaster saveRaycaster;
@@ -109,7 +109,7 @@ public class Render extends TimerTask {
             }
 
 
-        saveRaycaster.tim.schedule(new Render(start, saveRaycaster, game), Render.deltaTime - this.deltaRenderTime);
+        saveRaycaster.tim1.schedule(new Render(start, saveRaycaster, game), Render.deltaTime - this.deltaRenderTime);
 
     }
 }

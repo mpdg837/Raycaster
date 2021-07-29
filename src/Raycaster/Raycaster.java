@@ -23,6 +23,8 @@ public class Raycaster extends Frame {
     public final Input input = new Input();
     public java.util.Timer tim = new Timer();
 
+    public Timer tim1 = new Timer();
+    public Timer tim2 = new Timer();
     public Game game;
     private static DisplayMode[] BEST_DISPLAY_MODES = new DisplayMode[]{
             new DisplayMode(640, 480, 32, 0),
@@ -38,9 +40,13 @@ public class Raycaster extends Frame {
         this.addMouseListener(input);
 
         panel = new Panel();
+
+        this.setExtendedState(Frame.MAXIMIZED_BOTH);
+        this.setUndecorated(true);
         panel.setPreferredSize(new Dimension(resolution.x, resolution.y));
 
-        this.setSize(resolution.x, resolution.y);
+        this.setSize(this.getMaximumSize());
+
         this.add(panel, BorderLayout.CENTER);
 
         this.addWindowListener(new WindowME());
@@ -55,22 +61,15 @@ public class Raycaster extends Frame {
 
             Raycaster it = this;
             Thread the = new Thread(() -> {
-                Timer tim = new Timer();
-                tim.schedule(new Render(false, it, null), Render.deltaTime);
+                tim1.schedule(new Render(false, it, null), Render.deltaTime);
             });
             the.start();
 
             Thread ethe = new Thread(() -> {
-                Timer tim = new Timer();
-                tim.schedule(new GameTask(game), Render.deltaTime);
+                tim2.schedule(new GameTask(game), Render.deltaTime);
             });
             ethe.start();
 
-
-
-
-            device.setFullScreenWindow(this);
-            chooseBestDisplayMode(device);
         }catch (IOException ignore){
 
             System.exit(0);

@@ -13,8 +13,6 @@ import java.util.Timer;
 public class Raycaster extends Frame {
 
 
-    private final static GraphicsDevice device = GraphicsEnvironment
-            .getLocalGraphicsEnvironment().getScreenDevices()[0];
 
     public final BufferedImage buffer;
     public final Panel panel;
@@ -31,9 +29,9 @@ public class Raycaster extends Frame {
             new DisplayMode(640, 480, 16, 0),
             new DisplayMode(640, 480, 8, 0)};
 
-    public Raycaster() {
+    public Raycaster(boolean windowed) {
 
-        super("Window");
+        super("Raycaster Engine");
 
         this.setLayout(new BorderLayout());
         this.addKeyListener(input);
@@ -79,28 +77,15 @@ public class Raycaster extends Frame {
 
     }
 
-    private static DisplayMode getBestDisplayMode(GraphicsDevice device) {
-        for (DisplayMode bestDisplayMode : BEST_DISPLAY_MODES) {
-            final DisplayMode[] modes = device.getDisplayModes();
-            for (DisplayMode mode : modes) {
-                if (mode.getWidth() == bestDisplayMode.getWidth()
-                        && mode.getHeight() == bestDisplayMode.getHeight()
-                        && mode.getBitDepth() == bestDisplayMode.getBitDepth()) {
-                    return bestDisplayMode;
-                }
-            }
-        }
-        return null;
-    }
-
-    public static void chooseBestDisplayMode(GraphicsDevice device) {
-        final DisplayMode best = getBestDisplayMode(device);
-        if (best != null) {
-            device.setDisplayMode(best);
-        }
-    }
 
     public static void main(String[] args){
-        Raycaster wsw = new Raycaster();
+
+        boolean windowed = false;
+        if(args.length==1){
+            if(args[0].equals("-w")){
+                windowed=true;
+            }
+        }
+        new Raycaster(windowed);
     }
 }

@@ -32,7 +32,7 @@ public class Render extends TimerTask {
         renderSize = canvas.resolution;
         sprites = new ScreenSprite(this);
 
-        drawInside = (Graphics2D) canvas.panel.getGraphics();
+        drawInside = canvas.panel.getGraphics();
 
         saveRaycaster = canvas;
 

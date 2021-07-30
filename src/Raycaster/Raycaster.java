@@ -1,5 +1,6 @@
 package Raycaster;
 
+import Raycaster.Display.Raycaster.Raycasting;
 import Raycaster.Display.Render;
 import Raycaster.Player.GameTask;
 import Raycaster.Player.Input.Input;
@@ -13,9 +14,9 @@ import java.util.Timer;
 public class Raycaster extends Frame {
 
 
-
+    public Raycasting rayMaker;
     public final BufferedImage buffer;
-    public final Panel panel;
+    public final Container panel;
     public final static Point resolution= new Point(640,480);
 
     public final Input input = new Input();
@@ -37,7 +38,8 @@ public class Raycaster extends Frame {
         this.addKeyListener(input);
         this.addMouseListener(input);
 
-        panel = new Panel();
+        this.setIgnoreRepaint(true);
+        panel = new Container();
 
         if(!windowed) {
             this.setExtendedState(Frame.MAXIMIZED_BOTH);
@@ -63,6 +65,8 @@ public class Raycaster extends Frame {
         try {
             game = new Game(input);
 
+            rayMaker = new Raycasting(game);
+
             Raycaster it = this;
             Thread the = new Thread(() -> {
                 tim1.schedule(new Render(false, it, null), Render.deltaTime);
@@ -82,7 +86,6 @@ public class Raycaster extends Frame {
 
 
     }
-
 
     public static void main(String[] args){
 

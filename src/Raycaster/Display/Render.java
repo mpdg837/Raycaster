@@ -24,12 +24,12 @@ public class Render extends TimerTask {
     public final Raycaster saveRaycaster;
     private boolean start;
     private Game game;
-
+    public final Raycasting rayMaker;
     public int deltaRenderTime;
 
     public Render(boolean start, Raycaster canvas, Game game){
 
-        renderSize = canvas.resolution;
+        renderSize = Raycaster.resolution;
         sprites = new ScreenSprite(this);
 
         drawInside = canvas.panel.getGraphics();
@@ -47,7 +47,7 @@ public class Render extends TimerTask {
         }else{
             this.game = game;
         }
-
+        rayMaker = new Raycasting(game);
 
     }
 
@@ -82,7 +82,7 @@ public class Render extends TimerTask {
                 } else {
 
                     final long timeStart = System.nanoTime();
-                    final Raycasting rayMaker = new Raycasting(game);
+
 
                     rayMaker.draw();
 

@@ -14,6 +14,7 @@ import Raycaster.Display.Raycaster.RenderedBlocks.Sprites.SpriteXY;
 import Raycaster.Display.Raycaster.RenderedBlocks.Sprites.SpriteY;
 import Raycaster.Display.Textures.Texture;
 import Raycaster.Project.Game;
+import Raycaster.Raycaster;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
@@ -75,7 +76,7 @@ public class Raycasting {
     public Raycasting(Game game){
 
         this.game = game;
-        bufferImg = new BufferedImage(game.render.renderSize.x,game.render.renderSize.y, BufferedImage.TYPE_INT_RGB);
+        bufferImg = new BufferedImage(Raycaster.resolution.x, Raycaster.resolution.y, BufferedImage.TYPE_INT_RGB);
 
         columns = new ArrayList<>();
 
@@ -98,9 +99,9 @@ public class Raycasting {
 
         rayHalfBlocked = new boolean[320];
 
-        foo = new int[game.render.renderSize.y][game.render.renderSize.x];
+        foo = new int[Raycaster.resolution.y][Raycaster.resolution.x];
 
-        half = game.render.renderSize.y >> 1;
+        half = Raycaster.resolution.y >> 1;
     }
 
     public void loadMap(){
@@ -171,21 +172,23 @@ public class Raycasting {
 
                     analysePos.setLocation(cx, cy);
 
-                    final Point zaokraglij = new Point((int) (analysePos.getX() * 64), (int) (analysePos.getY() * 64));
-                    final Point largePointAnalyse = new Point((int) analysePos.getX(), (int) analysePos.getY());
+                    final Point zaokraglij = new Point((int) (cx * 64), (int) (cy * 64));
 
-                    partX = (analysePos.getX() - (int) analysePos.getX());
-                    partY = (analysePos.getY() - (int) analysePos.getY());
-
-                    posX = (int) (partX * 64);
-                    posY = (int) (partY * 64);
 
                     if (!zaokraglij.equals(lastPointOfMap)) {
+
+                        final Point largePointAnalyse = new Point((int) cx, (int) cy);
+
+                        partX = (cx - (int) cx);
+                        partY = (cy - (int) cy);
+
+                        posX = (int) (partX * 64);
+                        posY = (int) (partY * 64);
 
                         final Point punkta = new Point(nStep, half);
 
                         if (inside()) {
-                            switch (mapa[(int) analysePos.getX()][(int) analysePos.getY()]) {
+                            switch (mapa[(int) cx][(int) cy]) {
                                 case 1:
 
                                     if (box.drawBox(punkta, len, columns, foo)) len = maxLen;

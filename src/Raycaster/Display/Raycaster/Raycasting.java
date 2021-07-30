@@ -20,6 +20,7 @@ import java.awt.*;
 import java.awt.geom.Point2D;
 import java.awt.image.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.ConcurrentModificationException;
 
 public class Raycasting {
@@ -72,7 +73,6 @@ public class Raycasting {
     public int posX;
     public int posY;
 
-
     public Raycasting(Game game){
 
         this.game = game;
@@ -98,9 +98,6 @@ public class Raycasting {
         quHalf = new HalfQuaterBox(this);
 
         rayHalfBlocked = new boolean[320];
-
-        foo = new int[Raycaster.resolution.y][Raycaster.resolution.x];
-
         half = Raycaster.resolution.y >> 1;
     }
 
@@ -119,8 +116,11 @@ public class Raycasting {
     }
 
     public void prebake(){
-        rayHalfBlocked = new boolean[320];
+
+        Arrays.fill(rayHalfBlocked,false);
+
         byte[][] renderedSprites = new byte[128][128];
+        foo = new int[Raycaster.resolution.y][Raycaster.resolution.x];
 
         myAngle = game.playerTransform.rotation;
         myPos = game.playerTransform.postion;
@@ -150,6 +150,7 @@ public class Raycasting {
         final double min = myAngle - actAngleDelta;
         final double max = myAngle + actAngleDelta;
 
+
         for(double angle =  min ;angle< max;angle +=actStep) {
 
                 floorRay = !floorRay;
@@ -165,36 +166,49 @@ public class Raycasting {
                 cx = myPos.getX();
                 cy = myPos.getY();
 
+
+                final double deltaZ = tempCosB * deltaLen;
+                double height = Raycasting.maxLen;
+                double zet = 0;
+
+
                 for (double len = 0; len < maxLen - 18; len += deltaLen) {
 
                     cx += deltaX;
                     cy += deltaY;
 
-                    analysePos.setLocation(cx, cy);
+                    zet +=deltaZ;
+                    height -= deltaLen;
+
+
 
                     final Point zaokraglij = new Point((int) (cx * 64), (int) (cy * 64));
 
 
                     if (!zaokraglij.equals(lastPointOfMap)) {
 
-                        final Point largePointAnalyse = new Point((int) cx, (int) cy);
 
-                        partX = (cx - (int) cx);
-                        partY = (cy - (int) cy);
 
-                        posX = (int) (partX * 64);
-                        posY = (int) (partY * 64);
+                        if (inside() )  {
+                            final int wallHeight = (int) (renderHeightConstant * height / zet);
+                            final Point largePointAnalyse = new Point((int) cx, (int) cy);
 
-                        final Point punkta = new Point(nStep, half);
+                            partX = (cx - (int) cx);
+                            partY = (cy - (int) cy);
 
-                        if (inside()) {
+                            posX = (int) (partX * 64);
+                            posY = (int) (partY * 64);
+
+                            final Point punkta = new Point(nStep, half);
+
+                            analysePos.setLocation(cx, cy);
                             switch (mapa[(int) cx][(int) cy]) {
                                 case 1:
 
-                                    if (box.drawBox(punkta, len, columns, foo)) len = maxLen;
+                                    if (box.drawBox((int)height,wallHeight,punkta, len, columns, foo)) len = maxLen;
                                     else {
                                         if (floorRay) {
-                                            floor.floor(punkta, len);
+                                            floor.floor(wallHeight,punkta);
 
                                         }
                                     }
@@ -203,39 +217,42 @@ public class Raycasting {
                                 case 2:
 
                                     if (largePointAnalyse.getX() != largeLastPointAnalyse.getX() || largePointAnalyse.getY() != largeLastPointAnalyse.getY()) {
-                                        hbox.drawBox(nStep, punkta, len);
+                                        hbox.drawBox((int)height,wallHeight,nStep, punkta, len);
                                         largeLastPointAnalyse = largePointAnalyse;
                                     }
 
                                     if (len < 30 && floorRay) {
-                                        floor.floor(punkta, len);
+                                        floor.floor(wallHeight,punkta);
 
                                     }
 
                                     break;
                                 case 3:
 
-                                    if (ocolumn.drawBox(punkta, len, columns)) len = maxLen;
+                                    if (ocolumn.drawBox((int)height,wallHeight,punkta, len, columns)) len = maxLen;
                                     else {
                                         if (len < 30 && floorRay) {
-                                            floor.floor(punkta, len);
+                                            floor.floor(wallHeight,punkta);
 
                                         }
                                     }
                                     break;
                                 case 4:
                                 case 5:
-
+                                case 20:
+                                case 21:
 
                                     if (largePointAnalyse.getX() != largeLastPointAnalyse.getX() || largePointAnalyse.getY() != largeLastPointAnalyse.getY()) {
                                         boolean ok = false;
 
-                                        switch (mapa[(int) analysePos.getX()][(int) analysePos.getY()]) {
+                                        switch (mapa[(int) cx][(int) cy]) {
                                             case 4:
-                                                ok = spriteX.drawBox(nStep, punkta, len);
+                                            case 20:// Drzwi
+                                                ok = spriteX.drawBox((int)height,wallHeight,nStep, punkta, len);
                                                 break;
                                             case 5:
-                                                ok = spriteY.drawBox(nStep, punkta, len);
+                                            case 21:// Drzwi
+                                                ok = spriteY.drawBox((int)height,wallHeight,nStep, punkta, len);
                                                 break;
 
                                         }
@@ -246,7 +263,7 @@ public class Raycasting {
                                     }
 
                                     if (floorRay) {
-                                        floor.floor(punkta, len);
+                                        floor.floor(wallHeight,punkta);
 
                                     }
 
@@ -254,16 +271,16 @@ public class Raycasting {
                                 case 6:
 
 
-                                    if (renderedSprites[(int) analysePos.getX()][(int) analysePos.getY()] == 0) {
-                                        boolean ok = sprite.drawBox(nStep, punkta, len, angle);
+                                    if (renderedSprites[(int) cx][(int) cy] == 0) {
+                                        boolean ok = sprite.drawBox((int)height,wallHeight,nStep, punkta, len, angle);
 
                                         if (ok) {
-                                            renderedSprites[(int) analysePos.getX()][(int) analysePos.getY()] = 1;
+                                            renderedSprites[(int) cx][(int) cy]= 1;
                                         }
                                     }
 
                                     if (floorRay) {
-                                        floor.floor(punkta, len);
+                                        floor.floor(wallHeight,punkta);
 
                                     }
 
@@ -272,21 +289,21 @@ public class Raycasting {
                                 case 8:
                                 case 9:
                                 case 10:
-                                    int type = mapa[(int) analysePos.getX()][(int) analysePos.getY()] - 7;
+                                    int type = mapa[(int) cx][(int) cy]- 7;
 
-                                    if (tria.drawBox(punkta, len, columns, type)) len = maxLen;
+                                    if (tria.drawBox((int)height,wallHeight,punkta, len, columns, type)) len = maxLen;
                                     else {
                                         if (floorRay) {
-                                            floor.floor(punkta, len);
+                                            floor.floor(wallHeight,punkta);
 
                                         }
                                     }
                                     break;
                                 case 11:
-                                    sprXY.drawBox(nStep, punkta, len);
+                                    sprXY.drawBox((int)height,wallHeight,nStep, punkta, len);
 
                                     if (floorRay) {
-                                        floor.floor(punkta, len);
+                                        floor.floor(wallHeight,punkta);
 
                                     }
 
@@ -295,27 +312,13 @@ public class Raycasting {
                                 case 13:
                                 case 14:
                                 case 15:
-                                    int typeA = 0;
-                                    switch (mapa[(int) analysePos.getX()][(int) analysePos.getY()]) {
-                                        case 12:
-                                            typeA = 0;
-                                            break;
+                                    int typeA = mapa[(int) cx][(int) cy]-12;
 
-                                        case 13:
-                                            typeA = 1;
-                                            break;
-                                        case 14:
-                                            typeA = 2;
-                                            break;
-                                        case 15:
-                                            typeA = 3;
-                                            break;
-                                    }
 
-                                    if (quFull.drawBox(punkta, len, columns, foo, typeA)) len = maxLen;
+                                    if (quFull.drawBox((int)height,wallHeight,punkta, len, columns, foo, typeA)) len = maxLen;
                                     else {
                                         if (floorRay) {
-                                            floor.floor(punkta, len);
+                                            floor.floor(wallHeight,punkta);
 
                                         }
                                     }
@@ -325,30 +328,15 @@ public class Raycasting {
                                 case 17:
                                 case 18:
                                 case 19:
-                                    int typeB = 0;
-                                    switch (mapa[(int) analysePos.getX()][(int) analysePos.getY()]) {
-                                        case 16:
-                                            typeB = 0;
-                                            break;
-
-                                        case 17:
-                                            typeB = 1;
-                                            break;
-                                        case 18:
-                                            typeB = 2;
-                                            break;
-                                        case 19:
-                                            typeB = 3;
-                                            break;
-                                    }
+                                    int typeB = mapa[(int) cx][(int) cy]-16;
 
                                     if (largePointAnalyse.getX() != largeLastPointAnalyse.getX() || largePointAnalyse.getY() != largeLastPointAnalyse.getY()) {
-                                        if (quHalf.drawBox(nStep, punkta, len, typeB))
+                                        if (quHalf.drawBox((int)height,wallHeight,nStep, punkta, len, typeB))
                                             largeLastPointAnalyse = largePointAnalyse;
                                     }
 
                                     if (floorRay) {
-                                        floor.floor(punkta, len);
+                                        floor.floor(wallHeight,punkta);
 
                                     }
 
@@ -356,7 +344,7 @@ public class Raycasting {
                                     break;
                                 default:
                                     if (floorRay) {
-                                        floor.floor(punkta, len);
+                                        floor.floor(wallHeight,punkta);
 
                                     }
                                     break;
@@ -369,6 +357,8 @@ public class Raycasting {
 
 
                     }
+
+
 
                     lastPointOfMap = zaokraglij;
 

@@ -17,6 +17,6 @@ public class GameTask extends TimerTask {
         game.update();
         game.input.resetKey();
 
-        game.render.saveRaycaster.tim2.schedule(new GameTask(game), Render.deltaTime*3/4);
+        game.render.saveRaycaster.tim2.schedule(new GameTask(game), Render.deltaTime);
     }
 }

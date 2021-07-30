@@ -16,19 +16,23 @@ public class Floor {
         lastPoint = new Point(0,0);
     }
 
-    private void drawBigPixel(int colorA, Point punkta){
-        ray.foo[punkta.y][punkta.x] = colorA;
-        ray.foo[punkta.y][punkta.x + 1] = colorA;
-        ray.foo[punkta.y+1][punkta.x] = colorA;
-        ray.foo[punkta.y+1][punkta.x + 1] = colorA;
+    private static void drawBigPixel(int[][] foo,int colorA, Point punkta){
+
+        for(int x= punkta.x;x< punkta.x+4;x++){
+            for(int y= punkta.y;y< punkta.y+4;y++) {
+
+                    foo[y][x] = colorA;
+
+            }
+        }
+
     }
-    public void floor(Point punkta, double len){
-        final double height = ((Raycasting.maxLen - len));
 
-        final double zet = ray.tempCosB * len;
-        final int wallHeight = (int) (ray.renderHeightConstant * height / zet);
 
-        punkta = new Point((int) punkta.x, (int) (punkta.y + (wallHeight >> 1)) );
+    public void floor(int wallHeight,Point punkta){
+
+
+        punkta = new Point( punkta.x, (punkta.y + (wallHeight >> 1)) );
 
 
 
@@ -59,11 +63,7 @@ public class Floor {
                                             }
 
 
-                                                drawBigPixel(colorA, new Point(punkta.x, punkta.y ));
-                                                drawBigPixel(colorA, new Point(punkta.x + 2, punkta.y ));
-                                                drawBigPixel(colorA, new Point(punkta.x, punkta.y  + 2));
-                                                drawBigPixel(colorA, new Point(punkta.x + 2, punkta.y + 2));
-
+                                                drawBigPixel(ray.foo, colorA, new Point(punkta.x, punkta.y ));
 
 
                                         }
@@ -80,10 +80,7 @@ public class Floor {
                                             }
 
 
-                                                drawBigPixel(colorB, new Point(punkta.x, punkta.y - wallHeight));
-                                                drawBigPixel(colorB, new Point(punkta.x + 2, punkta.y - wallHeight));
-                                                drawBigPixel(colorB, new Point(punkta.x, punkta.y - wallHeight + 2));
-                                                drawBigPixel(colorB, new Point(punkta.x + 2, punkta.y - wallHeight + 2));
+                                                drawBigPixel(ray.foo,colorB, new Point(punkta.x, punkta.y - wallHeight));
 
                                         }
                                     }

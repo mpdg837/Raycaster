@@ -8,6 +8,7 @@ import Raycaster.Player.Camera;
 import Raycaster.Player.Input.Input;
 import Raycaster.Player.Input.Interaction;
 import Raycaster.Player.Collision;
+import Raycaster.Player.InteractiveObjects.Doors;
 import Raycaster.Player.Map;
 import Raycaster.Player.Transform;
 
@@ -39,10 +40,13 @@ public class Game extends Interaction {
 
     public final Camera camera = new Camera();
 
+    public final Doors doors;
+
     public Game(Input input) throws IOException{
         super(input);
 
         this.mapa = new Map();
+        doors = new Doors(this);
 
         playerTransform = new Transform();
 
@@ -87,7 +91,7 @@ public class Game extends Interaction {
         mapa.mapa[65][65] = 1;
         mapa.mapa[62][62] =2;
         mapa.mapa[64][62] =3;
-        mapa.mapa[66][62] =4;
+        mapa.mapa[66][62] =20;
         mapa.mapa[68][62] =5;
 
         mapa.mapa[66][68] =6;
@@ -144,11 +148,19 @@ public class Game extends Interaction {
     }
 
 
+    public void doors(){
+        if (input.getKey(KeyEvent.VK_O)) {
+            doors.open();
+        }
 
+        doors.update();
+    }
     public void update() {
 
         walking();
         camera.cameraRot(this);
+
+        doors();
 
         if (input.getKey(KeyEvent.VK_E)) {
             if (camera.zoom < 3) {
@@ -164,16 +176,23 @@ public class Game extends Interaction {
 
         tim ++;
 
+
         if(tim>60) {
 
             render.saveRaycaster.requestFocus();
 
             tim = 0;
+
+
+
             if (mapa.HP[65][65] >= 5) {
+
                 mapa.HP[65][65] = 0;
                 mapa.HP[64][62] = 0;
                 mapa.deltaPos[66][68] = new Point( (int)mapa.deltaPos[66][68].getX()- 2*5,(int)mapa.deltaPos[66][68].getY());
             } else {
+
+
                 mapa.HP[65][65]++;
                 mapa.HP[64][62]++;
                 mapa.deltaPos[66][68] = new Point( (int)mapa.deltaPos[66][68].getX()+ 2,(int)mapa.deltaPos[66][68].getY());

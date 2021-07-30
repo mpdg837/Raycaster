@@ -14,10 +14,9 @@ public class Triangle {
         this.ray = ray;
     }
 
-    public boolean drawBox(Point punkt, double len, ArrayList<Column> columns,int type){
+    public boolean drawBox(int height,int wallHeight,Point punkt, double len, ArrayList<Column> columns,int type){
 
 
-        final double height =((Raycasting.maxLen - len));
 
 
         boolean finish = false;
@@ -106,8 +105,6 @@ public class Triangle {
 
                 // Wyznaczenie tekstury
 
-                final double zet = ray.tempCosB * len;
-                final int wallHeight = (int) (ray.renderHeightConstant * height / zet);
 
                 final Column column = new Column();
 

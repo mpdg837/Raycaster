@@ -15,12 +15,7 @@ public class HalfBox {
 
 
 
-    public void drawBox(int nStep,Point punkt, double len) {
-
-
-            final double height = ((Raycasting.maxLen - len));
-
-
+    public void drawBox(int height,int wallHeight,int nStep,Point punkt, double len) {
 
             if (height > 0) {
 
@@ -40,9 +35,6 @@ public class HalfBox {
 
 
                 // Wyznaczenie tekstury
-
-                final double zet = ray.tempCosB * len;
-                final int wallHeight = (int) (ray.renderHeightConstant* height / zet);
 
                 final Column column = new Column();
 

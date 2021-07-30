@@ -15,13 +15,9 @@ public class Sprite {
 
 
 
-    public boolean drawBox(int nStep, Point punkt, double len,double angle) {
+    public boolean drawBox(int height,int wallHeight,int nStep, Point punkt, double len,double angle) {
 
         boolean end = false;
-        final double height = ((Raycasting.maxLen - len));
-
-
-
 
         if (height > 0) {
 
@@ -36,8 +32,6 @@ public class Sprite {
 
                     // Wyznaczenie tekstury
 
-                    final double zet = ray.tempCosB * len;
-                    final int wallHeight = (int) (ray.renderHeightConstant* height / zet);
 
                     final Column column = new Column();
 

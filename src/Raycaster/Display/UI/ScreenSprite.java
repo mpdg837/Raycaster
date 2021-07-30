@@ -32,7 +32,7 @@ public class ScreenSprite {
 
         String key= deltaRenderTime + "ms";
 
-        g.drawString(key, 10, 25);
+        g.drawString(key, 10, 50);
 
     }
 }

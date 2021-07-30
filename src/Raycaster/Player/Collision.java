@@ -18,6 +18,12 @@ public class Collision {
             final double partY = (position.getY() - (int) position.getY());
 
             switch (type) {
+                case 20:
+                case 21:
+                case 4:
+                case 5:
+                    decyzja = mapa.deltaPos[(int) position.getX()][(int) position.getY()].x<32;
+                    break;
                 case 3:
                     decyzja = partX >=0.375 && partX <= 0.625 && partY >=0.375 && partY <= 0.625;
                     break;

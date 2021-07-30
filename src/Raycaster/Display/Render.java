@@ -18,13 +18,13 @@ public class Render extends TimerTask {
 
     public final Point renderSize;
 
-    private final Graphics drawInside;
+    private final Graphics2D drawInside;
 
     public final ScreenSprite sprites;
     public final Raycaster saveRaycaster;
     private boolean start;
     private Game game;
-    public final Raycasting rayMaker;
+
     public int deltaRenderTime;
 
     public Render(boolean start, Raycaster canvas, Game game){
@@ -32,7 +32,7 @@ public class Render extends TimerTask {
         renderSize = Raycaster.resolution;
         sprites = new ScreenSprite(this);
 
-        drawInside = canvas.panel.getGraphics();
+        drawInside = (Graphics2D) canvas.getGraphics();
 
         saveRaycaster = canvas;
 
@@ -47,7 +47,6 @@ public class Render extends TimerTask {
         }else{
             this.game = game;
         }
-        rayMaker = new Raycasting(game);
 
     }
 
@@ -84,12 +83,12 @@ public class Render extends TimerTask {
                     final long timeStart = System.nanoTime();
 
 
-                    rayMaker.draw();
+                    saveRaycaster.rayMaker.draw();
 
-                    sprites.draw(rayMaker.bufferImg.getGraphics(),timeStart);
+                    sprites.draw(saveRaycaster.rayMaker.bufferImg.getGraphics(),timeStart);
 
 
-                    Image scaled = rayMaker.bufferImg.getScaledInstance(saveRaycaster.getWidth(), saveRaycaster.getHeight(),Image.SCALE_FAST);
+                    Image scaled = saveRaycaster.rayMaker.bufferImg.getScaledInstance(saveRaycaster.getWidth(), saveRaycaster.getHeight(),Image.SCALE_FAST);
                     drawInside.drawImage(scaled, 0, 0 , saveRaycaster);
 
                     final long timeEnd = System.nanoTime();

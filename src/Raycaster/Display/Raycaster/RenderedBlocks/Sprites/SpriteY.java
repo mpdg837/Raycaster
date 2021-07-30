@@ -14,29 +14,29 @@ public class SpriteY {
 
 
 
-    public boolean drawBox(int nStep, Point punkt, double len) {
+    public boolean drawBox(int height,int wallHeight,int nStep, Point punkt, double len) {
 
         boolean end = false;
-        final double height = ((Raycasting.maxLen - len));
+
 
 
         if (height > 0) {
 
             // Wybór tekstury
 
+            int delta = ray.game.mapa.deltaPos[(int)ray.analysePos.getX()][(int)ray.analysePos.getY()].y;
 
-            if (ray.posX==32){
+
+            if (ray.posX==32 && ray.posY>delta){
 
 
                 // Wyznaczenie tekstury
 
-                final double zet = ray.tempCosB * len;
-                final int wallHeight = (int) (ray.renderHeightConstant * height / zet);
 
                 final Column column = new Column();
 
                 column.darker =false;
-                column.index = ray.posY;
+                column.index = ray.posY-delta;
                 column.rect = new Rectangle(punkt.x, punkt.y - (wallHeight >> 1), 1, wallHeight);
                 column.half = false;
                 column.objPosition = new Point((int)ray.analysePos.getX(),(int)ray.analysePos.getY());

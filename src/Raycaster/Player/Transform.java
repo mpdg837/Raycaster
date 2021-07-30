@@ -6,7 +6,7 @@ public class Transform {
     public double rotation = 0;
     public Point2D postion = new Point2D.Double(64,64);
 
-    private double deltaR = Math.PI/2;
+    private final static double deltaR = Math.PI/2;
 
     public void translate(int kieruek,double len){
         if(kieruek == getUp()) {

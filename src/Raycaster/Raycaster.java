@@ -27,10 +27,6 @@ public class Raycaster extends Frame {
     public Timer tim1 = new Timer();
     public Timer tim2 = new Timer();
     public Game game;
-    private static DisplayMode[] BEST_DISPLAY_MODES = new DisplayMode[]{
-            new DisplayMode(640, 480, 32, 0),
-            new DisplayMode(640, 480, 16, 0),
-            new DisplayMode(640, 480, 8, 0)};
 
     public Raycaster(boolean windowed) {
 
@@ -57,8 +53,12 @@ public class Raycaster extends Frame {
 
         this.addWindowListener(new WindowME());
 
+
+
         EventQueue.invokeLater(() -> {
             this.setVisible(true);
+
+
         });
         buffer = new BufferedImage(resolution.x, resolution.y, BufferedImage.TYPE_INT_RGB);
 
@@ -85,29 +85,8 @@ public class Raycaster extends Frame {
         }
 
 
-
     }
 
-    private static DisplayMode getBestDisplayMode(GraphicsDevice device) {
-        for (DisplayMode bestDisplayMode : BEST_DISPLAY_MODES) {
-            final DisplayMode[] modes = device.getDisplayModes();
-            for (DisplayMode mode : modes) {
-                if (mode.getWidth() == bestDisplayMode.getWidth()
-                        && mode.getHeight() == bestDisplayMode.getHeight()
-                        && mode.getBitDepth() == bestDisplayMode.getBitDepth()) {
-                    return bestDisplayMode;
-                }
-            }
-        }
-        return null;
-    }
-
-    public static void chooseBestDisplayMode(GraphicsDevice device) {
-        final DisplayMode best = getBestDisplayMode(device);
-        if (best != null) {
-            device.setDisplayMode(best);
-        }
-    }
 
     public static void main(String[] args){
 

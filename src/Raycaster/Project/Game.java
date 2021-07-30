@@ -75,7 +75,7 @@ public class Game extends Interaction {
 
         for(int x=0;x<5;x++){
             for(int y=0;y<5;y++){
-                mapa.ceciling[62+x][63+y] = 0;
+                mapa.ceciling[62+x][63+y] = 2;
             }
         }
 

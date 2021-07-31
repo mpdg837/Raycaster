@@ -2,6 +2,7 @@ package Raycaster;
 
 import Raycaster.Display.Raycaster.Raycasting;
 import Raycaster.Display.Render;
+import Raycaster.Display.UI.ScreenSprite;
 import Raycaster.Player.GameTask;
 import Raycaster.Player.Input.Input;
 import Raycaster.Project.Game;
@@ -18,6 +19,7 @@ public class Raycaster extends Frame {
             .getLocalGraphicsEnvironment().getScreenDevices()[0];
     public Raycasting rayMaker;
     public final BufferedImage buffer;
+    public final ScreenSprite sprites;
 
     public final static Point resolution= new Point(640,480);
 
@@ -31,6 +33,8 @@ public class Raycaster extends Frame {
     public Raycaster(boolean windowed) {
 
         super("Raycaster Engine");
+
+        sprites = new ScreenSprite();
 
         this.setLayout(new BorderLayout());
         this.addKeyListener(input);

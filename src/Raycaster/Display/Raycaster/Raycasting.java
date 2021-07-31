@@ -25,7 +25,7 @@ import java.util.ConcurrentModificationException;
 
 public class Raycasting {
 
-    public Game game;
+    public final Game game;
 
     public double renderHeightConstant = 30;
     public double myAngle = Math.toRadians(90);
@@ -35,9 +35,6 @@ public class Raycasting {
     public static final double deltaLen = 0.015;
 
     public static double maxLen = 48;
-
-
-    public double tempCosB;
 
     private byte[][] mapa;
 
@@ -155,7 +152,7 @@ public class Raycasting {
 
                 floorRay = !floorRay;
 
-                tempCosB = game.getCos(Math.abs(myAngle - angle));
+                final double tempCosB = game.getCos(Math.abs(myAngle - angle));
 
                 Point largeLastPointAnalyse = new Point();
 

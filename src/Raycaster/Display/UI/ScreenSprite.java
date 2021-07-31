@@ -1,6 +1,7 @@
 package Raycaster.Display.UI;
 
 import Raycaster.Display.Render;
+import Raycaster.Raycaster;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -10,13 +11,13 @@ import java.io.IOException;
 
 public class ScreenSprite {
 
-    private final Render ren;
     public BufferedImage gun;
+    public Image scaled;
+    public ScreenSprite(){
 
-    public ScreenSprite(Render ren){
-        this.ren = ren;
         try{
             gun = ImageIO.read(new File("gun.png"));
+            scaled = gun.getScaledInstance(196,196,Image.SCALE_FAST);
         }catch (IOException err){
             gun = new BufferedImage(96,96,BufferedImage.TYPE_4BYTE_ABGR);
         }
@@ -24,8 +25,8 @@ public class ScreenSprite {
     }
 
     public void draw(Graphics g,long timeStart){
-        Image scaled = gun.getScaledInstance(196,196,Image.SCALE_FAST);
-        g.drawImage(scaled,ren.renderSize.x/2-98,ren.renderSize.y-196,null);
+
+        g.drawImage(scaled, Raycaster.resolution.x/2 -98,Raycaster.resolution.y-196,null);
 
         final long timeEnd = System.nanoTime();
         final int deltaRenderTime = (int)(timeEnd - timeStart)/1000000;

@@ -73,6 +73,7 @@ public class Raycasting {
     public Raycasting(Game game){
 
         this.game = game;
+
         bufferImg = new BufferedImage(Raycaster.resolution.x, Raycaster.resolution.y, BufferedImage.TYPE_INT_RGB);
 
         columns = new ArrayList<>();

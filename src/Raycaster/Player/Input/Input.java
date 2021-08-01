@@ -11,12 +11,12 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener {
 
     private ArrayList<Integer> keys = new ArrayList<Integer>();
 
-    private ArrayList<Integer> keysDown = new ArrayList<Integer>();
+    private ArrayList<Integer> keysDown = new ArrayList<Integer>() ;
     private ArrayList<Integer> lastKeysDown = new ArrayList<Integer>();
 
-    private int mouseButton;
-    private int mouseButtonDown;
-    private int lastMouseButtonDown;
+    private ArrayList<Integer>  mouseButton= new ArrayList<Integer>() ;
+    private ArrayList<Integer> mouseButtonDown = new ArrayList<Integer>() ;
+    private ArrayList<Integer> lastMouseButtonDown = new ArrayList<Integer>();
 
     private boolean isDragged;
     private boolean isMoving;
@@ -33,11 +33,11 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener {
 
     public void resetKey(){
         lastKeysDown.addAll(keysDown);
-        lastMouseButtonDown = mouseButton;
+        lastMouseButtonDown.addAll(mouseButton);
 
 
         keysDown.clear();
-        mouseButtonDown = 0;
+        mouseButtonDown.clear();
     }
 
     public void centerMouse(){
@@ -52,8 +52,8 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener {
     public boolean isDragged(){return isDragged;}
     public boolean isMoving() {return isMoving;}
 
-    public boolean getMouseButton(int mouseButton){return this.mouseButton == mouseButton;}
-    public boolean getMouseButtonDown(int mouseButton){return this.mouseButtonDown == mouseButton;}
+    public boolean getMouseButton(int mouseButton){return this.mouseButton.contains(mouseButton);}
+    public boolean getMouseButtonDown(int mouseButton){return this.mouseButtonDown.contains(mouseButton);}
 
     public boolean getKey(int key){
         return keys.contains(key);
@@ -95,30 +95,30 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        mouseButton = e.getButton();
-        if(lastMouseButtonDown != mouseButton) {
-            mouseButtonDown = e.getButton();
+        mouseButton.add(e.getButton());
+        if(!lastMouseButtonDown.contains(mouseButton)) {
+            mouseButtonDown.add(e.getButton());
         }
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        endMouse();
+        endMouse(e.getButton());
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        endMouse();
+        endMouse(e.getButton());
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        endMouse();
+        endMouse(e.getButton());
     }
 
-    private void endMouse(){
-        mouseButton = 0;
-        lastMouseButtonDown = 0;
+    private void endMouse(int button){
+        if(mouseButton.contains(button)) mouseButton.remove((Integer) button);
+        if(lastMouseButtonDown.contains(button)) lastMouseButtonDown.remove((Integer) button);
         isDragged = false;
         isMoving = false;
     }

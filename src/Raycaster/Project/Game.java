@@ -15,6 +15,7 @@ import Raycaster.Player.Transform;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 import java.io.File;
 import java.io.IOException;
@@ -41,6 +42,7 @@ public class Game extends Interaction {
     public final Camera camera = new Camera();
 
     public final Doors doors;
+    public final Player player;
 
     public Game(Input input) throws IOException{
         super(input);
@@ -56,6 +58,9 @@ public class Game extends Interaction {
             ceiling = new Texture(ImageIO.read(new File("floor.png")),false);
             sprite = new TexturePack(ImageIO.read(new File("sprite.png")));
             sky = new SkyBox(ImageIO.read(new File("skybox.jpg")));
+        player = new Player(this);
+
+
     }
 
     public void start() {
@@ -75,7 +80,7 @@ public class Game extends Interaction {
 
         for(int x=0;x<5;x++){
             for(int y=0;y<5;y++){
-                mapa.ceciling[62+x][63+y] = 2;
+                mapa.ceciling[62+x][63+y] = 3;
             }
         }
 
@@ -92,6 +97,8 @@ public class Game extends Interaction {
         mapa.mapa[62][62] =2;
         mapa.mapa[64][62] =3;
         mapa.mapa[66][62] =20;
+        mapa.textures[66][62] =1;
+
         mapa.mapa[68][62] =5;
 
         mapa.mapa[66][68] =6;
@@ -103,6 +110,8 @@ public class Game extends Interaction {
         mapa.mapa[69][65] =9;
         mapa.mapa[70][66] =10;
         mapa.mapa[70][65] =8;
+
+
         mapa.mapa[71][64] =11;
 
         mapa.mapa[61][69] =12;
@@ -123,29 +132,13 @@ public class Game extends Interaction {
 
         mapa.HP[65][65]=0;
 
+        mapa.textures[69][66] =2;
+        mapa.textures[69][65] =2;
+        mapa.textures[70][66] =2;
+        mapa.textures[70][65] =2;
     }
 
 
-    void walking(){
-        Point2D lastPos = playerTransform.postion;
-
-        double speed = 0.45;
-
-        if (input.getKey(KeyEvent.VK_W)) {
-            playerTransform.translate(Transform.getUp(),speed);
-        }else if (input.getKey(KeyEvent.VK_S)) {
-            playerTransform.translate(Transform.getDown(),speed);
-        }else if (input.getKey(KeyEvent.VK_A)) {
-            playerTransform.translate(Transform.getLeft(),speed);
-        }else if (input.getKey(KeyEvent.VK_D)) {
-            playerTransform.translate(Transform.getRight(),speed);
-        }
-
-        Collision coll = new Collision(mapa);
-        if(coll.collide(playerTransform.postion)){
-            playerTransform.postion =lastPos;
-        }
-    }
 
 
     public void doors(){
@@ -154,28 +147,49 @@ public class Game extends Interaction {
         }
 
         doors.update();
+
+        render.saveRaycaster.sprites.canUse = doors.canUse;
     }
+
+    public void shoot(){
+        render.saveRaycaster.sprites.shootAnimate=1;
+    }
+
+
     public void update() {
 
-        walking();
+        player.walking();
         camera.cameraRot(this);
 
         doors();
+        if(render.saveRaycaster.sprites.reloadAnimate<=0) {
+            if (input.getKeyDown(KeyEvent.VK_R)) {
 
-        if (input.getKey(KeyEvent.VK_E)) {
-            if (camera.zoom < 3) {
-                camera.zoom += 0.15;
+                render.saveRaycaster.sprites.reloadAnimate =1;
 
+            }else
+            if (input.getMouseButtonDown(MouseEvent.BUTTON1)) {
+                shoot();
             }
-        } else {
-            if (camera.zoom > 1) {
-                camera.zoom -= 0.2;
 
+            if( render.saveRaycaster.sprites.reloadAnimate !=1) {
+                if (input.getMouseButton(MouseEvent.BUTTON3)) {
+                    if (camera.zoom < 3) {
+                        camera.zoom += 0.15;
+
+                    }
+                } else {
+
+                        if (camera.zoom > 1) {
+                            camera.zoom -= 0.2;
+
+                        }
+
+                }
+
+                tim++;
             }
         }
-
-        tim ++;
-
 
         if(tim>60) {
 

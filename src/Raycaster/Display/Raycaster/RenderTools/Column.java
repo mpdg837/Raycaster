@@ -37,6 +37,7 @@ public class Column {
         int deltaYa = 0;
         if(half){
             deltaYa = (int)rect.getHeight() >> 1;
+            yR = 32;
         }
 
         int xR = rect.x >> 1;

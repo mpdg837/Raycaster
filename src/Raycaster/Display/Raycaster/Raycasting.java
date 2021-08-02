@@ -185,9 +185,10 @@ public class Raycasting {
 
                     if (!zaokraglij.equals(lastPointOfMap)) {
 
-
+                        int lenMem = (int)len;
 
                         if (inside() )  {
+
                             final int wallHeight = (int) (renderHeightConstant * height / zet);
                             final Point largePointAnalyse = new Point((int) cx, (int) cy);
 
@@ -200,10 +201,11 @@ public class Raycasting {
                             final Point punkta = new Point(nStep, half);
 
                             analysePos.setLocation(cx, cy);
+
                             switch (mapa[(int) cx][(int) cy]) {
                                 case 1:
 
-                                    if (box.drawBox((int)height,wallHeight,punkta, len, columns, foo)) len = maxLen;
+                                    if (box.drawBox((int)height,wallHeight,punkta, len, columns, foo)) {len = maxLen;}
                                     else {
                                         if (floorRay) {
                                             floor.floor(wallHeight,punkta);
@@ -349,10 +351,11 @@ public class Raycasting {
 
                             }
 
+
+
                         } else {
                             len = maxLen;
                         }
-
 
                     }
 

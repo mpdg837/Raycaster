@@ -18,11 +18,11 @@ public class Player {
 
         double speed = 0.45;
 
-        game.render.saveRaycaster.sprites.moveGun+=3;
-        game.render.saveRaycaster.sprites.zoom = game.camera.zoom;
+        game.render.saveRaycaster.sprites.gunRender.moveGun+=3;
+        game.render.saveRaycaster.sprites.gunRender.zoom = game.camera.zoom;
 
-        if(game.render.saveRaycaster.sprites.zoom <1){
-            game.render.saveRaycaster.sprites.zoom=1;
+        if(game.render.saveRaycaster.sprites.gunRender.zoom <1){
+            game.render.saveRaycaster.sprites.gunRender.zoom=1;
         }
 
         if (game.input.getKey(KeyEvent.VK_W)) {
@@ -38,18 +38,18 @@ public class Player {
 
             game.playerTransform.translate(Transform.getRight(),speed);
         }else{
-            game.render.saveRaycaster.sprites.moveGun-=3;
+            game.render.saveRaycaster.sprites.gunRender.moveGun-=3;
 
-            if(game.render.saveRaycaster.sprites.moveGun<= 0 || game.render.saveRaycaster.sprites.moveGun== 66){
+            if(game.render.saveRaycaster.sprites.gunRender.moveGun<= 0 || game.render.saveRaycaster.sprites.gunRender.moveGun== 66){
 
             }else{
-                game.render.saveRaycaster.sprites.moveGun +=3;
+                game.render.saveRaycaster.sprites.gunRender.moveGun +=3;
 
             }
         }
 
-        Collision coll = new Collision(game.mapa);
-        if(coll.collide(game.playerTransform.postion)){
+
+        if(game.coll.collide(game.playerTransform.postion)){
             game.playerTransform.postion =lastPos;
         }
     }

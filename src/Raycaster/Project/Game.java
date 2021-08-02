@@ -1,5 +1,6 @@
 package Raycaster.Project;
 
+import Raycaster.Display.Raycaster.Raycasting;
 import Raycaster.Display.Raycaster.SkyBox;
 import Raycaster.Display.Textures.Texture;
 import Raycaster.Display.Render;
@@ -43,7 +44,8 @@ public class Game extends Interaction {
 
     public final Doors doors;
     public final Player player;
-
+    public final Gun gun;
+    public Collision coll;
     public Game(Input input) throws IOException{
         super(input);
 
@@ -60,7 +62,8 @@ public class Game extends Interaction {
             sky = new SkyBox(ImageIO.read(new File("skybox.jpg")));
         player = new Player(this);
 
-
+        gun = new Gun(this);
+        coll = new Collision(mapa);
     }
 
     public void start() {
@@ -119,11 +122,20 @@ public class Game extends Interaction {
         mapa.mapa[61][65] =14;
         mapa.mapa[61][63] =15;
 
+        mapa.textures[61][69] =4;
+        mapa.textures[61][67] =4;
+        mapa.textures[61][65] =4;
+        mapa.textures[61][63] =4;
+
         mapa.mapa[74][69] =16;
         mapa.mapa[74][67] =17;
         mapa.mapa[74][65] =18;
         mapa.mapa[74][63] =19;
 
+        mapa.textures[74][69] =4;
+        mapa.textures[74][67] =4;
+        mapa.textures[74][65] =4;
+        mapa.textures[74][63] =4;
         for(int x=61;x<70;x++) {
             for (int y = 61; y < 63; y++) {
                 mapa.light[x][y] = false;
@@ -151,10 +163,6 @@ public class Game extends Interaction {
         render.saveRaycaster.sprites.canUse = doors.canUse;
     }
 
-    public void shoot(){
-        render.saveRaycaster.sprites.shootAnimate=1;
-    }
-
 
     public void update() {
 
@@ -162,34 +170,7 @@ public class Game extends Interaction {
         camera.cameraRot(this);
 
         doors();
-        if(render.saveRaycaster.sprites.reloadAnimate<=0) {
-            if (input.getKeyDown(KeyEvent.VK_R)) {
-
-                render.saveRaycaster.sprites.reloadAnimate =1;
-
-            }else
-            if (input.getMouseButtonDown(MouseEvent.BUTTON1)) {
-                shoot();
-            }
-
-            if( render.saveRaycaster.sprites.reloadAnimate !=1) {
-                if (input.getMouseButton(MouseEvent.BUTTON3)) {
-                    if (camera.zoom < 3) {
-                        camera.zoom += 0.15;
-
-                    }
-                } else {
-
-                        if (camera.zoom > 1) {
-                            camera.zoom -= 0.2;
-
-                        }
-
-                }
-
-                tim++;
-            }
-        }
+        gun.useGun();
 
         if(tim>60) {
 
@@ -201,14 +182,9 @@ public class Game extends Interaction {
 
             if (mapa.HP[65][65] >= 5) {
 
-                mapa.HP[65][65] = 0;
-                mapa.HP[64][62] = 0;
                 mapa.deltaPos[66][68] = new Point( (int)mapa.deltaPos[66][68].getX()- 2*5,(int)mapa.deltaPos[66][68].getY());
             } else {
 
-
-                mapa.HP[65][65]++;
-                mapa.HP[64][62]++;
                 mapa.deltaPos[66][68] = new Point( (int)mapa.deltaPos[66][68].getX()+ 2,(int)mapa.deltaPos[66][68].getY());
             }
         }

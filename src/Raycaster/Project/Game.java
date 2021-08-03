@@ -58,7 +58,7 @@ public class Game extends Interaction {
             texture = new TexturePack(ImageIO.read(new File("texture.png")));
             floor = new Texture(ImageIO.read(new File("floor.png")),false);
             ceiling = new Texture(ImageIO.read(new File("floor.png")),false);
-            sprite = new TexturePack(ImageIO.read(new File("sprite.png")));
+            sprite = new TexturePack(ImageIO.read(new File("sprite0.png")));
             sky = new SkyBox(ImageIO.read(new File("skybox.jpg")));
         player = new Player(this);
 

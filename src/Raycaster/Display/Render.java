@@ -14,7 +14,7 @@ import Raycaster.Project.Game;
 
 public class Render extends TimerTask {
 
-    public final static int deltaTime =33;
+    public final static int deltaTime =34;
 
     public final Point renderSize;
 

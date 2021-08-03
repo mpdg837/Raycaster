@@ -27,7 +27,8 @@ public class Triangle {
 
 
             boolean decyzja = false;
-
+            boolean in = false;
+            final byte hp = ray.game.mapa.HP[(int) ray.analysePos.getX()][(int) ray.analysePos.getY()];
             switch (type) {
                 case 0: decyzja = ray.partX > ray.partY;
                     break;
@@ -38,6 +39,14 @@ public class Triangle {
                 case 3: decyzja = ray.partY < 1-ray.partX;
                     break;
             }
+
+
+            boolean destroyed = (ray.game.damage.pseudoLos(ray.posX,hp));
+
+            if(hp<1){
+                destroyed = false;
+            }
+
             if( decyzja) {
 
                 boolean cien = false;
@@ -102,11 +111,11 @@ public class Triangle {
                         break;
                 }
 
-
                 // Wyznaczenie tekstury
 
 
                 final Column column = new Column();
+
 
 
                 column.darker = cien;
@@ -115,6 +124,7 @@ public class Triangle {
                 column.objPosition = new Point((int)ray.analysePos.getX(),(int)ray.analysePos.getY());
                 column.raycastPosition = new Point2D.Double(ray.analysePos.getX(),ray.analysePos.getY());
 
+                column.destroyed = destroyed;
                 column.half = false;
                 column.setLen(len);
                 columns.add(column);

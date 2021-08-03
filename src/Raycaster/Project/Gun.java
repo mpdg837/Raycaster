@@ -93,6 +93,19 @@ public class Gun {
                         switch (game.mapa.mapa[(int) cx][(int) cy]) {
                             case 0:
                                 break;
+                            case 2:
+
+                                if(game.camera.deltaY>0){
+                                    if (game.coll.collide(new Point2D.Double(cx, cy))) {
+
+                                        memLen = len;
+                                        len = 30;
+
+                                        posDetected = new Point((int) cx, (int) cy);
+
+                                    }
+                                }
+                                break;
                             case 4:
                             case 5:
                             case 20:

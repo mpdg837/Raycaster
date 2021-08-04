@@ -32,7 +32,7 @@ public class Game extends Interaction {
     public Map mapa;
 
     public final TexturePack texture;
-    public final TexturePack sprite;
+    public final TexturePack[] sprite;
 
     public final Texture floor;
     public final Texture ceiling;
@@ -46,6 +46,7 @@ public class Game extends Interaction {
     public final Player player;
     public final Gun gun;
     public Collision coll;
+
     public Game(Input input) throws IOException{
         super(input);
 
@@ -58,7 +59,11 @@ public class Game extends Interaction {
             texture = new TexturePack(ImageIO.read(new File("texture.png")));
             floor = new Texture(ImageIO.read(new File("floor.png")),false);
             ceiling = new Texture(ImageIO.read(new File("floor.png")),false);
-            sprite = new TexturePack(ImageIO.read(new File("sprite0.png")));
+
+            sprite = new TexturePack[3];
+            for(int n=0;n<sprite.length;n++) {
+                sprite[n] =new TexturePack(ImageIO.read(new File("sprite"+n+".png")));
+            }
             sky = new SkyBox(ImageIO.read(new File("skybox.jpg")));
         player = new Player(this);
 
@@ -84,6 +89,7 @@ public class Game extends Interaction {
         for(int x=0;x<5;x++){
             for(int y=0;y<5;y++){
                 mapa.ceciling[62+x][63+y] = 3;
+
             }
         }
 

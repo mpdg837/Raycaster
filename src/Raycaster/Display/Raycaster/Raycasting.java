@@ -404,7 +404,17 @@ public class Raycasting {
                             final Texture myTex = game.texture.textures[game.mapa.textures[columnS.objPosition.x][columnS.objPosition.y]];
                             columnS.render(n,this, myTex,false);
                         } else {
-                            final Texture myTex = game.sprite.textures[game.mapa.textures[columnS.objPosition.x][columnS.objPosition.y]];
+
+                            int HP = game.mapa.HP[(int)columnS.raycastPosition.getX()][(int)columnS.raycastPosition.getY()];
+
+                            if(HP>2){
+                                HP=2;
+                            }
+
+                            if(HP<0){
+                                HP = 0;
+                            }
+                            final Texture myTex = game.sprite[HP].textures[game.mapa.textures[columnS.objPosition.x][columnS.objPosition.y]];
                             columnS.render(n,this, myTex,false);
                         }
                     }

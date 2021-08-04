@@ -21,6 +21,8 @@ public class ScreenSprite {
 
 
     public int bulletSize;
+
+
     public ScreenSprite(){
 
         gunRender =  new GunRender(this);

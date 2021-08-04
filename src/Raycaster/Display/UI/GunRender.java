@@ -10,6 +10,8 @@ import java.io.IOException;
 
 public class GunRender {
 
+    public boolean blockMe;
+
     private final ScreenSprite sprite;
 
     public Image[] scaled = new Image[4];
@@ -52,7 +54,7 @@ public class GunRender {
     public void moveGun(Graphics g) {
 
 
-        if(sprite.bulletSize>0) {
+        if(sprite.bulletSize>0 && !blockMe) {
             g.drawImage(rdes[shootAnimate], 320 - (sprite.bulletSize >> 1), 240 - (sprite.bulletSize >> 1), sprite.bulletSize, sprite.bulletSize, null);
         }
         if(shootAnimate>0) {

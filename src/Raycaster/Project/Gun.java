@@ -94,28 +94,29 @@ public class Gun {
                             case 0:
                                 break;
                             case 2:
-
+                            case 12:
+                            case 13:
+                            case 14:
+                            case 15:
+                            case 16:
+                            case 17:
+                            case 18:
+                            case 19:
                                 if(game.camera.deltaY>0){
                                     if (game.coll.collide(new Point2D.Double(cx, cy))) {
 
                                         memLen = len;
                                         len = 30;
-
+                                        game.render.saveRaycaster.sprites.gunRender.blockMe = false;
                                         posDetected = new Point((int) cx, (int) cy);
 
                                     }
                                 }
                                 break;
-                            case 4:
-                            case 5:
+
                             case 20:
                             case 21:
-                            case 6:
-                            case 11:
-                            case 16:
-                            case 17:
-                            case 18:
-                            case 19:
+
                                 memLen = 30;
                                 len = 30;
                                 break;
@@ -124,11 +125,28 @@ public class Gun {
 
                                 if (game.coll.collide(new Point2D.Double(cx, cy))) {
 
+                                    boolean decyzja = true;
+                                    switch (game.mapa.mapa[(int) cx][(int) cy]) {
+                                        case 4:
+                                        case 5:
+                                        case 6:
+                                        case 11:
+                                            if(game.mapa.HP[(int) cx][(int) cy]>3) decyzja = false;
+                                            else game.render.saveRaycaster.sprites.gunRender.blockMe = true;
+                                            break;
+                                        default:
+
+                                            game.render.saveRaycaster.sprites.gunRender.blockMe = false;
+                                            break;
+                                    }
+
+
+                                    if(decyzja) {
                                         memLen = len;
                                         len = 30;
 
                                         posDetected = new Point((int) cx, (int) cy);
-
+                                    }
                                 }
                                 break;
 

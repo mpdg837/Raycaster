@@ -269,6 +269,7 @@ public class Raycasting {
 
                                     break;
                                 case 6:
+                                case 22:
 
 
                                     if (renderedSprites[(int) cx][(int) cy] == 0) {

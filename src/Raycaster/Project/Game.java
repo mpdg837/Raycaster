@@ -111,7 +111,9 @@ public class Game extends Interaction {
         mapa.mapa[68][62] =5;
 
         mapa.mapa[66][68] =6;
-        mapa.mapa[67][68] =6;
+        mapa.mapa[67][68] =22;
+        mapa.textures[67][68] =2;
+
         mapa.mapa[68][68] =6;
 
 
@@ -177,6 +179,8 @@ public class Game extends Interaction {
 
         doors();
         gun.useGun();
+
+        mapa.analyse();
 
         if(tim>60) {
 

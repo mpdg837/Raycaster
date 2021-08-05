@@ -23,4 +23,40 @@ public class Map {
             }
         }
     }
+
+    private boolean inside(int x,int y){
+        return x>=0 && y>=0 && x<128 && y<128;
+    }
+
+    int tim = 0;
+    public void analyse(){
+
+        tim++;
+
+        if(tim>10) {
+            tim = 0;
+            for (int x = 0; x < 128; x++) {
+                for (int y = 0; y < 128; y++) {
+                    switch (mapa[x][y]) {
+                        case 22:
+                            if (HP[x][y] > 0 && HP[x][y] < 5) {
+
+
+                                // Wybuch beczki
+
+                                for (int xa = x - 1; xa < x + 1; xa++) {
+                                    for (int ya = y - 1; ya < y + 1; ya++) {
+                                        if (inside(xa, ya)) {
+                                            HP[xa][ya]++;
+                                        }
+                                    }
+                                }
+                            }
+                            break;
+                    }
+                }
+            }
+        }
+
+    }
 }

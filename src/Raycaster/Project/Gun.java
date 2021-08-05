@@ -52,6 +52,7 @@ public class Gun {
             if( 240 > 240 - ((48-detect)*3) +  Math.abs(game.camera.deltaY) && 240 < 240 + ((48-detect)*3) +  Math.abs(game.camera.deltaY)  ) {
 
                 if (game.mapa.HP[posDetected.x][posDetected.y] < 5) {
+
                     game.mapa.HP[posDetected.x][posDetected.y]++;
                 }
 

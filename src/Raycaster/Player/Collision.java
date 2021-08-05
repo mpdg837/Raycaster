@@ -20,9 +20,21 @@ public class Collision {
             switch (type) {
                 case 20:
                 case 21:
+                    decyzja = mapa.deltaPos[(int) position.getX()][(int) position.getY()].x<32;
+                    break;
                 case 4:
                 case 5:
-                    decyzja = mapa.deltaPos[(int) position.getX()][(int) position.getY()].x<32;
+                    if(mapa.HP[(int) position.getX()][(int) position.getY()] <3){
+                        decyzja = mapa.deltaPos[(int) position.getX()][(int) position.getY()].x<32;
+                    }else{
+                        decyzja = false;
+                    }
+
+                    break;
+                case 6:
+                case 11:
+                case 22:
+                    decyzja =mapa.HP[(int) position.getX()][(int) position.getY()] <3;
                     break;
                 case 3:
                     decyzja = partX >=0.375 && partX <= 0.625 && partY >=0.375 && partY <= 0.625;

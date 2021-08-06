@@ -119,6 +119,8 @@ public class Raycasting {
         Arrays.fill(rayHalfBlocked,false);
 
         byte[][] renderedSprites = new byte[128][128];
+        byte[][] renderedEnemies = new byte[128][128];
+
         foo = new int[Raycaster.resolution.y][Raycaster.resolution.x];
 
         myAngle = game.playerTransform.rotation;
@@ -170,7 +172,7 @@ public class Raycasting {
                 double height = Raycasting.maxLen;
                 double zet = 0;
 
-
+                boolean blockShoot = false;
                 for (double len = 0; len < maxLen - 18; len += deltaLen) {
 
                     cx += deltaX;
@@ -242,7 +244,7 @@ public class Raycasting {
                                 case 5:
                                 case 20:
                                 case 21:
-
+                                    blockShoot = true;
                                     if (largePointAnalyse.getX() != largeLastPointAnalyse.getX() || largePointAnalyse.getY() != largeLastPointAnalyse.getY()) {
                                         boolean ok = false;
 
@@ -274,13 +276,29 @@ public class Raycasting {
                                 case 23:
 
 
+                                    if(mapa[(int) cx][(int) cy]==23 && !blockShoot) {
+
+                                        if(posX>28 && posX<36){
+                                            if(posY>28 && posY<36){
+
+                                                if (renderedEnemies[(int) cx][(int) cy] > 50) {
+                                                    game.enemyPoint.add(new Point((int) cx, (int) cy));
+                                                }else{
+                                                    renderedEnemies[(int) cx][(int) cy]++;
+                                                }
+
+                                            }
+                                        }
+
+                                    }else{
+                                        blockShoot = true;
+                                    }
+
                                     if (renderedSprites[(int) cx][(int) cy] == 0) {
                                         boolean ok = sprite.drawBox((int)height,wallHeight,nStep, punkta, len, angle);
 
                                         if (ok) {
-                                            if(mapa[(int) cx][(int) cy]==23){
-                                                game.enemyPoint.add(new Point((int) cx,(int) cy));
-                                            }
+
 
                                             renderedSprites[(int) cx][(int) cy]= 1;
                                         }

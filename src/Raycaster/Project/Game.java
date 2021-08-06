@@ -190,18 +190,6 @@ public class Game extends Interaction {
 
         mapa.analyse();
 
-        timk++;
-        if(timk>3) {
-            if (n > 1) {
-                n = 0;
-
-            } else {
-                n++;
-            }
-
-
-            timk=0;
-        }
 
         final Point enPos = new Point(63,68);
 
@@ -242,16 +230,36 @@ public class Game extends Interaction {
 
         }
 
-        if(hurt){
+        timk++;
+        if(timk>3) {
+            if (hurt) {
 
 
-            mapa.textures[63][68]=(byte)(3+4*16);
-        }else{
-            System.out.println("COLL "+numer);
-            mapa.textures[63][68]=(byte)(3+n*16);
+                if (n > 3) {
+                    n = 0;
+
+                } else {
+                    n++;
+                }
+
+
+
+
+                mapa.textures[63][68] = (byte) (3 + n * 16);
+            } else {
+
+                if (n > 1) {
+                    n = 0;
+
+                } else {
+                    n++;
+                }
+
+                System.out.println("COLL " + numer);
+                mapa.textures[63][68] = (byte) (3 + n * 16);
+            }
+            timk = 0;
         }
-
-
         if(tim>60) {
 
             render.saveRaycaster.requestFocus();

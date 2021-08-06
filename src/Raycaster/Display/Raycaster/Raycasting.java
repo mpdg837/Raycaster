@@ -115,6 +115,7 @@ public class Raycasting {
 
     public void prebake(){
 
+        game.enemyPoint.clear();
         Arrays.fill(rayHalfBlocked,false);
 
         byte[][] renderedSprites = new byte[128][128];
@@ -270,12 +271,17 @@ public class Raycasting {
                                     break;
                                 case 6:
                                 case 22:
+                                case 23:
 
 
                                     if (renderedSprites[(int) cx][(int) cy] == 0) {
                                         boolean ok = sprite.drawBox((int)height,wallHeight,nStep, punkta, len, angle);
 
                                         if (ok) {
+                                            if(mapa[(int) cx][(int) cy]==23){
+                                                game.enemyPoint.add(new Point((int) cx,(int) cy));
+                                            }
+
                                             renderedSprites[(int) cx][(int) cy]= 1;
                                         }
                                     }

@@ -20,6 +20,7 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Game extends Interaction {
 
@@ -46,6 +47,9 @@ public class Game extends Interaction {
     public final Player player;
     public final Gun gun;
     public Collision coll;
+
+
+    public ArrayList<Point> enemyPoint = new ArrayList<>();
 
     public Game(Input input) throws IOException{
         super(input);
@@ -111,10 +115,14 @@ public class Game extends Interaction {
         mapa.mapa[68][62] =5;
 
         mapa.mapa[66][68] =6;
-        mapa.mapa[67][68] =22;
-        mapa.textures[67][68] =2;
-
         mapa.mapa[68][68] =6;
+
+
+        mapa.mapa[61][68] =22;
+        mapa.textures[61][68] =2;
+
+        mapa.mapa[63][68] =23;
+        mapa.textures[63][68] =3+16;
 
 
         mapa.mapa[69][66] =7;
@@ -182,24 +190,77 @@ public class Game extends Interaction {
 
         mapa.analyse();
 
+        timk++;
+        if(timk>3) {
+            if (n > 1) {
+                n = 0;
+
+            } else {
+                n++;
+            }
+
+
+            timk=0;
+        }
+
+        final Point enPos = new Point(63,68);
+
+        boolean hurt = true;
+        byte numer = 0;
+
+        if(!enemyPoint.contains(enPos)) {
+
+            final Point myPos = new Point((int)playerTransform.postion.getX(),(int)playerTransform.postion.getY());
+
+            final Point2D delta = new Point2D.Double((double) (myPos.x - enPos.x) / (double) 64, (myPos.y - enPos.y) / (double) 64);
+            Point2D analysePos = new Point2D.Double(enPos.x, enPos.y);
+
+            Point lastZao = myPos;
+
+
+
+            for (int n = 0; n < 64; n++) {
+                final Point zao = new Point((int) analysePos.getX(), (int) analysePos.getY());
+                if (!zao.equals(lastZao)) {
+
+                    if (zao.equals(myPos)) {
+                        break;
+                    } else if (mapa.mapa[zao.x][zao.y] != 0 && mapa.mapa[zao.x][zao.y] != 23) {
+
+                        hurt = false;
+                        numer = mapa.mapa[zao.x][zao.y];
+                        break;
+
+
+                    }
+
+                }
+
+                analysePos.setLocation(analysePos.getX() + delta.getX(), analysePos.getY() + delta.getY());
+                lastZao = zao;
+            }
+
+        }
+
+        if(hurt){
+
+
+            mapa.textures[63][68]=(byte)(3+4*16);
+        }else{
+            System.out.println("COLL "+numer);
+            mapa.textures[63][68]=(byte)(3+n*16);
+        }
+
+
         if(tim>60) {
 
             render.saveRaycaster.requestFocus();
-
             tim = 0;
-
-
-
-            if (mapa.HP[65][65] >= 5) {
-
-                mapa.deltaPos[66][68] = new Point( (int)mapa.deltaPos[66][68].getX()- 2*5,(int)mapa.deltaPos[66][68].getY());
-            } else {
-
-                mapa.deltaPos[66][68] = new Point( (int)mapa.deltaPos[66][68].getX()+ 2,(int)mapa.deltaPos[66][68].getY());
-            }
         }
     }
 
+    int timk = 0;
+    int n=0;
     int tim = 0;
 
 }

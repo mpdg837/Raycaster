@@ -24,7 +24,7 @@ public class Collision {
                     break;
                 case 4:
                 case 5:
-                    if(mapa.HP[(int) position.getX()][(int) position.getY()] <3){
+                    if(mapa.HP[(int) position.getX()][(int) position.getY()] <2){
                         decyzja = mapa.deltaPos[(int) position.getX()][(int) position.getY()].x<32;
                     }else{
                         decyzja = false;
@@ -34,7 +34,7 @@ public class Collision {
                 case 6:
                 case 11:
                 case 22:
-                    decyzja =mapa.HP[(int) position.getX()][(int) position.getY()] <3;
+                    decyzja =mapa.HP[(int) position.getX()][(int) position.getY()] <2;
                     break;
                 case 3:
                     decyzja = partX >=0.375 && partX <= 0.625 && partY >=0.375 && partY <= 0.625;

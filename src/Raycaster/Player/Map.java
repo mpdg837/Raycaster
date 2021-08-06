@@ -44,10 +44,14 @@ public class Map {
 
                                 // Wybuch beczki
 
-                                for (int xa = x - 1; xa < x + 1; xa++) {
-                                    for (int ya = y - 1; ya < y + 1; ya++) {
+                                final int radius = 1;
+                                for (int xa = x - radius; xa < x + radius; xa++) {
+                                    for (int ya = y - radius; ya < y + radius; ya++) {
                                         if (inside(xa, ya)) {
-                                            HP[xa][ya]++;
+
+                                            if(HP[xa][ya]<5) {
+                                                HP[xa][ya]++;
+                                            }
                                         }
                                     }
                                 }

@@ -132,7 +132,7 @@ public class Gun {
                                         case 5:
                                         case 6:
                                         case 11:
-                                            if(game.mapa.HP[(int) cx][(int) cy]>3) decyzja = false;
+                                            if(game.mapa.HP[(int) cx][(int) cy]>2) decyzja = false;
                                             else game.render.saveRaycaster.sprites.gunRender.blockMe = true;
                                             break;
                                         default:

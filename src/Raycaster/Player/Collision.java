@@ -34,6 +34,7 @@ public class Collision {
                 case 6:
                 case 11:
                 case 22:
+                case 23:
                     decyzja =mapa.HP[(int) position.getX()][(int) position.getY()] <2;
                     break;
                 case 3:

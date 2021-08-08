@@ -434,11 +434,14 @@ public class Raycasting {
 
                             if(HP>2){
                                 HP=2;
-                            }
-
-                            if(HP<0){
+                            }else if(HP<0){
                                 HP = 0;
                             }
+
+                            if(game.mapa.mapa[(int)columnS.raycastPosition.getX()][(int)columnS.raycastPosition.getY()]==23){
+                                HP = 0;
+                            }
+
                             final Texture myTex = game.sprite[HP].textures[game.mapa.textures[columnS.objPosition.x][columnS.objPosition.y]];
                             columnS.render(n,this, myTex,false);
                         }

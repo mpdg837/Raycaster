@@ -1,6 +1,7 @@
 package Raycaster.Player;
 
 import java.awt.*;
+import java.awt.geom.Point2D;
 import java.util.Arrays;
 
 public class Map {
@@ -8,6 +9,8 @@ public class Map {
     public byte[][] textures = new byte[128][128];
 
     public Point[][] deltaPos = new Point[128][128];
+    public Point2D[][] deltaPosE = new Point[128][128];
+
     public byte[][] HP = new byte[128][128];
 
     public byte[][] ceciling = new byte[128][128];

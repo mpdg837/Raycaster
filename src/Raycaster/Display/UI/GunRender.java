@@ -88,6 +88,10 @@ public class GunRender {
             moveGun = 0;
         }
 
+        if(zoom<1){
+            zoom = 1;
+        }
+
         final int half = (int) (90 * zoom);
         final int full = (int) (zoom * 196);
         final int zoomAdd = (int) ((zoom - 1) * 30);

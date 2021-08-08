@@ -9,6 +9,7 @@ public class Enemy {
 
     final private Game game;
     private boolean[][] blocked = new boolean[128][128];
+    private byte[][] n = new byte[128][128];
 
     public Enemy(Game game){
         this.game = game;
@@ -119,15 +120,17 @@ public class Enemy {
     }
 
     public boolean detect(Point enPos,Point myPos){
+
+
         Point2D analysePos = new Point2D.Double(enPos.x, enPos.y);
-        final Point2D delta = new Point2D.Double((double) (myPos.x - enPos.x) / (double) 64, (myPos.y - enPos.y) / (double) 64);
+        final Point2D delta = new Point2D.Double((double) (myPos.x - enPos.x) / (double) 16, (myPos.y - enPos.y) / (double) 16);
 
         boolean hurt = true;
 
         Point lastZao = myPos;
 
 
-        for (int n = 0; n < 64; n++) {
+        for (int n = 0; n < 16; n++) {
             final Point zao = new Point((int) analysePos.getX(), (int) analysePos.getY());
             if (!zao.equals(lastZao)) {
 
@@ -150,12 +153,19 @@ public class Enemy {
         return hurt;
     }
     public void updateEnemy(Point enPos){
+        byte myN = n[enPos.x][enPos.y];
+        n[enPos.x][enPos.y]=0;
+
+        Point nPos = new Point(enPos.x, enPos.y);
 
         if(game.mapa.HP[enPos.x][enPos.y]<1) {
+
+
+
             boolean hurt = true;
             byte numer = 0;
 
-            Point nPos = new Point(enPos.x, enPos.y);
+
             final Point myPos = new Point((int) game.playerTransform.postion.getX(), (int) game.playerTransform.postion.getY());
 
 
@@ -171,39 +181,41 @@ public class Enemy {
             if (hurt) {
 
 
-                if (game.n > 3) {
-                    game.n = 0;
+                if (myN > 3) {
+                    myN = 0;
 
                 } else {
-                    game.n++;
+                    myN ++;
                 }
 
 
-                game.mapa.textures[nPos.x][nPos.y] = (byte) (3 + game.n * 16);
+                game.mapa.textures[nPos.x][nPos.y] = (byte) (3 + myN  * 16);
             } else {
 
 
-                if (game.n > 1) {
-                    game.n = 0;
+                if (myN  > 1) {
+                    myN  = 0;
 
                 } else {
-                    game.n++;
+                    myN ++;
                 }
 
-                game.mapa.textures[nPos.x][nPos.y] = (byte) (3 + game.n * 16);
+                game.mapa.textures[nPos.x][nPos.y] = (byte) (3 + myN  * 16);
             }
-
 
         }else{
-            if (game.n > 6) {
-                game.n = 7;
+            if (myN  > 6) {
+                myN  = 7;
 
             } else {
-                game.n++;
+                myN ++;
             }
 
-            game.mapa.textures[enPos.x][enPos.y] = (byte) (3 + game.n * 16);
+            game.mapa.textures[enPos.x][enPos.y] = (byte) (3 + myN  * 16);
         }
+
+        n[nPos.x][nPos.y]=myN;
+
 
     }
 }

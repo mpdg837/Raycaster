@@ -121,8 +121,13 @@ public class Game extends Interaction {
         mapa.textures[61][68] =2;
 
         mapa.mapa[63][68] =23;
-        mapa.textures[63][68] =3+16;
+        mapa.textures[63][68] =3;
 
+        mapa.mapa[65][68] =23;
+        mapa.textures[65][68] =3;
+
+        mapa.mapa[68][68] =23;
+        mapa.textures[68][68] =3;
 
         mapa.mapa[69][66] =7;
         mapa.mapa[69][65] =9;

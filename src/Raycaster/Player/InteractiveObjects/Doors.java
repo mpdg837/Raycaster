@@ -6,7 +6,7 @@ import java.awt.*;
 
 public class Doors {
 
-    private final int[][] tim = new int[128][128];
+    public final int[][] tim = new int[128][128];
     private final Game game;
 
     public boolean canUse;
@@ -67,27 +67,6 @@ public class Doors {
     public void update(){
 
         canUse = checkOpen();
-        for(int x=0;x<128;x++){
-            for(int y=0;y<128;y++){
-                if(tim[x][y]>0){
-                    tim[x][y]+=2;
 
-                    int pos;
-
-                    if(tim[x][y]<64){
-                        pos = tim[x][y];
-                    }else if(tim[x][y]<2*64+1){
-                        pos = 64;
-                    }else{
-                        pos = 64 - (tim[x][y] - (2*64+1));
-                    }
-                    game.mapa.deltaPos[x][y].setLocation(pos,pos);
-
-                    if(tim[x][y]>191){
-                        tim[x][y]=0;
-                    }
-                }
-            }
-        }
     }
 }

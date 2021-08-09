@@ -88,7 +88,7 @@ public class Render extends TimerTask {
                     saveRaycaster.sprites.draw(saveRaycaster.rayMaker.bufferImg.getGraphics(),timeStart);
 
 
-                    Image scaled = saveRaycaster.rayMaker.bufferImg.getScaledInstance(saveRaycaster.getWidth(), saveRaycaster.getHeight(),Image.SCALE_FAST);
+                    final Image scaled = saveRaycaster.rayMaker.bufferImg.getScaledInstance(saveRaycaster.getWidth(), saveRaycaster.getHeight(),Image.SCALE_FAST);
                     drawInside.drawImage(scaled, 0, 0 , saveRaycaster);
 
                     final long timeEnd = System.nanoTime();
@@ -98,7 +98,9 @@ public class Render extends TimerTask {
                         this.deltaRenderTime = deltaTime;
                     }
 
+                    String key = deltaRenderTime + "ms";
 
+                    System.out.println(key);
 
                 }
 

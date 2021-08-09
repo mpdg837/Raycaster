@@ -42,14 +42,5 @@ public class ScreenSprite {
 
        gunRender.moveGun(g);
 
-
-
-        final long timeEnd = System.nanoTime();
-        final int deltaRenderTime = (int)(timeEnd - timeStart)/1000000;
-
-        String key= deltaRenderTime + "ms";
-
-       System.out.println(key);
-
     }
 }

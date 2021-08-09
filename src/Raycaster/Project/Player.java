@@ -9,6 +9,9 @@ import java.awt.geom.Point2D;
 public class Player {
 
     private Game game;
+
+    public int HP = 100;
+
     public Player(Game game){
         this.game = game;
     }
@@ -16,7 +19,7 @@ public class Player {
     public void walking(){
         Point2D lastPos = game.playerTransform.postion;
 
-        double speed = 0.45;
+        double speed = 0.5;
 
         game.render.saveRaycaster.sprites.gunRender.moveGun+=3;
         game.render.saveRaycaster.sprites.gunRender.zoom = game.camera.zoom;

@@ -4,6 +4,7 @@ import Raycaster.Display.Raycaster.SkyBox;
 import Raycaster.Display.Textures.Texture;
 import Raycaster.Display.Render;
 import Raycaster.Display.Textures.TexturePack;
+import Raycaster.Display.UI.MakeSound;
 import Raycaster.Player.Camera;
 import Raycaster.Player.Input.Input;
 import Raycaster.Player.Input.Interaction;
@@ -11,7 +12,7 @@ import Raycaster.Player.Collision;
 import Raycaster.Player.InteractiveObjects.Doors;
 import Raycaster.Player.Map;
 import Raycaster.Player.Transform;
-import Raycaster.Project.Enemy.Enemy;
+import Raycaster.Player.InteractiveObjects.Enemy.Enemy;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -47,13 +48,14 @@ public class Game extends Interaction {
     public Collision coll;
 
     final Enemy enemy = new Enemy(this);
+    final MakeSound sound = new MakeSound();
 
     public ArrayList<Point> enemyPoint = new ArrayList<>();
 
     public Game(Input input) throws IOException{
         super(input);
 
-        this.mapa = new Map();
+        this.mapa = new Map(this);
         doors = new Doors(this);
 
         playerTransform = new Transform();
@@ -75,6 +77,7 @@ public class Game extends Interaction {
     }
 
     public void start() {
+
 
 
         for(int x=0;x<16;x++){
@@ -186,16 +189,29 @@ public class Game extends Interaction {
 
     public void update() {
 
-        player.walking();
-        camera.cameraRot(this);
 
-        doors();
-        gun.useGun();
+            final Thread mapUpdates = new Thread(()->{
+                doors();
+                mapa.analyse();
+            });
 
-        mapa.analyse();
+            final Thread enemy = new Thread(this.enemy::update);
 
+            mapUpdates.start();
+            enemy.start();
 
-       enemy.update();
+            gun.useGun();
+            camera.cameraRot(this);
+            player.walking();
+
+        if(tim>60) {
+            if(!sound.isPlaying("soundtrack.wav")) sound.playSound("soundtrack.wav");
+
+            render.saveRaycaster.requestFocus();
+           tim = 0;
+        }else{
+            tim++;
+        }
 
     }
 

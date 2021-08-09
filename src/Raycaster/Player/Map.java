@@ -1,5 +1,7 @@
 package Raycaster.Player;
 
+import Raycaster.Project.Game;
+
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.Arrays;
@@ -18,7 +20,9 @@ public class Map {
 
     public boolean[][] light = new boolean[128][128];
 
-    public Map(){
+    Game game ;
+    public Map(Game game){
+        this.game = game;
         for(int x=0;x<128;x++){
             for(int y=0;y<128;y++){
                 light[x][y] = true;
@@ -31,16 +35,38 @@ public class Map {
         return x>=0 && y>=0 && x<128 && y<128;
     }
 
-    int tim = 0;
     public void analyse(){
+        final int radiusB = 10;
+            Point myPos =new Point((int)game.playerTransform.postion.getX(),(int)game.playerTransform.postion.getY());
 
-        tim++;
+            for (int x = myPos.x - radiusB; x < myPos.x+radiusB; x++) {
+                for (int y = myPos.y-radiusB; y < myPos.y+radiusB; y++) {
 
-        if(tim>10) {
-            tim = 0;
-            for (int x = 0; x < 128; x++) {
-                for (int y = 0; y < 128; y++) {
                     switch (mapa[x][y]) {
+                        case 20:
+                        case 21:
+
+                            // Drzwi
+                            if (game.doors.tim[x][y] > 0) {
+                                game.doors.tim[x][y] += 2;
+
+                                int pos;
+
+                                if (game.doors.tim[x][y] < 64) {
+                                    pos = game.doors.tim[x][y];
+                                } else if (game.doors.tim[x][y] < 2 * 64 + 1) {
+                                    pos = 64;
+                                } else {
+                                    pos = 64 - (game.doors.tim[x][y] - (2 * 64 + 1));
+                                }
+                                game.mapa.deltaPos[x][y].setLocation(pos, pos);
+
+                                if (game.doors.tim[x][y] > 191) {
+                                    game.doors.tim[x][y] = 0;
+                                }
+                            }
+
+                            break;
                         case 22:
                             if (HP[x][y] > 0 && HP[x][y] < 5) {
 
@@ -63,7 +89,7 @@ public class Map {
                     }
                 }
             }
-        }
+
 
     }
 }

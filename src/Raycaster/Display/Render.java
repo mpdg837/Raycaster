@@ -94,13 +94,15 @@ public class Render extends TimerTask {
                     final long timeEnd = System.nanoTime();
                     this.deltaRenderTime = (int)(timeEnd - timeStart)/1000000;
 
+                    String key = deltaRenderTime + "ms";
+
+                    System.out.println(key);
+
                     if(this.deltaRenderTime > deltaTime){
                         this.deltaRenderTime = deltaTime;
                     }
 
-                    String key = deltaRenderTime + "ms";
 
-                    System.out.println(key);
 
                 }
 

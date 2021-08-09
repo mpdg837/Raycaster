@@ -48,7 +48,7 @@ public class Game extends Interaction {
     public Collision coll;
 
     final Enemy enemy = new Enemy(this);
-    final MakeSound sound = new MakeSound();
+    final public MakeSound sound = new MakeSound();
 
     public ArrayList<Point> enemyPoint = new ArrayList<>();
 
@@ -193,6 +193,15 @@ public class Game extends Interaction {
             final Thread mapUpdates = new Thread(()->{
                 doors();
                 mapa.analyse();
+
+                if(tim>60) {
+                    if(!sound.isPlaying("soundtrack.wav")) sound.playSound("soundtrack.wav");
+
+                    render.saveRaycaster.requestFocus();
+                    tim = 0;
+                }else{
+                    tim++;
+                }
             });
 
             final Thread enemy = new Thread(this.enemy::update);
@@ -201,17 +210,11 @@ public class Game extends Interaction {
             enemy.start();
 
             gun.useGun();
+
             camera.cameraRot(this);
             player.walking();
 
-        if(tim>60) {
-            if(!sound.isPlaying("soundtrack.wav")) sound.playSound("soundtrack.wav");
 
-            render.saveRaycaster.requestFocus();
-           tim = 0;
-        }else{
-            tim++;
-        }
 
     }
 

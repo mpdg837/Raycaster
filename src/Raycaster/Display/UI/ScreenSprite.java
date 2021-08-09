@@ -16,7 +16,8 @@ public class ScreenSprite {
     public Image useIt;
     public boolean canUse;
 
-
+    public Image mask;
+    public boolean hurt;
 
 
 
@@ -29,7 +30,11 @@ public class ScreenSprite {
         try{
 
             final BufferedImage useItA = ImageIO.read(new File("use.png"));
+
             useIt = useItA.getScaledInstance(32,32,Image.SCALE_FAST);
+
+            BufferedImage maskRead = ImageIO.read(new File("mask.png"));
+            mask = maskRead.getScaledInstance(640,48,Image.SCALE_FAST);
         }catch (IOException ignore){
 
         }
@@ -38,9 +43,16 @@ public class ScreenSprite {
 
 
 
-    public void draw(Graphics g,long timeStart){
+    public void draw(Graphics g,long timeStart) {
 
-       gunRender.moveGun(g);
+        gunRender.moveGun(g);
 
+        if (hurt) {
+            Color color = new Color(255, 0, 0, 128);
+            g.setColor(color);
+            g.fillRect(0, 0, Raycaster.resolution.x, Raycaster.resolution.y);
+        }
+
+        g.drawImage(mask,0,432,null);
     }
 }

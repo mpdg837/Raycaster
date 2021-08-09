@@ -149,6 +149,9 @@ public class Enemy {
                     myN ++;
                 }
 
+                if(myN == 3){
+                    game.sound.playSound("enemyShoot.wav");
+                }
 
                 game.mapa.textures[nPos.x][nPos.y] = (byte) (3 + myN  * 16);
             } else {
@@ -170,6 +173,10 @@ public class Enemy {
 
             } else {
                 myN ++;
+            }
+
+            if(myN == 6){
+                game.sound.playSound("die.wav");
             }
 
             game.mapa.textures[enPos.x][enPos.y] = (byte) (3 + myN  * 16);

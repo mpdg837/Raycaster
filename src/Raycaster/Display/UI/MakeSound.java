@@ -14,9 +14,7 @@ import javax.sound.sampled.SourceDataLine;
 public class MakeSound {
 
 
-        private File soundFile;
-        private AudioInputStream audioStream;
-        private SourceDataLine sourceLine;
+
 
         private ArrayList<String> listPlayingSounds = new ArrayList<String>();
 
@@ -64,6 +62,10 @@ public class MakeSound {
      */
 
         private void playInsideSound(String filename){
+
+            File soundFile = new File("");
+            AudioInputStream audioStream = null;
+            SourceDataLine sourceLine = null;
 
             // https://stackoverflow.com/questions/2416935/how-to-play-wav-files-with-java
 

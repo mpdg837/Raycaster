@@ -59,6 +59,13 @@ public class Map {
                                 } else {
                                     pos = 64 - (game.doors.tim[x][y] - (2 * 64 + 1));
                                 }
+
+                                if (game.doors.tim[x][y] == 5) {
+                                    game.sound.playSound("dooropensound.wav");
+                                }else if (game.doors.tim[x][y] == 131) {
+                                    game.sound.playSound("doorclosesound.wav");
+                                }
+
                                 game.mapa.deltaPos[x][y].setLocation(pos, pos);
 
                                 if (game.doors.tim[x][y] > 191) {

@@ -9,7 +9,7 @@ import java.awt.geom.Point2D;
 public class Player {
 
     private Game game;
-
+    private int timWalk = 0;
     public int HP = 100;
 
     public Player(Game game){
@@ -19,7 +19,7 @@ public class Player {
     public void walking(){
         Point2D lastPos = game.playerTransform.postion;
 
-        double speed = 0.5;
+        double speed = 0.55;
 
         game.render.saveRaycaster.sprites.gunRender.moveGun+=3;
         game.render.saveRaycaster.sprites.gunRender.zoom = game.camera.zoom;
@@ -28,17 +28,18 @@ public class Player {
             game.render.saveRaycaster.sprites.gunRender.zoom=1;
         }
 
+        boolean walk = false;
         if (game.input.getKey(KeyEvent.VK_W)) {
-
+            walk = true;
             game.playerTransform.translate(Transform.getUp(),speed);
         }else if (game.input.getKey(KeyEvent.VK_S)) {
-
+            walk = true;
             game.playerTransform.translate(Transform.getDown(),speed);
         }else if (game.input.getKey(KeyEvent.VK_A)) {
-
+            walk = true;
             game.playerTransform.translate(Transform.getLeft(),speed);
         }else if (game.input.getKey(KeyEvent.VK_D)) {
-
+            walk = true;
             game.playerTransform.translate(Transform.getRight(),speed);
         }else{
             game.render.saveRaycaster.sprites.gunRender.moveGun-=3;
@@ -49,6 +50,21 @@ public class Player {
                 game.render.saveRaycaster.sprites.gunRender.moveGun +=3;
 
             }
+        }
+
+        if(walk){
+            if(timWalk==0) {
+                game.sound.playSound("footstepsound.wav");
+            }
+
+            timWalk ++;
+
+            if(timWalk>10){
+                timWalk = 0;
+            }
+
+        }else{
+            timWalk = 0;
         }
 
 

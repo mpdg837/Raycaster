@@ -20,10 +20,12 @@ public class Gun {
         if(game.render.saveRaycaster.sprites.gunRender.reloadAnimate<=0) {
             if (game.input.getKeyDown(KeyEvent.VK_R)) {
 
+                game.sound.playSound("reload.wav");
                 game.render.saveRaycaster.sprites.gunRender.reloadAnimate =1;
 
             }else
             if (game.input.getMouseButtonDown(MouseEvent.BUTTON1)) {
+                game.sound.playSound("shoot.wav");
                 shoot();
             }
 

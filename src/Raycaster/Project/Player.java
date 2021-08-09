@@ -1,5 +1,6 @@
 package Raycaster.Project;
 
+import Raycaster.Display.Render;
 import Raycaster.Player.Collision;
 import Raycaster.Player.Transform;
 
@@ -12,14 +13,23 @@ public class Player {
     private int timWalk = 0;
     public int HP = 100;
 
+    public double lastDeltaTime = 0;
+
+    public long start = 0;
+    public long stop = 0;
     public Player(Game game){
         this.game = game;
     }
 
     public void walking(){
+        stop = System.nanoTime();
+
+        lastDeltaTime = (double) ((double)(stop - start)/(double)1000000);
+
+
         Point2D lastPos = game.playerTransform.postion;
 
-        double speed = 0.55;
+        double speed = lastDeltaTime * 0.02;
 
         game.render.saveRaycaster.sprites.gunRender.moveGun+=3;
         game.render.saveRaycaster.sprites.gunRender.zoom = game.camera.zoom;
@@ -71,5 +81,9 @@ public class Player {
         if(game.coll.collide(game.playerTransform.postion)){
             game.playerTransform.postion =lastPos;
         }
+
+
+        start = System.nanoTime();
+
     }
 }

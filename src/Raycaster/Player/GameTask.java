@@ -14,8 +14,10 @@ public class GameTask extends TimerTask {
     @Override
     public void run() {
 
+
         game.update();
         game.input.resetKey();
+
 
         game.render.saveRaycaster.tim2.schedule(new GameTask(game), Render.deltaTime);
     }

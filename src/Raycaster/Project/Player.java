@@ -29,7 +29,7 @@ public class Player {
 
         Point2D lastPos = game.playerTransform.postion;
 
-        double speed = lastDeltaTime * 0.02;
+        double speed = lastDeltaTime * 0.015;
 
         game.render.saveRaycaster.sprites.gunRender.moveGun+=3;
         game.render.saveRaycaster.sprites.gunRender.zoom = game.camera.zoom;

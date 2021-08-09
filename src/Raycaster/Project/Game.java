@@ -190,23 +190,9 @@ public class Game extends Interaction {
     public void update() {
 
 
-            final Thread mapUpdates = new Thread(()->{
-                doors();
-                mapa.analyse();
-
-                if(tim>60) {
-                    if(!sound.isPlaying("soundtrack.wav")) sound.playSound("soundtrack.wav");
-
-                    render.saveRaycaster.requestFocus();
-                    tim = 0;
-                }else{
-                    tim++;
-                }
-            });
 
             final Thread enemy = new Thread(this.enemy::update);
 
-            mapUpdates.start();
             enemy.start();
 
             gun.useGun();
@@ -214,7 +200,17 @@ public class Game extends Interaction {
             camera.cameraRot(this);
             player.walking();
 
+            doors();
+            mapa.analyse();
 
+            if(tim>60) {
+                if(!sound.isPlaying("soundtrack.wav")) sound.playSound("soundtrack.wav");
+
+                render.saveRaycaster.requestFocus();
+                tim = 0;
+            }else{
+                tim++;
+            }
 
     }
 

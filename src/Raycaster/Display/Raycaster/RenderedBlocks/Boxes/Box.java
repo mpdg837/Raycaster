@@ -25,15 +25,20 @@ public class Box {
 
             boolean destroy = false;
             boolean decyzja = true;
-            final byte hp = ray.game.mapa.HP[(int) ray.analysePos.getX()][(int) ray.analysePos.getY()];
+            byte hp = 0;
+            final byte rhp = ray.game.mapa.HP[(int) ray.analysePos.getX()][(int) ray.analysePos.getY()];
+
+            if(rhp>1){
+                hp = 2;
+            }
 
             boolean in = (ray.posY >= hp && ray.posY <= 64 - hp && ray.posX >= hp && ray.posX <= 64 - hp);
             if(hp>1) {
                 if (ray.posY <= hp || ray.posY >= 64-hp) {
-                    decyzja = (ray.game.damage.pseudoLos(ray.posX,hp)) || in;
+                    decyzja = (ray.game.damage.pseudoLos(ray.posX,rhp)) || in;
                     destroy = in;
                 } else {
-                    decyzja = (ray.game.damage.pseudoLos(ray.posY,hp)) || in;
+                    decyzja = (ray.game.damage.pseudoLos(ray.posY,rhp)) || in;
                     destroy = in;
                 }
             }

@@ -44,12 +44,16 @@ public class Raycaster extends Frame {
 
         this.setIgnoreRepaint(true);
 
+
         if(!windowed) {
             this.setExtendedState(Frame.MAXIMIZED_BOTH);
             this.setUndecorated(true);
+
         }else{
+            this.setResizable(false);
             this.setSize(640,480);
         }
+
 
 
         if(!windowed) {
@@ -59,11 +63,10 @@ public class Raycaster extends Frame {
 
         this.addWindowListener(new WindowME());
 
-
+        this.setBackground(Color.BLACK);
 
         EventQueue.invokeLater(() -> {
             this.setVisible(true);
-
 
         });
 
@@ -110,8 +113,8 @@ public class Raycaster extends Frame {
 
 
 
-                if ( bestDisplayMode.getWidth() >=600 &&  bestDisplayMode.getWidth() <700 ){
-
+                if ( bestDisplayMode.getWidth() ==640){
+                    System.out.println(bestDisplayMode.toString());
                     return bestDisplayMode;
 
                 }
@@ -121,10 +124,14 @@ public class Raycaster extends Frame {
         return null;
     }
 
-    public static void chooseBestDisplayMode(GraphicsDevice device) {
+    public void chooseBestDisplayMode(GraphicsDevice device) {
         final DisplayMode best = getBestDisplayMode(device);
         if (best != null) {
             device.setDisplayMode(best);
+        }else{
+            this.setResizable(false);
+            this.setSize(640,480);
+            this.setUndecorated(false);
         }
     }
 

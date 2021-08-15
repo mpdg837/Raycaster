@@ -176,7 +176,14 @@ public class Game extends Interaction {
     }
 
 
+    public void restart(){
+        player.HP = 100;
+        this.mapa = new Map(this);
+        playerTransform = new Transform();
 
+        start();
+
+    }
 
     public void doors(){
         if (input.getKey(KeyEvent.VK_O)) {

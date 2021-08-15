@@ -37,8 +37,9 @@ public class Gun {
                 reloadMe();
             }else
             if (game.input.getMouseButtonDown(MouseEvent.BUTTON1)) {
-
-                shoot();
+                if(game.render.saveRaycaster.sprites.gunRender.shootAnimate<=0){
+                    shoot();
+                }
             }
 
             if( game.render.saveRaycaster.sprites.gunRender.reloadAnimate !=1) {
@@ -64,7 +65,7 @@ public class Gun {
 
 
 
-            if(game.render.saveRaycaster.sprites.gunRender.shootAnimate==2) {
+            if(game.render.saveRaycaster.sprites.gunRender.shootAnimate==1) {
 
 
 
@@ -109,13 +110,38 @@ public class Gun {
         for(double len=0;len<30;len+=deltaLen){
             cx += deltaX;
             cy += deltaY;
-            if (cx >= 0 && cx<= 128) {
-                if (cy >= 0 && cy<= 128) {
-                    Point zao = new Point((int)(cx*2),(int)(cy*2));
+            if (cx >= 0 && cx< 128) {
+                if (cy >= 0 && cy< 128) {
+                    Point zao = new Point((int)(cx*10),(int)(cy*10));
                     if(zao != lastPoint){
 
                         switch (game.mapa.mapa[(int) cx][(int) cy]) {
                             case 0:
+                            case 24:
+                            case 25:
+                            case 26:
+                                break;
+                            case 23:
+                                final Point pos = game.mapa.deltaPos[(int) cx][(int) cy];
+                                final Point zaoPos = new Point((int)((cx-(int)cx)*64),(int)((cy-(int)cy)*64));
+
+                                final int radius =24;
+
+                                if(zaoPos.x <= pos.x+radius && zaoPos.x >= pos.x-radius){
+                                    if(zaoPos.y <= pos.y+radius && zaoPos.y >= pos.y-radius){
+
+                                        if(game.mapa.HP[(int) cx][(int) cy]<=5){
+
+                                            memLen = 30;
+                                            len = 30;
+
+                                            posDetected = new Point((int) cx, (int) cy);
+
+                                        }
+
+                                    }
+                                }
+
                                 break;
                             case 2:
                             case 12:
@@ -146,68 +172,35 @@ public class Gun {
                                 }
 
                                 break;
+                            case 4:
+                            case 5:
+                            case 6:
+                            case 11:
+                            case 22:
+
+                                if(game.mapa.HP[(int) cx][(int) cy]<=2){
+
+                                    posDetected = new Point((int) cx, (int) cy);
+                                    memLen = 30;
+                                    len = 30;
+                                }
+                                break;
                             default:
 
 
                                 if (game.coll.collide(new Point2D.Double(cx, cy),false)) {
 
-                                    boolean decyzja = true;
-                                    switch (game.mapa.mapa[(int) cx][(int) cy]) {
-                                        case 24:
-                                        case 25:
-                                        case 26:
-                                            decyzja = false;
-                                            break;
-                                        case 4:
-                                        case 5:
-                                        case 6:
-                                        case 11:
 
-                                            if(game.mapa.HP[(int) cx][(int) cy]>2) decyzja = false;
-                                            else {
-                                                decyzja = true;
-                                                memLen = len;
-                                                len = 30;
-                                            }
-                                            break;
-                                            case 23:
-                                                final Point pos = game.mapa.deltaPos[(int) cx][(int) cy];
-                                                final Point zaoPos = new Point((int)((cx-(int)cx)*64),(int)((cy-(int)cy)*64));
-
-                                                final int radius = 12;
-
-                                                if(zaoPos.x <= pos.x+radius && zaoPos.x >= pos.x-radius){
-                                                    if(zaoPos.y <= pos.y+radius && zaoPos.y >= pos.y-radius){
-
-                                                        if(game.mapa.HP[(int) cx][(int) cy]>5) decyzja = false;
-                                                        else {
-
-                                                            decyzja = true;
-                                                            memLen = len;
-                                                            len = 30;
-                                                        }
-
-                                                    }else{
-                                                        decyzja = false;
-                                                    }
-                                                }else{
-                                                    decyzja = false;
-                                                }
-
-                                                break;
-                                        default:
 
                                             game.render.saveRaycaster.sprites.gunRender.blockMe = false;
-                                            break;
-                                    }
 
 
-                                    if(decyzja) {
+
                                         memLen = len;
                                         len = 30;
 
                                         posDetected = new Point((int) cx, (int) cy);
-                                    }
+
                                 }
                                 break;
 

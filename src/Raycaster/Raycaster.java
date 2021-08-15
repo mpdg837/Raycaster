@@ -2,7 +2,6 @@ package Raycaster;
 
 import Raycaster.Display.Raycaster.Raycasting;
 import Raycaster.Display.Render;
-import Raycaster.Display.UI.MakeSound;
 import Raycaster.Display.UI.ScreenSprite;
 import Raycaster.Player.GameTask;
 import Raycaster.Player.Input.Input;

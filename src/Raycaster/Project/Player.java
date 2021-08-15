@@ -17,6 +17,9 @@ public class Player {
 
     public long start = 0;
     public long stop = 0;
+
+    private int timDead = 0;
+
     public Player(Game game){
         this.game = game;
     }
@@ -85,6 +88,16 @@ public class Player {
 
 
             start = System.nanoTime();
+            timDead=0;
+        }else{
+            timDead ++;
+
+            if(timDead>100){
+                game.restart();
+                timDead=0;
+                HP = 100;
+
+            }
         }
     }
 }

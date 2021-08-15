@@ -8,8 +8,10 @@ import Raycaster.Player.GameTask;
 import Raycaster.Player.Input.Input;
 import Raycaster.Project.Game;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.util.Timer;
 
@@ -17,7 +19,7 @@ public class Raycaster extends Frame {
 
 
     public Raycasting rayMaker;
-    public final BufferedImage buffer;
+    public BufferedImage buffer;
     public final ScreenSprite sprites;
 
     public final static Point resolution= new Point(640,480);
@@ -32,6 +34,7 @@ public class Raycaster extends Frame {
     public Raycaster(boolean windowed) {
 
         super("Raycaster Engine");
+
 
 
 
@@ -64,16 +67,19 @@ public class Raycaster extends Frame {
         this.addWindowListener(new WindowME());
 
         this.setBackground(Color.BLACK);
+        try {
+
+            BufferedImage bufa = ImageIO.read(new File("intro.png"));
 
         EventQueue.invokeLater(() -> {
             this.setVisible(true);
-
+            this.getGraphics().drawImage(bufa,0,0,this.getWidth(),this.getHeight(),null);
         });
 
 
         buffer = new BufferedImage(resolution.x, resolution.y, BufferedImage.TYPE_INT_RGB);
 
-        try {
+
             game = new Game(input);
 
             rayMaker = new Raycasting(game);
@@ -98,6 +104,7 @@ public class Raycaster extends Frame {
                 device.setFullScreenWindow(this);
 
                 chooseBestDisplayMode(device);
+                this.getGraphics().drawImage(bufa,0,0,this.getWidth(),this.getHeight(),null);
             }
 
         }catch (IOException ignore){

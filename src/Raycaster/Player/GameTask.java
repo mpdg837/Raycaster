@@ -22,7 +22,7 @@ public class GameTask extends TimerTask {
         final long stop = System.nanoTime();
 
         final int delta = (int)((double)(stop - start)/(double) 1000000);
-        int timeOut = Render.deltaTime - delta;
+        int timeOut = (Render.deltaTime) - delta;
         if(timeOut<0){
             timeOut = 0;
         }

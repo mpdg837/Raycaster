@@ -23,12 +23,17 @@ public class BufferTranslator {
             scale = (double) height/(double)(height-game.camera.deltaY);
         }
         double yact = deltaM * scale;
+
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
 
 
                 if(yact>=0 && yact<height) {
                     pixels[n] = img[(int)yact][x];
+                }
+
+                if(x==320 && y==240){
+                    game.render.saveRaycaster.sprites.renderedSkyBoxInCenter= (pixels[n]==0) ;
                 }
                 n++;
             }

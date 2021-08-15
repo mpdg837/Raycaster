@@ -9,6 +9,11 @@ public class Gun {
 
     private final Game game;
 
+    public final int maxAmmo=20;
+
+    public int ammo;
+    public int itemsAmmo = 5;
+
     public Point posDetected;
 
     public Gun(Game game){
@@ -17,15 +22,22 @@ public class Gun {
 
 
     public void useGun(){
-        if(game.render.saveRaycaster.sprites.gunRender.reloadAnimate<=0) {
+
+
+        game.render.saveRaycaster.sprites.infoAmmo = ammo +"/"+itemsAmmo;
+
+        if(ammo == -1 && itemsAmmo == 0){
+            game.render.saveRaycaster.sprites.infoAmmo = "0";
+        }
+        if(game.render.saveRaycaster.sprites.gunRender.reloadAnimate<=0 && game.player.HP>0) {
             if (game.input.getKeyDown(KeyEvent.VK_R)) {
 
                 game.sound.playSound("reload.wav");
                 game.render.saveRaycaster.sprites.gunRender.reloadAnimate =1;
-
+                reloadMe();
             }else
             if (game.input.getMouseButtonDown(MouseEvent.BUTTON1)) {
-                game.sound.playSound("shoot.wav");
+
                 shoot();
             }
 
@@ -50,7 +62,12 @@ public class Gun {
 
         int detect = (int)detectLen();
 
-        if(game.render.saveRaycaster.sprites.gunRender.shootAnimate==2) {
+
+
+            if(game.render.saveRaycaster.sprites.gunRender.shootAnimate==2) {
+
+
+
             if( 240 > 240 - ((48-detect)*3) +  Math.abs(game.camera.deltaY) && 240 < 240 + ((48-detect)*3) +  Math.abs(game.camera.deltaY)  ) {
 
                 if (game.mapa.HP[posDetected.x][posDetected.y] < 5) {
@@ -69,6 +86,10 @@ public class Gun {
         }
     }
 
+    public void addItem(){
+        itemsAmmo ++;
+
+    }
     public double detectLen(){
 
         final double deltaLen = 0.01;
@@ -106,7 +127,7 @@ public class Gun {
                             case 18:
                             case 19:
                                 if(game.camera.deltaY>0){
-                                    if (game.coll.collide(new Point2D.Double(cx, cy))) {
+                                    if (game.coll.collide(new Point2D.Double(cx, cy),false)) {
 
                                         memLen = len;
                                         len = 30;
@@ -119,25 +140,61 @@ public class Gun {
 
                             case 20:
                             case 21:
+                                if(game.mapa.deltaPos[(int) cx][(int) cy].x<32) {
+                                    memLen = 30;
+                                    len = 30;
+                                }
 
-                                memLen = 30;
-                                len = 30;
                                 break;
                             default:
 
 
-                                if (game.coll.collide(new Point2D.Double(cx, cy))) {
+                                if (game.coll.collide(new Point2D.Double(cx, cy),false)) {
 
                                     boolean decyzja = true;
                                     switch (game.mapa.mapa[(int) cx][(int) cy]) {
+                                        case 24:
+                                        case 25:
+                                        case 26:
+                                            decyzja = false;
+                                            break;
                                         case 4:
                                         case 5:
                                         case 6:
-                                        case 23:
                                         case 11:
+
                                             if(game.mapa.HP[(int) cx][(int) cy]>2) decyzja = false;
-                                            else game.render.saveRaycaster.sprites.gunRender.blockMe = true;
+                                            else {
+                                                decyzja = true;
+                                                memLen = len;
+                                                len = 30;
+                                            }
                                             break;
+                                            case 23:
+                                                final Point pos = game.mapa.deltaPos[(int) cx][(int) cy];
+                                                final Point zaoPos = new Point((int)((cx-(int)cx)*64),(int)((cy-(int)cy)*64));
+
+                                                final int radius = 12;
+
+                                                if(zaoPos.x <= pos.x+radius && zaoPos.x >= pos.x-radius){
+                                                    if(zaoPos.y <= pos.y+radius && zaoPos.y >= pos.y-radius){
+
+                                                        if(game.mapa.HP[(int) cx][(int) cy]>5) decyzja = false;
+                                                        else {
+
+                                                            decyzja = true;
+                                                            memLen = len;
+                                                            len = 30;
+                                                        }
+
+                                                    }else{
+                                                        decyzja = false;
+                                                    }
+                                                }else{
+                                                    decyzja = false;
+                                                }
+
+                                                break;
                                         default:
 
                                             game.render.saveRaycaster.sprites.gunRender.blockMe = false;
@@ -165,8 +222,34 @@ public class Gun {
 
         return memLen;
     }
+
+    private void reloadMe(){
+        if(itemsAmmo>0) {
+            game.render.saveRaycaster.sprites.gunRender.reloadAnimate = 1;
+
+            ammo = maxAmmo;
+            itemsAmmo--;
+        }
+    }
     public void shoot(){
-        game.render.saveRaycaster.sprites.gunRender.shootAnimate=1;
+
+
+
+
+
+        if(ammo < 0){
+
+
+            game.sound.playSound("reload.wav");
+
+                reloadMe();
+
+        }else{
+            game.render.saveRaycaster.sprites.gunRender.shootAnimate=1;
+            game.sound.playSound("shoot.wav");
+            ammo--;
+        }
+
     }
 
 

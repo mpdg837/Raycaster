@@ -18,9 +18,10 @@ public class Enemy {
         return x >= 0 && x<= 128 && y >= 0 && y<= 128;
     }
     public void update(){
-
+        game.render.saveRaycaster.sprites.hurt = false;
         game.timk++;
         if(game.timk>3) {
+
             final boolean[][] blocked = new boolean[128][128];
 
             final Point center = new Point((int)game.playerTransform.postion.getX(),(int)game.playerTransform.postion.getY());
@@ -124,7 +125,7 @@ public class Enemy {
 
         Point nPos = new Point(enPos.x, enPos.y);
 
-        if(game.mapa.HP[enPos.x][enPos.y]<1) {
+        if(game.mapa.HP[enPos.x][enPos.y]<2) {
 
 
 
@@ -135,13 +136,15 @@ public class Enemy {
                hurt = false;
 
 
+            }else{
+                game.render.saveRaycaster.sprites.hurt = true;
             }
 
             nPos = move(enPos,blocked);
 
             if (hurt) {
 
-                game.player.HP -=10;
+                game.player.HP -=2;
                 if (myN > 3) {
                     myN = 0;
 

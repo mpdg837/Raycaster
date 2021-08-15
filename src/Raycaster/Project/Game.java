@@ -34,8 +34,6 @@ public class Game extends Interaction {
     public final TexturePack texture;
     public final TexturePack[] sprite;
 
-    public final Texture floor;
-    public final Texture ceiling;
     public final SkyBox sky;
 
     public final Texture destroyed;
@@ -62,18 +60,16 @@ public class Game extends Interaction {
 
             destroyed = new Texture(ImageIO.read(new File("destroyed.png")),false);
             texture = new TexturePack(ImageIO.read(new File("texture.png")));
-            floor = new Texture(ImageIO.read(new File("floor.png")),false);
-            ceiling = new Texture(ImageIO.read(new File("floor.png")),false);
 
             sprite = new TexturePack[3];
             for(int n=0;n<sprite.length;n++) {
                 sprite[n] =new TexturePack(ImageIO.read(new File("sprite"+n+".png")));
             }
-            sky = new SkyBox(ImageIO.read(new File("skybox.jpg")));
+            sky = new SkyBox(ImageIO.read(new File("skybox.jpg")),this);
         player = new Player(this);
 
         gun = new Gun(this);
-        coll = new Collision(mapa);
+        coll = new Collision(mapa,this);
     }
 
     public void start() {
@@ -94,7 +90,7 @@ public class Game extends Interaction {
 
         for(int x=0;x<5;x++){
             for(int y=0;y<5;y++){
-                mapa.ceciling[62+x][63+y] = 3;
+                mapa.ceciling[62+x][63+y] = 0;
 
             }
         }
@@ -131,6 +127,12 @@ public class Game extends Interaction {
 
         mapa.mapa[68][68] =23;
         mapa.textures[68][68] =3;
+
+        mapa.mapa[69][69] =24;
+        mapa.textures[69][69] =5;
+
+        mapa.mapa[70][69] =25;
+        mapa.textures[70][69] =4;
 
         mapa.mapa[69][66] =7;
         mapa.mapa[69][65] =9;
@@ -190,6 +192,7 @@ public class Game extends Interaction {
     public void update() {
 
 
+            render.saveRaycaster.sprites.HP = player.HP;
 
             final Thread enemy = new Thread(this.enemy::update);
 

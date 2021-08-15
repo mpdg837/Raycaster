@@ -9,6 +9,7 @@ import java.awt.geom.Point2D;
 
 public class Sprite {
     final Raycasting ray;
+
     public Sprite(Raycasting ray){
         this.ray = ray;
     }

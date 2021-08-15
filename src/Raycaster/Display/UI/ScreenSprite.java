@@ -12,14 +12,17 @@ import java.io.IOException;
 public class ScreenSprite {
 
     public final GunRender gunRender;
+    public boolean renderedSkyBoxInCenter;
 
     public Image useIt;
     public boolean canUse;
 
-    public Image mask;
+    public UIInform mask;
     public boolean hurt;
 
 
+    public int HP;
+    public String infoAmmo;
 
     public int bulletSize;
 
@@ -27,14 +30,16 @@ public class ScreenSprite {
     public ScreenSprite(){
 
         gunRender =  new GunRender(this);
+        mask = new UIInform(this);
+
         try{
 
             final BufferedImage useItA = ImageIO.read(new File("use.png"));
 
             useIt = useItA.getScaledInstance(32,32,Image.SCALE_FAST);
 
-            BufferedImage maskRead = ImageIO.read(new File("mask.png"));
-            mask = maskRead.getScaledInstance(640,48,Image.SCALE_FAST);
+
+
         }catch (IOException ignore){
 
         }
@@ -42,17 +47,38 @@ public class ScreenSprite {
     }
 
 
+    int timDead = 0;
 
     public void draw(Graphics g,long timeStart) {
 
         gunRender.moveGun(g);
 
-        if (hurt) {
-            Color color = new Color(255, 0, 0, 128);
+        if(HP<0){
+            timDead ++;
+
+            int intense = 0;
+
+            if(timDead*10 < 128){
+                intense = (timDead*10);
+            }else{
+                intense = 128;
+            }
+
+            System.out.println(intense);
+            final Color color = new Color(255, 0, 0, intense);
             g.setColor(color);
             g.fillRect(0, 0, Raycaster.resolution.x, Raycaster.resolution.y);
         }
+        if (hurt) {
+            final Color color = new Color(255, 0, 0, 128);
+            g.setColor(color);
+            g.fillRect(0, 0, Raycaster.resolution.x, Raycaster.resolution.y);
 
-        g.drawImage(mask,0,432,null);
+        }
+
+
+       mask.renderUI(g);
+
+
     }
 }

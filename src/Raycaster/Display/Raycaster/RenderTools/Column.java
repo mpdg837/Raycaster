@@ -92,7 +92,7 @@ public class Column {
                                                         int color = tex.bufferXYS[(int) yR][(int) relX];
 
                                                         if (!ray.game.mapa.light[(int) objPosition.getX()][(int) objPosition.getY()]) {
-                                                            color = ray.game.floor.bufferXYNL[(int) yR][(int) relX];
+                                                            color = tex.bufferXYNL[(int) yR][(int) relX];
                                                         }
 
                                                         if (color != Texture.black || half || !tex.transparency) {

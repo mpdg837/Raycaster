@@ -13,6 +13,7 @@ public class GunRender {
     public boolean blockMe;
 
     private final ScreenSprite sprite;
+    private BufferedImage guncenter;
 
     public Image[] scaled = new Image[4];
     public Image[] zscaled = new Image[4];
@@ -32,6 +33,9 @@ public class GunRender {
         this.sprite = sprite;
 
         try {
+
+            guncenter = ImageIO.read(new File("guncenter.png"));
+
             for (int n = 0; n < scaled.length; n++) {
                 final BufferedImage gun = ImageIO.read(new File("gun" + n + ".png"));
                 scaled[n] = gun.getScaledInstance(196, 196, Image.SCALE_FAST);
@@ -53,10 +57,19 @@ public class GunRender {
 
     public void moveGun(Graphics g) {
 
+        g.drawImage(guncenter, 320-guncenter.getWidth()/2,249-guncenter.getHeight()/2, null);
 
         if(sprite.bulletSize>0 && !blockMe) {
-            g.drawImage(rdes[shootAnimate], 320 - (sprite.bulletSize >> 1), 240 - (sprite.bulletSize >> 1), sprite.bulletSize, sprite.bulletSize, null);
+
+            int xPos = 320 - (sprite.bulletSize >> 1);
+            int yPos = 240 - (sprite.bulletSize >> 1);
+
+            if(!sprite.renderedSkyBoxInCenter){
+                g.drawImage(rdes[shootAnimate], xPos, yPos, sprite.bulletSize, sprite.bulletSize, null);
+            }
+
         }
+
         if(shootAnimate>0) {
             int bulletNSize = (4 - shootAnimate) * 10;
 
@@ -97,7 +110,9 @@ public class GunRender {
         final int zoomAdd = (int) ((zoom - 1) * 30);
 
         if (sprite.canUse) {
+
             g.drawImage(sprite.useIt, Raycaster.resolution.x / 2 - 16, Raycaster.resolution.y / 4 - 16, null);
+
         }
 
 
@@ -131,11 +146,17 @@ public class GunRender {
             }
         }
 
-        if (zoom > 1) {
-            g.drawImage(actScaled, Raycaster.resolution.x / 2 - half + posX, Raycaster.resolution.y - 196 + posY - zoomAdd, null);
+        if(sprite.HP>0){
+            if (zoom > 1) {
+                g.drawImage(actScaled, Raycaster.resolution.x / 2 - half + posX, Raycaster.resolution.y - 196 + posY - zoomAdd, null);
+            }else{
+                g.drawImage(actScaled, Raycaster.resolution.x / 2 - half +100+ posX, Raycaster.resolution.y - 196 + posY - zoomAdd, null);
+            }
         }else{
-            g.drawImage(actScaled, Raycaster.resolution.x / 2 - half +100+ posX, Raycaster.resolution.y - 196 + posY - zoomAdd, null);
+            g.drawImage(actScaled, Raycaster.resolution.x / 2 - half +100+ posX, Raycaster.resolution.y - 196 + posY - zoomAdd -sprite.HP , null);
         }
+
+
 
     }
 

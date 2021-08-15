@@ -1,14 +1,23 @@
 package Raycaster.Player;
 
+import Raycaster.Player.InteractiveObjects.Items;
+import Raycaster.Project.Game;
+
 import java.awt.geom.Point2D;
 
 public class Collision {
     Map mapa;
-    public Collision(Map mapa){
+    Game game;
+    final Items item;
+
+    public Collision(Map mapa,Game game){
+
         this.mapa = mapa;
+        this.game = game;
+        this.item = new Items(game);
     }
 
-    public boolean collide(Point2D position) {
+    public boolean collide(Point2D position,boolean player) {
 
         if (mapa.mapa[(int) position.getX()][(int) position.getY()] > 0) {
             boolean decyzja;
@@ -71,6 +80,15 @@ public class Collision {
 
                 default:
                     decyzja = true;
+                    break;
+                case 24:
+                case 25:
+                case 26:
+                    if(player) {
+                        item.useItems(position,type);
+                    }
+                    decyzja = false;
+
                     break;
             }
 

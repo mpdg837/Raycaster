@@ -274,8 +274,9 @@ public class Raycasting {
                                 case 6:
                                 case 22:
                                 case 23:
-
-
+                                case 24:
+                                case 25:
+                                case 26:
                                     if(mapa[(int) cx][(int) cy]==23 && !blockShoot) {
 
                                         if(posX>28 && posX<36){
@@ -432,15 +433,27 @@ public class Raycasting {
 
                             int HP = game.mapa.HP[(int)columnS.raycastPosition.getX()][(int)columnS.raycastPosition.getY()];
 
-                            if(HP>2){
-                                HP=2;
-                            }else if(HP<0){
-                                HP = 0;
+                            switch (game.mapa.mapa[(int)columnS.raycastPosition.getX()][(int)columnS.raycastPosition.getY()]){
+                                case 23:
+                                case 24:
+                                case 25:
+                                    HP=0;
+                                    break;
+                                default:
+                                    if(HP>2){
+                                        HP=2;
+                                    }else if(HP<0){
+                                        HP = 0;
+                                    }
+
+                                    if(game.mapa.mapa[(int)columnS.raycastPosition.getX()][(int)columnS.raycastPosition.getY()]==23){
+                                        HP = 0;
+                                    }
+
+
+                                    break;
                             }
 
-                            if(game.mapa.mapa[(int)columnS.raycastPosition.getX()][(int)columnS.raycastPosition.getY()]==23){
-                                HP = 0;
-                            }
 
                             final Texture myTex = game.sprite[HP].textures[game.mapa.textures[columnS.objPosition.x][columnS.objPosition.y]];
                             columnS.render(n,this, myTex,false);

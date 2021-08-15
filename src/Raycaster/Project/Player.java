@@ -22,68 +22,69 @@ public class Player {
     }
 
     public void walking(){
-        stop = System.nanoTime();
+        if(HP>0) {
+            stop = System.nanoTime();
 
-        lastDeltaTime = (double) ((double)(stop - start)/(double)1000000);
+            lastDeltaTime = (double) ((double) (stop - start) / (double) 1000000);
 
 
-        Point2D lastPos = game.playerTransform.postion;
+            Point2D lastPos = game.playerTransform.postion;
 
-        double speed = lastDeltaTime * 0.015;
+            double speed = lastDeltaTime * 0.015;
 
-        game.render.saveRaycaster.sprites.gunRender.moveGun+=3;
-        game.render.saveRaycaster.sprites.gunRender.zoom = game.camera.zoom;
+            game.render.saveRaycaster.sprites.gunRender.moveGun += 3;
+            game.render.saveRaycaster.sprites.gunRender.zoom = game.camera.zoom;
 
-        if(game.render.saveRaycaster.sprites.gunRender.zoom <1){
-            game.render.saveRaycaster.sprites.gunRender.zoom=1;
-        }
-
-        boolean walk = false;
-        if (game.input.getKey(KeyEvent.VK_W)) {
-            walk = true;
-            game.playerTransform.translate(Transform.getUp(),speed);
-        }else if (game.input.getKey(KeyEvent.VK_S)) {
-            walk = true;
-            game.playerTransform.translate(Transform.getDown(),speed);
-        }else if (game.input.getKey(KeyEvent.VK_A)) {
-            walk = true;
-            game.playerTransform.translate(Transform.getLeft(),speed);
-        }else if (game.input.getKey(KeyEvent.VK_D)) {
-            walk = true;
-            game.playerTransform.translate(Transform.getRight(),speed);
-        }else{
-            game.render.saveRaycaster.sprites.gunRender.moveGun-=3;
-
-            if(game.render.saveRaycaster.sprites.gunRender.moveGun<= 0 || game.render.saveRaycaster.sprites.gunRender.moveGun== 66){
-
-            }else{
-                game.render.saveRaycaster.sprites.gunRender.moveGun +=3;
-
-            }
-        }
-
-        if(walk){
-            if(timWalk==0) {
-                game.sound.playSound("footstepsound.wav");
+            if (game.render.saveRaycaster.sprites.gunRender.zoom < 1) {
+                game.render.saveRaycaster.sprites.gunRender.zoom = 1;
             }
 
-            timWalk ++;
+            boolean walk = false;
+            if (game.input.getKey(KeyEvent.VK_W)) {
+                walk = true;
+                game.playerTransform.translate(Transform.getUp(), speed);
+            } else if (game.input.getKey(KeyEvent.VK_S)) {
+                walk = true;
+                game.playerTransform.translate(Transform.getDown(), speed);
+            } else if (game.input.getKey(KeyEvent.VK_A)) {
+                walk = true;
+                game.playerTransform.translate(Transform.getLeft(), speed);
+            } else if (game.input.getKey(KeyEvent.VK_D)) {
+                walk = true;
+                game.playerTransform.translate(Transform.getRight(), speed);
+            } else {
+                game.render.saveRaycaster.sprites.gunRender.moveGun -= 3;
 
-            if(timWalk>10){
+                if (game.render.saveRaycaster.sprites.gunRender.moveGun <= 0 || game.render.saveRaycaster.sprites.gunRender.moveGun == 66) {
+
+                } else {
+                    game.render.saveRaycaster.sprites.gunRender.moveGun += 3;
+
+                }
+            }
+
+            if (walk) {
+                if (timWalk == 0) {
+                    game.sound.playSound("footstepsound.wav");
+                }
+
+                timWalk++;
+
+                if (timWalk > 10) {
+                    timWalk = 0;
+                }
+
+            } else {
                 timWalk = 0;
             }
 
-        }else{
-            timWalk = 0;
+
+            if (game.coll.collide(game.playerTransform.postion, true)) {
+                game.playerTransform.postion = lastPos;
+            }
+
+
+            start = System.nanoTime();
         }
-
-
-        if(game.coll.collide(game.playerTransform.postion)){
-            game.playerTransform.postion =lastPos;
-        }
-
-
-        start = System.nanoTime();
-
     }
 }

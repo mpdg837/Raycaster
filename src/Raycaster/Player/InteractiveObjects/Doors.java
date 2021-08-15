@@ -63,6 +63,34 @@ public class Doors {
         return false;
     }
 
+    public void updateMap(int x,int y){
+        // Drzwi
+        if (game.doors.tim[x][y] > 0) {
+            game.doors.tim[x][y] += 2;
+
+            int pos;
+
+            if (game.doors.tim[x][y] < 64) {
+                pos = game.doors.tim[x][y];
+            } else if (game.doors.tim[x][y] < 2 * 64 + 1) {
+                pos = 64;
+            } else {
+                pos = 64 - (game.doors.tim[x][y] - (2 * 64 + 1));
+            }
+
+            if (game.doors.tim[x][y] == 5) {
+                game.sound.playSound("dooropensound.wav");
+            }else if (game.doors.tim[x][y] == 131) {
+                game.sound.playSound("doorclosesound.wav");
+            }
+
+            game.mapa.deltaPos[x][y].setLocation(pos, pos);
+
+            if (game.doors.tim[x][y] > 191) {
+                game.doors.tim[x][y] = 0;
+            }
+        }
+    }
 
     public void update(){
 

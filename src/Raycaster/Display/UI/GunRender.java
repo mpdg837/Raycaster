@@ -106,7 +106,7 @@ public class GunRender {
         }
 
         final int half = (int) (90 * zoom);
-        final int full = (int) (zoom * 196);
+        int full = (int) (zoom * 196);
         final int zoomAdd = (int) ((zoom - 1) * 30);
 
         if (sprite.canUse) {
@@ -117,14 +117,18 @@ public class GunRender {
 
 
         Image actScaled;
-        if(reloadAnimate>0){
-            actScaled = rscaled[reloadAnimate].getScaledInstance(full, full, Image.SCALE_FAST);
-        }else
-        if(zoom>1){
-            actScaled = zscaled[shootAnimate].getScaledInstance(full, full, Image.SCALE_FAST);
-        }else{
-            actScaled = scaled[shootAnimate].getScaledInstance(full, full, Image.SCALE_FAST);
+
+        if(full<=0) {
+            full =1;
         }
+            if (reloadAnimate > 0) {
+                actScaled = rscaled[reloadAnimate].getScaledInstance(full, full, Image.SCALE_FAST);
+            } else if (zoom > 1) {
+                actScaled = zscaled[shootAnimate].getScaledInstance(full, full, Image.SCALE_FAST);
+            } else {
+                actScaled = scaled[shootAnimate].getScaledInstance(full, full, Image.SCALE_FAST);
+            }
+
 
         if(reloadAnimate>0){
             timReload++;

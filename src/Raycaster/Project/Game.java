@@ -41,8 +41,8 @@ public class Game extends Interaction {
     public final Camera camera = new Camera();
 
     public final Doors doors;
-    public final Player player;
-    public final Gun gun;
+    public Player player;
+    public Gun gun;
     public Collision coll;
 
     final Enemy enemy = new Enemy(this);
@@ -178,6 +178,10 @@ public class Game extends Interaction {
         player.HP = 100;
         this.mapa = new Map(this);
         playerTransform = new Transform();
+        player = new Player(this);
+
+        gun = new Gun(this);
+        coll = new Collision(mapa,this);
 
         start();
 

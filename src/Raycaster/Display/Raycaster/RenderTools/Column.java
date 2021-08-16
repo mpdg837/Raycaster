@@ -84,10 +84,7 @@ public class Column {
 
                                         if (x >= 0 && x < ray.game.render.renderSize.getX()) {
 
-                                            if(x/2<ray.columns.size()) {
-                                                Column column = ray.columns.get(x >> 1);
 
-                                                if (column.len > this.len) {
                                                     if (relX >= 0 && relX < 64) {
                                                         int color = tex.bufferXYS[(int) yR][(int) relX];
 
@@ -101,8 +98,7 @@ public class Column {
                                                             ray.foo[y][x] = color;
                                                         }
                                                     }
-                                                }
-                                            }
+
                                         }
 
                                     relX += relDelta;

@@ -34,10 +34,13 @@ public class Doors {
             case 20:
             case 21:
 
-                if(tim[pos.x][pos.y]==0){
-                    tim[pos.x][pos.y]=1;
+                if(game.mapa.textures[pos.x][pos.y]==8){
+                    System.exit(0);
+                }else {
+                    if (tim[pos.x][pos.y] == 0) {
+                        tim[pos.x][pos.y] = 1;
+                    }
                 }
-
                 break;
         }
     }

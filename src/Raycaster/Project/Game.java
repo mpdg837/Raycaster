@@ -146,6 +146,10 @@ public class Game extends Interaction {
         mapa.mapa[62][69] =27;
         mapa.textures[62][69] =7;
 
+        mapa.mapa[60][70] =21;
+        mapa.textures[60][70] =8;
+        mapa.deltaPos[60][70] = new Point(0,0);
+
         mapa.mapa[69][66] =7;
         mapa.mapa[69][65] =9;
         mapa.mapa[70][66] =10;

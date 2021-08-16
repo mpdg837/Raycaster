@@ -308,6 +308,7 @@ public class Raycasting {
                                     }else if(!blockShoot){
                                         switch (mapa[(int) cx][(int) cy])
                                         {
+                                            case 27:
                                             case 24:
                                             case 25:
                                             case 26:

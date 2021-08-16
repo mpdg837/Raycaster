@@ -43,8 +43,10 @@ public class Collision {
                 case 6:
                 case 11:
                 case 22:
-                case 23:
                     decyzja =mapa.HP[(int) position.getX()][(int) position.getY()] <2;
+                    break;
+                case 23:
+                    decyzja = false;
                     break;
                 case 3:
                     decyzja = partX >=0.375 && partX <= 0.625 && partY >=0.375 && partY <= 0.625;
@@ -84,6 +86,7 @@ public class Collision {
                 case 24:
                 case 25:
                 case 26:
+                case 27:
                     if(player) {
                         item.useItems(position,type);
                     }

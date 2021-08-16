@@ -290,6 +290,7 @@ public class Raycasting {
                                 case 24:
                                 case 25:
                                 case 26:
+                                case 27:
                                     if(mapa[(int) cx][(int) cy]==23 && !blockShoot) {
 
                                         if(posX>16 && posX<48){
@@ -466,6 +467,9 @@ public class Raycasting {
                                 case 23:
                                 case 24:
                                 case 25:
+                                    case 26:
+                                case 27:
+
                                     HP=0;
                                     break;
                                 default:
@@ -483,8 +487,10 @@ public class Raycasting {
                                     break;
                             }
 
+                            final int num = game.mapa.textures[columnS.objPosition.x][columnS.objPosition.y];
 
-                            final Texture myTex = game.sprite[HP].textures[game.mapa.textures[columnS.objPosition.x][columnS.objPosition.y]];
+                            System.out.println(num);
+                            final Texture myTex = game.sprite[HP].textures[num];
                             columnS.render(n,this, myTex,false);
                         }
                     }

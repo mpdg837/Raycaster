@@ -12,8 +12,8 @@ public class Items {
         this.game = game;
     }
     public void useItems(Point2D position,int type){
-        int partXMy = (int) ((position.getX() - (double) ((int) position.getX())) * 64);
-        int partYMy = (int) ((position.getY() - (double) ((int) position.getY())) * 64);
+        int partXMy = (int) ((position.getX() - (double) ((int) position.getX())) * (double) 64);
+        int partYMy = (int) ((position.getY() - (double) ((int) position.getY())) * (double) 64);
 
         if (partXMy > 8 && partXMy < 56 && partYMy > 8 && partYMy < 56) {
             game.mapa.mapa[(int) position.getX()][(int) position.getY()] = 0;
@@ -26,12 +26,28 @@ public class Items {
                     }
                     break;
                 case 25:
+
+
                     game.sound.playSound("weaponpickup.wav");
                     game.gun.addItem();
 
+                    int myN = 8;
+                    if(game.mapa.textures[(int) position.getX()][(int) position.getY()] == 3 + myN * 16){
+                        myN = 7;
+
+                        game.mapa.mapa[(int) position.getX()][(int) position.getY()] = 23;
+                        game.mapa.HP[(int) position.getX()][(int) position.getY()] = 10;
+                        game.mapa.textures[(int) position.getX()][(int) position.getY()] =  3 + myN * 16;
+
+                    }
+
                     break;
                 case 26:
-                    game.sound.playSound("healthpickup.wav");
+                    game.sound.playSound("treasurefoundsound.wav");
+                    break;
+                case 27:
+                    game.sound.playSound("keyfoundsound.wav");
+
                     break;
             }
 

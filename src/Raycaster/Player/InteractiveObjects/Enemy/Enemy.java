@@ -161,7 +161,7 @@ public class Enemy {
                     game.sound.playSound("enemyShoot.wav");
                 }
 
-                game.mapa.textures[nPos.x][nPos.y] = (byte) (3 + myN  * 16);
+                game.mapa.textures[nPos.x][nPos.y] = (int) (3 + myN  * 16);
             } else {
 
 
@@ -172,22 +172,27 @@ public class Enemy {
                     myN ++;
                 }
 
-                game.mapa.textures[nPos.x][nPos.y] = (byte) (3 + myN  * 16);
+                game.mapa.textures[nPos.x][nPos.y] = (int) (3 + myN  * 16);
             }
 
-        }else{
-            if (myN  > 6) {
-                myN  = 7;
+        }else {
+            if( game.mapa.HP[nPos.x][nPos.y]!=10) {
+                if (myN > 7) {
+                    myN = 8;
 
-            } else {
-                myN ++;
+                    game.mapa.mapa[nPos.x][nPos.y] = 25;
+                    game.mapa.HP[nPos.x][nPos.y] = 0;
+                    game.mapa.textures[nPos.x][nPos.y] = (int) (3 + myN * 16);
+                } else {
+                    myN++;
+                }
+
+                if (myN == 6) {
+                    game.sound.playSound("die.wav");
+                }
+
+                game.mapa.textures[enPos.x][enPos.y] = (int) (3 + myN * 16);
             }
-
-            if(myN == 6){
-                game.sound.playSound("die.wav");
-            }
-
-            game.mapa.textures[enPos.x][enPos.y] = (byte) (3 + myN  * 16);
         }
 
         n[nPos.x][nPos.y]=myN;

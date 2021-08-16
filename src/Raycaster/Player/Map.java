@@ -9,7 +9,7 @@ import java.util.Arrays;
 
 public class Map {
     public byte[][] mapa = new byte[128][128];
-    public byte[][] textures = new byte[128][128];
+    public int[][] textures = new int[128][128];
 
     public Point[][] deltaPos = new Point[128][128];
 

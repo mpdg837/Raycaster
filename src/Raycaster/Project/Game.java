@@ -4,6 +4,7 @@ import Raycaster.Display.Raycaster.SkyBox;
 import Raycaster.Display.Textures.Texture;
 import Raycaster.Display.Render;
 import Raycaster.Display.Textures.TexturePack;
+import Raycaster.Project.Gun.Gun;
 import Raycaster.Sound.MakeSound;
 import Raycaster.Player.Camera;
 import Raycaster.Player.Input.Input;
@@ -27,7 +28,7 @@ public class Game extends Interaction {
     public Render render;
 
 
-
+    public boolean pause;
     public Transform playerTransform;
     public Map mapa;
 
@@ -49,6 +50,8 @@ public class Game extends Interaction {
     final public MakeSound sound = new MakeSound();
 
     public ArrayList<Point> enemyPoint = new ArrayList<>();
+
+    public int timeStart = 0;
 
     public Game(Input input) throws IOException{
         super(input);
@@ -125,12 +128,23 @@ public class Game extends Interaction {
         mapa.mapa[65][68] =23;
         mapa.textures[65][68] =3;
 
+        mapa.mapa[68][68] =23;
+        mapa.textures[68][68] =3;
+
+        mapa.mapa[70][68] =23;
+        mapa.textures[70][68] =3;
 
         mapa.mapa[69][69] =24;
         mapa.textures[69][69] =5;
 
         mapa.mapa[70][69] =25;
         mapa.textures[70][69] =4;
+
+        mapa.mapa[72][69] =26;
+        mapa.textures[72][69] =6;
+
+        mapa.mapa[62][69] =27;
+        mapa.textures[62][69] =7;
 
         mapa.mapa[69][66] =7;
         mapa.mapa[69][65] =9;
@@ -190,6 +204,7 @@ public class Game extends Interaction {
     public void doors(){
         if (input.getKey(KeyEvent.VK_O)) {
             doors.open();
+
         }
 
         doors.update();
@@ -200,7 +215,13 @@ public class Game extends Interaction {
 
     public void update() {
 
+        if(timeStart<30){
+            timeStart ++;
 
+            render.saveRaycaster.sprites.mask.timStart = timeStart;
+            render.saveRaycaster.sprites.infoAmmo = "";
+        }else
+        if(!pause) {
             render.saveRaycaster.sprites.HP = player.HP;
 
             final Thread enemy = new Thread(this.enemy::update);
@@ -209,21 +230,23 @@ public class Game extends Interaction {
 
             gun.useGun();
 
-            camera.cameraRot(this);
+
             player.walking();
 
             doors();
             mapa.analyse();
 
-            if(tim>60) {
-                if(!sound.isPlaying("soundtrack.wav")) sound.playSound("soundtrack.wav");
+            if (tim > 60) {
+                if (!sound.isPlaying("soundtrack.wav")) sound.playSound("soundtrack.wav");
 
                 render.saveRaycaster.requestFocus();
                 tim = 0;
-            }else{
+            } else {
                 tim++;
             }
+        }
 
+        camera.cameraRot(this);
     }
 
     public int timk = 0;

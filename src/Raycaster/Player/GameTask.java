@@ -16,16 +16,22 @@ public class GameTask extends TimerTask {
 
         final long start = System.nanoTime();
 
-        game.update();
-        game.input.resetKey();
+
+            game.update();
+            game.input.resetKey();
+
+
+
+
 
         final long stop = System.nanoTime();
 
-        final int delta = (int)((double)(stop - start)/(double) 1000000);
+        final int delta = (int) ((double) (stop - start) / (double) 1000000);
         int timeOut = (Render.deltaTime) - delta;
-        if(timeOut<0){
+        if (timeOut < 0) {
             timeOut = 0;
         }
+
         game.render.saveRaycaster.tim2.schedule(new GameTask(game), timeOut);
     }
 }

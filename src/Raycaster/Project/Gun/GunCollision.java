@@ -1,4 +1,4 @@
-package Raycaster.Project;
+package Raycaster.Project.Gun;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
@@ -78,6 +78,7 @@ public class GunCollision {
                                 case 24:
                                 case 25:
                                 case 26:
+                                case 27:
                                     break;
                                 case 2:
                                 case 12:

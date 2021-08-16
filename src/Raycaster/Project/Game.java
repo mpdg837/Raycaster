@@ -4,7 +4,7 @@ import Raycaster.Display.Raycaster.SkyBox;
 import Raycaster.Display.Textures.Texture;
 import Raycaster.Display.Render;
 import Raycaster.Display.Textures.TexturePack;
-import Raycaster.Display.UI.MakeSound;
+import Raycaster.Sound.MakeSound;
 import Raycaster.Player.Camera;
 import Raycaster.Player.Input.Input;
 import Raycaster.Player.Input.Interaction;

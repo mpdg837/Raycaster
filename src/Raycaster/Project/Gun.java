@@ -20,7 +20,7 @@ public class Gun {
         this.game = game;
     }
 
-
+    int detect;
     public void useGun(){
 
 
@@ -31,15 +31,17 @@ public class Gun {
         }
         if(game.render.saveRaycaster.sprites.gunRender.reloadAnimate<=0 && game.player.HP>0) {
             if (game.input.getKeyDown(KeyEvent.VK_R)) {
-
-                game.sound.playSound("reload.wav");
-                game.render.saveRaycaster.sprites.gunRender.reloadAnimate =1;
-                reloadMe();
+                if(game.render.saveRaycaster.sprites.gunRender.reloadAnimate<=0) {
+                    game.sound.playSound("reload.wav");
+                    game.render.saveRaycaster.sprites.gunRender.reloadAnimate = 1;
+                    reloadMe();
+                }
             }else
             if (game.input.getMouseButtonDown(MouseEvent.BUTTON1)) {
 
                 if(game.render.saveRaycaster.sprites.gunRender.shootAnimate<=0){
                     shoot();
+
                 }
             }
 
@@ -62,17 +64,17 @@ public class Gun {
             }
         }
 
-        int detect = (int)detectLen();
 
 
 
-            if(game.render.saveRaycaster.sprites.gunRender.shootAnimate==2) {
+
+        if(game.render.saveRaycaster.sprites.gunRender.shootAnimate==1) {
 
 
 
             if( 240 > 240 - ((48-detect)*3) +  Math.abs(game.camera.deltaY) && 240 < 240 + ((48-detect)*3) +  Math.abs(game.camera.deltaY)  ) {
 
-                if (game.mapa.HP[posDetected.x][posDetected.y] < 5) {
+                if (game.mapa.HP[posDetected.x][posDetected.y] < 5 && game.mapa.mapa[posDetected.x][posDetected.y]!=0 ) {
 
                     game.mapa.HP[posDetected.x][posDetected.y]++;
                 }
@@ -81,8 +83,11 @@ public class Gun {
         }
 
         if(game.render.saveRaycaster.sprites.gunRender.shootAnimate>0) {
-            double wsp = (double) (20 - detect) / (double) 20 * 100;
-            game.render.saveRaycaster.sprites.bulletSize = (int) (wsp);
+
+
+                double wsp = (double) (20 - detect) / (double) 20 * 100;
+                game.render.saveRaycaster.sprites.bulletSize = (int) (wsp);
+
         }else{
             game.render.saveRaycaster.sprites.bulletSize = 0;
         }
@@ -103,122 +108,120 @@ public class Gun {
         double cy = game.playerTransform.postion.getY();
 
         posDetected = new Point((int)cx,(int)cy);
-        Point lastPoint = new Point((int)(cx*32),(int)(cy*32));
+        Point lastPoint = new Point(0,0);
 
-
+        game.render.saveRaycaster.sprites.gunRender.blockMe = false;
         double memLen = 0;
 
         for(double len=0;len<30;len+=deltaLen){
-            cx += deltaX;
-            cy += deltaY;
-            if (cx >= 0 && cx<= 128) {
-                if (cy >= 0 && cy<= 128) {
-                    Point zao = new Point((int)(cx*32),(int)(cy*32));
-                    if(zao != lastPoint){
 
-                        switch (game.mapa.mapa[(int) cx][(int) cy]) {
-                            case 0:
-                                break;
-                            case 2:
-                            case 12:
-                            case 13:
-                            case 14:
-                            case 15:
-                            case 16:
-                            case 17:
-                            case 18:
-                            case 19:
-                                if(game.camera.deltaY>0){
-                                    if (game.coll.collide(new Point2D.Double(cx, cy),false)) {
+            if(!game.render.saveRaycaster.sprites.gunRender.blockMe ) {
+                cx += deltaX;
+                cy += deltaY;
+                if (cx >= 0 && cx < 128) {
+                    if (cy >= 0 && cy < 128) {
+                        Point zao = new Point((int) (cx * (double) 32), (int) (cy * (double)32));
+                        if (!zao.equals(lastPoint)) {
 
-                                        memLen = len;
-                                        len = 30;
-                                        game.render.saveRaycaster.sprites.gunRender.blockMe = false;
-                                        posDetected = new Point((int) cx, (int) cy);
+                            switch (game.mapa.mapa[(int) cx][(int) cy]) {
+                                case 0:
+                                case 24:
+                                case 25:
+                                case 26:
+                                    break;
+                                case 2:
+                                case 12:
+                                case 13:
+                                case 14:
+                                case 15:
+                                case 16:
+                                case 17:
+                                case 18:
+                                case 19:
+                                    if (game.camera.deltaY > 0) {
+                                        if (game.coll.collide(new Point2D.Double(cx, cy), false)) {
 
+                                            memLen = len;
+                                            len = 30;
+                                            game.render.saveRaycaster.sprites.gunRender.blockMe = false;
+                                            posDetected = new Point((int) cx, (int) cy);
+
+                                        }
                                     }
-                                }
-                                break;
+                                    break;
+                                case 23:
 
-                            case 20:
-                            case 21:
-                                if(game.mapa.deltaPos[(int) cx][(int) cy].x<32) {
-                                    memLen = 30;
-                                    len = 30;
-                                }
+                                    final Point pos = game.mapa.deltaPos[(int) cx][(int) cy];
+                                    final Point zaoPos = new Point((int) ((cx - (double) (int) cx) * (double) 64), (int) ((cy - (double) (int) cy) * (double) 64));
 
-                                break;
-                            default:
+                                    final int radius =24;
+
+                                    if (zaoPos.x <= pos.x + radius && zaoPos.x >= pos.x - radius) {
+                                        if (zaoPos.y <= pos.y + radius && zaoPos.y >= pos.y - radius) {
+
+                                            if (game.mapa.HP[(int) cx][(int) cy] <= 5) {
 
 
-                                if (game.coll.collide(new Point2D.Double(cx, cy),false)) {
+                                                game.render.saveRaycaster.sprites.gunRender.blockMe = true;
 
-                                    boolean decyzja = true;
-                                    switch (game.mapa.mapa[(int) cx][(int) cy]) {
-                                        case 24:
-                                        case 25:
-                                        case 26:
-                                            decyzja = false;
-                                            break;
-                                        case 4:
-                                        case 5:
-                                        case 6:
-                                        case 11:
-
-                                            if(game.mapa.HP[(int) cx][(int) cy]>2) decyzja = false;
-                                            else {
-                                                decyzja = true;
                                                 memLen = len;
                                                 len = 30;
+                                                posDetected = new Point((int) cx, (int) cy);
                                             }
-                                            break;
-                                            case 23:
-                                                final Point pos = game.mapa.deltaPos[(int) cx][(int) cy];
-                                                final Point zaoPos = new Point((int)((cx-(int)cx)*64),(int)((cy-(int)cy)*64));
 
-                                                final int radius =24;
-
-                                                if(zaoPos.x <= pos.x+radius && zaoPos.x >= pos.x-radius){
-                                                    if(zaoPos.y <= pos.y+radius && zaoPos.y >= pos.y-radius){
-
-                                                        if(game.mapa.HP[(int) cx][(int) cy]>5) decyzja = false;
-                                                        else {
-
-                                                            game.render.saveRaycaster.sprites.gunRender.blockMe =true;
-                                                            decyzja = true;
-                                                            memLen = 30;
-                                                            len = 30;
-                                                        }
-
-                                                    }else{
-                                                        decyzja = false;
-                                                    }
-                                                }else{
-                                                    decyzja = false;
-                                                }
-
-                                                break;
-                                        default:
-
-                                            game.render.saveRaycaster.sprites.gunRender.blockMe = false;
-                                            break;
+                                        }
                                     }
 
-
-                                    if(decyzja) {
-                                        memLen = len;
+                                    break;
+                                case 20:
+                                case 21:
+                                    if (game.mapa.deltaPos[(int) cx][(int) cy].x < 32) {
+                                        memLen = 30;
                                         len = 30;
-
-                                        posDetected = new Point((int) cx, (int) cy);
+                                        game.render.saveRaycaster.sprites.gunRender.blockMe = true;
                                     }
-                                }
-                                break;
+
+                                    break;
+                                default:
+
+
+                                        boolean decyzja = true;
+                                        switch (game.mapa.mapa[(int) cx][(int) cy]) {
+
+                                            case 4:
+                                            case 5:
+                                            case 6:
+                                            case 11:
+
+                                                if (game.mapa.HP[(int) cx][(int) cy] > 2) decyzja = false;
+                                                else {
+
+                                                    memLen = len;
+                                                    len = 30;
+                                                }
+                                                break;
+
+                                            default:
+                                                decyzja = game.coll.collide(new Point2D.Double(cx, cy), false);
+                                                break;
+                                        }
+
+
+                                        if (decyzja) {
+                                            memLen = len;
+                                            len = 30;
+                                            game.render.saveRaycaster.sprites.gunRender.blockMe = true;
+                                            posDetected = new Point((int) cx, (int) cy);
+                                        }
+
+                                    break;
+
+                            }
 
                         }
 
+                        lastPoint = zao;
                     }
-
-                    lastPoint = zao;
                 }
             }
         }
@@ -240,7 +243,7 @@ public class Gun {
 
 
 
-        if(ammo < 0){
+        if(ammo < 1){
 
 
             game.sound.playSound("reload.wav");
@@ -248,6 +251,8 @@ public class Gun {
                 reloadMe();
 
         }else{
+
+            detect = (int)detectLen();
             game.render.saveRaycaster.sprites.gunRender.shootAnimate=1;
             game.sound.playSound("shoot.wav");
             ammo--;

@@ -244,7 +244,20 @@ public class Raycasting {
                                 case 5:
                                 case 20:
                                 case 21:
-                                    blockShoot = true;
+
+                                   switch (mapa[(int)cx][(int)cy]){
+                                       case 21:
+                                       case 20:
+
+                                            if(game.mapa.deltaPos[(int)cx][(int)cy].x>32){
+                                                blockShoot = true;
+                                            }
+
+                                           break;
+                                       default:
+                                           blockShoot = true;
+                                           break;
+                                   }
                                     if (largePointAnalyse.getX() != largeLastPointAnalyse.getX() || largePointAnalyse.getY() != largeLastPointAnalyse.getY()) {
                                         boolean ok = false;
 
@@ -279,10 +292,10 @@ public class Raycasting {
                                 case 26:
                                     if(mapa[(int) cx][(int) cy]==23 && !blockShoot) {
 
-                                        if(posX>28 && posX<36){
-                                            if(posY>28 && posY<36){
+                                        if(posX>16 && posX<48){
+                                            if(posY>16 && posY<48){
 
-                                                if (renderedEnemies[(int) cx][(int) cy] > 50) {
+                                                if (renderedEnemies[(int) cx][(int) cy] > 40) {
                                                     game.enemyPoint.add(new Point((int) cx, (int) cy));
                                                 }else{
                                                     renderedEnemies[(int) cx][(int) cy]++;
@@ -291,8 +304,24 @@ public class Raycasting {
                                             }
                                         }
 
-                                    }else{
-                                        blockShoot = true;
+                                    }else if(!blockShoot){
+                                        switch (mapa[(int) cx][(int) cy])
+                                        {
+                                            case 24:
+                                            case 25:
+                                            case 26:
+
+                                                break;
+                                            default:
+                                                if(posX>16 && posX<48){
+                                                    if(posY>16 && posY<48){
+                                                        blockShoot = true;
+                                                    }
+                                                }
+
+                                                break;
+                                        }
+
                                     }
 
                                     if (renderedSprites[(int) cx][(int) cy] == 0) {

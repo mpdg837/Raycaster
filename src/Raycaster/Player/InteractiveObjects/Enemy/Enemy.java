@@ -15,7 +15,7 @@ public class Enemy {
     }
 
     private boolean inside(int x, int y){
-        return x >= 0 && x<= 128 && y >= 0 && y<= 128;
+        return x >= 0 && x< 128 && y >= 0 && y< 128;
     }
     public void update(){
         game.render.saveRaycaster.sprites.hurt = false;
@@ -26,7 +26,7 @@ public class Enemy {
 
             final Point center = new Point((int)game.playerTransform.postion.getX(),(int)game.playerTransform.postion.getY());
 
-            final int range = 10;
+            final int range = 15;
             for(int x=center.x-range ; x<center.x+range;x++){
                 for(int y=center.y-range ; y<center.y+range;y++){
 
@@ -57,6 +57,7 @@ public class Enemy {
 
         Point last = new Point(game.mapa.deltaPos[enPos.x][enPos.y].x, game.mapa.deltaPos[enPos.x][enPos.y].y);
         final Point stepDelta = new Point((int) (delta.getX() * 120), (int) (delta.getY() * 120));
+
 
 
         if (last.x + stepDelta.x >= 0 && last.x + stepDelta.x < 63) {
@@ -110,11 +111,15 @@ public class Enemy {
         }
 
 
-        game.mapa.mapa[enPos.x][enPos.y] = 0;
-        game.mapa.deltaPos[nPos.x][nPos.y] = last;
+        byte hp = game.mapa.HP[enPos.x][enPos.y];
 
+        game.mapa.HP[enPos.x][enPos.y] = 0;
+        game.mapa.mapa[enPos.x][enPos.y] = 0;
+
+        game.mapa.deltaPos[nPos.x][nPos.y] = last;
         game.mapa.mapa[nPos.x][nPos.y] = 23;
         blocked[nPos.x][nPos.y] = true;
+        game.mapa.HP[nPos.x][nPos.y] += hp;
 
         return nPos;
     }
@@ -125,7 +130,7 @@ public class Enemy {
 
         Point nPos = new Point(enPos.x, enPos.y);
 
-        if(game.mapa.HP[enPos.x][enPos.y]<2) {
+        if(game.mapa.HP[enPos.x][enPos.y]<1) {
 
 
 

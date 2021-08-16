@@ -490,7 +490,6 @@ public class Raycasting {
 
                             final int num = game.mapa.textures[columnS.objPosition.x][columnS.objPosition.y];
 
-                            System.out.println(num);
                             final Texture myTex = game.sprite[HP].textures[num];
                             columnS.render(n,this, myTex,false);
                         }

@@ -64,7 +64,6 @@ public class ScreenSprite {
                 intense = 128;
             }
 
-            System.out.println(intense);
             final Color color = new Color(255, 0, 0, intense);
             g.setColor(color);
             g.fillRect(0, 0, Raycaster.resolution.x, Raycaster.resolution.y);

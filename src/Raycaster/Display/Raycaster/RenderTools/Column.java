@@ -65,6 +65,11 @@ public class Column {
             max = (int)ray.game.render.renderSize.getY();
         }
 
+        boolean[] decyzje = new boolean[1];
+        if(spriteReduction) {
+            decyzje = new boolean[640];
+        }
+
         for(int y=min;y<max;y++) {
 
 
@@ -80,20 +85,39 @@ public class Column {
 
                             final int hhei = (hei >> 1);
 
+                                int quant = 0;
+
+                                boolean decyzja = false;
+
                                 for (int x = rect.x - hhei; x < rect.x + hhei; x++) {
 
                                         if (x >= 0 && x < ray.game.render.renderSize.getX()) {
 
-                                            int colLen = this.len;
-                                            if((x>>1)<ray.columns.size()) {
-
-                                                final int delta = ray.columns.get(x >> 1).len - this.len;
-                                                if(delta>5 || delta<-5) {
-                                                    colLen = ray.columns.get(x >> 1).len;
+                                            if (y == min) {
+                                                if (quant > 10) {
+                                                    quant = 0;
                                                 }
-                                            }
 
-                                                if (colLen >= this.len) {
+                                                if (quant == 0) {
+                                                    int colLen = this.len;
+                                                    if ((x >> 1) < ray.columns.size()) {
+
+                                                        final int delta = ray.columns.get(x >> 1).len - this.len;
+                                                        if (delta > 5 || delta < -5) {
+                                                            colLen = ray.columns.get(x >> 1).len;
+                                                        }
+                                                    }
+                                                    decyzja = (colLen >= this.len);
+                                                    decyzje[x] = decyzja;
+
+                                                } else {
+                                                    decyzje[x] = decyzja;
+                                                }
+                                                quant++;
+                                            } else {
+
+
+                                                if (decyzje[x]) {
                                                     if (relX >= 0 && relX < 64) {
                                                         int color = tex.bufferXYS[(int) yR][(int) relX];
 
@@ -109,7 +133,9 @@ public class Column {
                                                     }
 
                                                 }
+                                            }
                                         }
+
 
                                     relX += relDelta;
                                 }

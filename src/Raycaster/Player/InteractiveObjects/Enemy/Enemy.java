@@ -9,9 +9,14 @@ public class Enemy {
 
     final private Game game;
     private final byte[][] n = new byte[128][128];
+    final int range = 15;
+
+    boolean[][] blocked;
+    Point center;
 
     public Enemy(Game game){
         this.game = game;
+        center = new Point(0,0);
     }
 
     private boolean inside(int x, int y){
@@ -21,31 +26,31 @@ public class Enemy {
         game.render.saveRaycaster.sprites.hurt = false;
         game.timk++;
 
-        final Enemy it = this;
+
+        hurted = false;
+
         if(game.timk>3) {
 
-            new Thread(()-> {
-                final boolean[][] blocked = new boolean[128][128];
 
-                final Point center = new Point((int) game.playerTransform.postion.getX(), (int) game.playerTransform.postion.getY());
-
-                final int range = 15;
                 for (int x = center.x - range; x < center.x + range; x++) {
                     for (int y = center.y - range; y < center.y + range; y++) {
 
                         if (inside(x, y)) {
 
                             if (game.mapa.mapa[x][y] == 23 && !blocked[x][y]) {
-                                it.updateEnemy(new Point(x, y), blocked);
+                                updateEnemy(new Point(x, y), blocked);
                             }
 
                         }
 
                     }
                 }
-            }).start();
+
 
             game.timk = 0;
+        }else if(game.timk==1){
+            blocked = new boolean[128][128];
+            center = new Point((int) game.playerTransform.postion.getX(), (int) game.playerTransform.postion.getY());
         }
 
 
@@ -128,6 +133,8 @@ public class Enemy {
         return nPos;
     }
 
+    boolean hurted = false;
+
     public void updateEnemy(Point enPos,boolean[][] blocked){
         byte myN = n[enPos.x][enPos.y];
         n[enPos.x][enPos.y]=0;
@@ -142,11 +149,14 @@ public class Enemy {
 
             if (!game.enemyPoint.contains(enPos)) {
 
-               hurt = false;
+                    hurt = false;
 
 
-            }else{
-                game.render.saveRaycaster.sprites.hurt = true;
+            }else {
+                if (!hurted) {
+                    game.render.saveRaycaster.sprites.hurt = true;
+                    hurted = true;
+                }
             }
 
             nPos = move(enPos,blocked);

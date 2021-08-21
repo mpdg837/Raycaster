@@ -131,6 +131,9 @@ public class Game extends Interaction {
         mapa.mapa[68][68] =23;
         mapa.textures[68][68] =3;
 
+        mapa.mapa[70][68] =23;
+        mapa.textures[70][68] =3;
+
         mapa.mapa[69][69] =24;
         mapa.textures[69][69] =5;
 
@@ -227,28 +230,31 @@ public class Game extends Interaction {
         if(!pause) {
             render.saveRaycaster.sprites.HP = player.HP;
 
-            new Thread(this.enemy::update).start();
+            this.enemy.update();
             gun.useGun();
 
 
-            new Thread(player::walking).start();
+            player.walking();
 
             new Thread(this::doors).start();
             new Thread(mapa::analyse).start();
 
-            if (tim > 60) {
-                if (!sound.isPlaying("soundtrack.wav")) sound.playSound("soundtrack.wav");
+            new Thread(()->{
+                if (tim > 60) {
+                    if (!sound.isPlaying("soundtrack.wav")) sound.playSound("soundtrack.wav");
 
-                render.saveRaycaster.requestFocus();
-                tim = 0;
-            } else {
-                tim++;
-            }
+                    render.saveRaycaster.requestFocus();
+                    tim = 0;
+                } else {
+                    tim++;
+                }
+            }).start();
 
-            camera.cameraRot(this);
+
+
         }
 
-
+        camera.cameraRot(this);
     }
 
     public int timk = 0;

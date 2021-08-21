@@ -181,14 +181,13 @@ public class Raycasting {
                     zet +=deltaZ;
                     height -= deltaLen;
 
-
-
                     final Point zaokraglij = new Point((int) (cx * 64), (int) (cy * 64));
 
 
                     if (!zaokraglij.equals(lastPointOfMap)) {
 
                         int lenMem = (int)len;
+                        analysePos.setLocation(cx, cy);
 
                         if (inside() )  {
 
@@ -203,7 +202,7 @@ public class Raycasting {
 
                             final Point punkta = new Point(nStep, half);
 
-                            analysePos.setLocation(cx, cy);
+
 
                             switch (mapa[(int) cx][(int) cy]) {
                                 case 1:

@@ -71,7 +71,7 @@ public class ScreenSprite {
         if (hurt) {
             final Color color = new Color(255, 0, 0, 128);
             g.setColor(color);
-            g.fillRect(0, 0, Raycaster.resolution.x, Raycaster.resolution.y);
+            g.fillRect(0, 0, Raycaster.resolution.x, Raycaster.resolution.y-48);
 
         }
 

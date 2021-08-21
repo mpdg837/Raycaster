@@ -21,7 +21,7 @@ public class Enemy {
         game.render.saveRaycaster.sprites.hurt = false;
         game.timk++;
 
-        Enemy it = this;
+        final Enemy it = this;
         if(game.timk>3) {
 
             new Thread(()-> {
@@ -59,7 +59,7 @@ public class Enemy {
         final Point2D delta = new Point2D.Double((double) (myPos.x - enPos.x) / (double) 64, (myPos.y - enPos.y) / (double) 64);
 
 
-        Point last = new Point(game.mapa.deltaPos[enPos.x][enPos.y].x, game.mapa.deltaPos[enPos.x][enPos.y].y);
+        final Point last = new Point(game.mapa.deltaPos[enPos.x][enPos.y].x, game.mapa.deltaPos[enPos.x][enPos.y].y);
         final Point stepDelta = new Point((int) (delta.getX() * 120), (int) (delta.getY() * 120));
 
 
@@ -115,7 +115,7 @@ public class Enemy {
         }
 
 
-        byte hp = game.mapa.HP[enPos.x][enPos.y];
+        final byte hp = game.mapa.HP[enPos.x][enPos.y];
 
         game.mapa.HP[enPos.x][enPos.y] = 0;
         game.mapa.mapa[enPos.x][enPos.y] = 0;

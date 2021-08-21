@@ -131,9 +131,6 @@ public class Game extends Interaction {
         mapa.mapa[68][68] =23;
         mapa.textures[68][68] =3;
 
-        mapa.mapa[70][68] =23;
-        mapa.textures[70][68] =3;
-
         mapa.mapa[69][69] =24;
         mapa.textures[69][69] =5;
 
@@ -222,23 +219,22 @@ public class Game extends Interaction {
         if(timeStart<60){
             timeStart ++;
 
+            input.centerMouse();
+
             render.saveRaycaster.sprites.mask.timStart = timeStart;
             render.saveRaycaster.sprites.infoAmmo = "";
         }else
         if(!pause) {
             render.saveRaycaster.sprites.HP = player.HP;
 
-            final Thread enemy = new Thread(this.enemy::update);
-
-            enemy.start();
-
+            new Thread(this.enemy::update).start();
             gun.useGun();
 
 
-            player.walking();
+            new Thread(player::walking).start();
 
-            doors();
-            mapa.analyse();
+            new Thread(this::doors).start();
+            new Thread(mapa::analyse).start();
 
             if (tim > 60) {
                 if (!sound.isPlaying("soundtrack.wav")) sound.playSound("soundtrack.wav");

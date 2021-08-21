@@ -46,16 +46,18 @@ public class Map {
             for (int x = myPos.x - radiusB; x < myPos.x+radiusB; x++) {
                 for (int y = myPos.y-radiusB; y < myPos.y+radiusB; y++) {
 
-                    switch (mapa[x][y]) {
-                        case 20:
-                        case 21:
+                    if (inside(x, y)) {
+                        switch (mapa[x][y]) {
+                            case 20:
+                            case 21:
 
-                            game.doors.updateMap(x,y);
+                                game.doors.updateMap(x, y);
 
-                            break;
-                        case 22:
-                            barrels.updateMap(x,y);
-                            break;
+                                break;
+                            case 22:
+                                barrels.updateMap(x, y);
+                                break;
+                        }
                     }
                 }
             }

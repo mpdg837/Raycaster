@@ -50,8 +50,8 @@ public class UIInform {
 
         }
 
-        if(timStart<30){
-            g.setColor(new Color(0,0,0,(30-timStart)*8));
+        if(timStart<60){
+            g.setColor(new Color(0,0,0,(60-timStart)*4));
             g.fillRect(0,0,640,480);
         }
     }

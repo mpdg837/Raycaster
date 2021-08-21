@@ -219,7 +219,7 @@ public class Game extends Interaction {
 
     public void update() {
 
-        if(timeStart<30){
+        if(timeStart<60){
             timeStart ++;
 
             render.saveRaycaster.sprites.mask.timStart = timeStart;
@@ -248,9 +248,11 @@ public class Game extends Interaction {
             } else {
                 tim++;
             }
+
+            camera.cameraRot(this);
         }
 
-        camera.cameraRot(this);
+
     }
 
     public int timk = 0;

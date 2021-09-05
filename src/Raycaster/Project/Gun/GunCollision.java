@@ -143,9 +143,9 @@ public class GunCollision {
 
 
                                     if (decyzja) {
-                                        gun.memLen = len;
+                                        gun.memLen = len ;
                                         len = 30;
-                                        gun.game.render.saveRaycaster.sprites.gunRender.blockMe = true;
+
                                         gun.posDetected = new Point((int) cx, (int) cy);
                                     }
                                     break;

@@ -93,6 +93,7 @@ public class Gun {
                 double wsp = (double) (20 - detect) / (double) 20 * 100;
                 game.render.saveRaycaster.sprites.bulletSize = (int) (wsp);
 
+
         }else{
             game.render.saveRaycaster.sprites.bulletSize = 0;
         }
@@ -128,6 +129,7 @@ public class Gun {
         }else{
 
             detect = (int)gcoll.detectLen();
+
             game.render.saveRaycaster.sprites.gunRender.shootAnimate=1;
             game.sound.playSound("shoot.wav");
             ammo--;

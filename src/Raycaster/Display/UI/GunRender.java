@@ -58,6 +58,7 @@ public class GunRender {
     public void moveGun(Graphics g) {
 
         g.drawImage(guncenter, 320-guncenter.getWidth()/2,249-guncenter.getHeight()/2, null);
+        System.out.println(sprite.bulletSize);
 
         if(sprite.bulletSize>0 && !blockMe) {
 

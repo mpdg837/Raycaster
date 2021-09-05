@@ -68,8 +68,8 @@ public class Floor {
 
                                         }
                                     }
-                                    if (ray.game.mapa.ceciling[(int) ray.analysePos.getX()][(int) ray.analysePos.getY()] > 0) {
-                                        final Texture myTex = ray.game.texture.textures[ray.game.mapa.ceciling[(int) ray.analysePos.getX()][(int) ray.analysePos.getY()]];
+                                    if (ray.game.mapa.ceiling[(int) ray.analysePos.getX()][(int) ray.analysePos.getY()] > 0) {
+                                        final Texture myTex = ray.game.texture.textures[ray.game.mapa.ceiling[(int) ray.analysePos.getX()][(int) ray.analysePos.getY()]];
                                         int colorB = myTex.bufferXYS[ray.posY][ray.posX];
 
 
